@@ -1,2 +1,3 @@
-# p2_lab6
-DEU TUDO ERRADO CARAIO
+### Equipe
+
+Rielisson Joseff de Sousa Costa - 12111333
