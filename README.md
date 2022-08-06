@@ -1,2 +1,2 @@
 # p2_lab6
-testando
+DEU TUDO ERRADO CARAIO
