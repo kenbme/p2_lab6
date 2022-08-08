@@ -1,8 +1,21 @@
+import Atividade.AtividadeController;
+import Atividade.AtividadeService;
+import Pessoa.PessoaController;
+import Pessoa.PessoaService;
+import Tarefa.TarefaController;
+import Tarefa.TarefaService;
+
 public class Facade {
+
+    private PessoaController pessoaController;
+    private AtividadeController atividadeController;
+    private TarefaController tarefaController;
 
     // TODO SEPARAR RESPONSABILIDADES
     public Facade() {
-        // TODO CONTROLLERS
+        pessoaController = new PessoaController(new PessoaService());
+        atividadeController = new AtividadeController(new AtividadeService());
+        tarefaController = new TarefaController(new TarefaService());
     }
 
     // PESSOA
@@ -11,7 +24,7 @@ public class Facade {
     }
 
     public String exibirPessoa(String cpf) {
-
+        throw new UnsupportedOperationException();
     }
 
     public void alterarNomePessoa(String cpf, String novoNome) {
@@ -31,12 +44,12 @@ public class Facade {
     }
 
     public String listarComentariosPessoa(String cpf) {
-
+        throw new UnsupportedOperationException();
     }
 
     // ATIVIDADE
     public String cadastrarAtividade(String nome, String descricao, String cpf) {
-
+        throw new UnsupportedOperationException();
     }
 
     public void encerrarAtividade(String atividadeId) {
@@ -52,7 +65,7 @@ public class Facade {
     }
 
     public String exibirAtividade(String atividadeId) {
-
+        throw new UnsupportedOperationException();
     }
 
     public void alterarDescricaoAtividade(String atividadeId, String descricao) {
@@ -65,7 +78,7 @@ public class Facade {
 
     // TAREFA
     public String cadastrarTarefa(String atividadeId, String nome, String[] habilidades) {
-
+        throw new UnsupportedOperationException();
     }
 
     public void alterarNomeTarefa(String idTarefa, String novoNome) {
@@ -93,7 +106,7 @@ public class Facade {
     }
 
     public String exibirTarefa(String idTarefa) {
-
+        throw new UnsupportedOperationException();
     }
 
     public void associarPessoaTarefa(String cpf, String idTarefa) {
