@@ -28,23 +28,23 @@ public class Facade {
     }
 
     public void alterarNomePessoa(String cpf, String novoNome) {
-
+        pessoaController.alterarNomePessoa(cpf, novoNome);
     }
 
     public void alterarHabilidadesPessoa(String cpf, String[] novasHabilidades) {
-
+        pessoaController.alterarHabilidadesPessoa(cpf, novasHabilidades);
     }
 
     public void removerPessoa(String cpf) {
-
+        pessoaController.removerPessoa(cpf);
     }
 
     public void adicionarComentarioPessoa(String cpf, String comentario, String autorCpf) {
-
+        pessoaController.adicionarComentarioPessoa(cpf, comentario, autorCpf);
     }
 
     public String listarComentariosPessoa(String cpf) {
-        throw new UnsupportedOperationException();
+        return pessoaController.listarComentariosPessoa(cpf);
     }
 
     // ATIVIDADE

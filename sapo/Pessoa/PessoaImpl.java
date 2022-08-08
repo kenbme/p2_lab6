@@ -1,15 +1,25 @@
 package Pessoa;
 
+import Comentario.Comentario;
+import Comentario.ComentarioImpl;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class PessoaImpl implements Pessoa {
 
     private final String cpf;
     private String nome;
-    private String[] habilidades;
+    private final List<String> habilidades;
+    private final List<Comentario> comentarios;
 
     public PessoaImpl(String cpf, String nome, String[] habilidades) {
         this.cpf = cpf;
         this.nome = nome;
-        this.habilidades = habilidades;
+        this.habilidades = new ArrayList<>();
+        this.habilidades.addAll(Arrays.asList(habilidades));
+        comentarios = new ArrayList<>();
     }
 
     @Override
@@ -23,22 +33,35 @@ public class PessoaImpl implements Pessoa {
 
     @Override
     public void alterarNome(String novoNome) {
-
+        nome = novoNome;
     }
 
     @Override
     public void alterarHabilidades(String[] novasHabilidades) {
-
+        this.habilidades.addAll(Arrays.asList(novasHabilidades));
     }
 
     @Override
-    public void adicionarComentario(String comentario, String autorCpf) {
-
+    public void adicionarComentario(String comentario, Pessoa autor) {
+        comentarios.add(new ComentarioImpl(comentario, autor));
     }
 
     @Override
     public String listarComentarios() {
-        return null;
+        StringBuilder lista = new StringBuilder(nome + " – " + cpf);
+        if (comentarios.isEmpty()) {
+            return lista.toString();
+        }
+        lista.append("\nComentários:");
+        for (Comentario comentario : comentarios) {
+            lista.append("\n-- ").append(comentario.exibir());
+        }
+        return lista.toString();
+    }
+
+    @Override
+    public String getNome() {
+        return nome;
     }
 
 }
