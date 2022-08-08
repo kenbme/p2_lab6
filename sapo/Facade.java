@@ -20,11 +20,11 @@ public class Facade {
 
     // PESSOA
     public void cadastrarPessoa(String cpf, String nome, String[] habilidades) {
-
+        pessoaController.cadastrarPessoa(cpf, nome, habilidades);
     }
 
     public String exibirPessoa(String cpf) {
-        throw new UnsupportedOperationException();
+        return pessoaController.exibirPessoa(cpf);
     }
 
     public void alterarNomePessoa(String cpf, String novoNome) {
