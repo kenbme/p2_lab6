@@ -7,9 +7,9 @@ import Tarefa.TarefaService;
 
 public class Facade {
 
-    private PessoaController pessoaController;
-    private AtividadeController atividadeController;
-    private TarefaController tarefaController;
+    private final PessoaController pessoaController;
+    private final AtividadeController atividadeController;
+    private final TarefaController tarefaController;
 
     // TODO SEPARAR RESPONSABILIDADES
     public Facade() {
