@@ -1,9 +1,9 @@
-import Atividade.AtividadeController;
-import Atividade.AtividadeService;
-import Pessoa.PessoaController;
-import Pessoa.PessoaService;
-import Tarefa.TarefaController;
-import Tarefa.TarefaService;
+import atividade.AtividadeController;
+import atividade.AtividadeService;
+import pessoa.PessoaController;
+import pessoa.PessoaService;
+import tarefa.TarefaController;
+import tarefa.TarefaService;
 
 public class Facade {
 

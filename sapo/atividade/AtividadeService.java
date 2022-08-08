@@ -1,4 +1,4 @@
-package Atividade;
+package atividade;
 
 public class AtividadeService {
 }

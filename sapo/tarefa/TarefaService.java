@@ -1,4 +1,4 @@
-package Tarefa;
+package tarefa;
 
 public class TarefaService {
 }

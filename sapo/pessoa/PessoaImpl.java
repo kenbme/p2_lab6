@@ -1,7 +1,7 @@
-package Pessoa;
+package pessoa;
 
-import Comentario.Comentario;
-import Comentario.ComentarioImpl;
+import comentario.Comentario;
+import comentario.ComentarioImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;

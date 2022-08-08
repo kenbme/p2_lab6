@@ -1,6 +1,6 @@
-package Comentario;
+package comentario;
 
-import Pessoa.Pessoa;
+import pessoa.Pessoa;
 
 public class ComentarioImpl implements Comentario {
 

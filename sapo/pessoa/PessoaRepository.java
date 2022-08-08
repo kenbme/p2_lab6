@@ -1,4 +1,4 @@
-package Pessoa;
+package pessoa;
 
 import java.util.HashMap;
 import java.util.Map;

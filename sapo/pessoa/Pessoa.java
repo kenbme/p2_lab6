@@ -1,4 +1,4 @@
-package Pessoa;
+package pessoa;
 
 public interface Pessoa {
 

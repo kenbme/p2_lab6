@@ -1,4 +1,4 @@
-package Comentario;
+package comentario;
 
 public interface Comentario {
 
