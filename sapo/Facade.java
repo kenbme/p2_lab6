@@ -6,7 +6,7 @@ public class Facade {
     }
 
     // PESSOA
-    public void cadastrarPessoa(String cpf, String nome, str[] habilidades) {
+    public void cadastrarPessoa(String cpf, String nome, String[] habilidades) {
 
     }
 
@@ -18,7 +18,7 @@ public class Facade {
 
     }
 
-    public void alterarHabilidadesPessoa(String cpf, str[] novasHabilidades) {
+    public void alterarHabilidadesPessoa(String cpf, String[] novasHabilidades) {
 
     }
 
@@ -64,7 +64,7 @@ public class Facade {
     }
 
     // TAREFA
-    public String cadastrarTarefa(String atividadeId, String nome, str[] habilidades) {
+    public String cadastrarTarefa(String atividadeId, String nome, String[] habilidades) {
 
     }
 
@@ -72,7 +72,7 @@ public class Facade {
 
     }
 
-    public void alterarHabilidadesTarefa(String idTarefa, str[] habilidades) {
+    public void alterarHabilidadesTarefa(String idTarefa, String[] habilidades) {
 
     }
 
