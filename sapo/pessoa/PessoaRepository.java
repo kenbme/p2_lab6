@@ -1,12 +1,11 @@
 package pessoa;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class PessoaRepository {
 
-    Map<String, Pessoa> pessoas;
+    HashMap<String, Pessoa> pessoas;
 
     // TODO POSSIVEL REFATORACAO NAS VERIFICACOES DE NULL
     public PessoaRepository() {

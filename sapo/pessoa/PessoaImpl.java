@@ -5,14 +5,13 @@ import comentario.ComentarioImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class PessoaImpl implements Pessoa {
 
     private final String cpf;
     private String nome;
-    private final List<String> habilidades;
-    private final List<Comentario> comentarios;
+    private final ArrayList<String> habilidades;
+    private final ArrayList<Comentario> comentarios;
 
     public PessoaImpl(String cpf, String nome, String[] habilidades) {
         this.cpf = cpf;
