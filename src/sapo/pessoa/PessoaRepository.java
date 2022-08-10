@@ -12,14 +12,17 @@ public class PessoaRepository {
     }
 
     public void cadastrarPessoa(String cpf, String nome, String[] habilidades) {
-        // TODO SE JÁ EXISTIR, OQ FAZER????????????????
+        Pessoa pessoa = pessoas.get(cpf);
+        if (pessoa != null) {
+            throw new IllegalStateException("CPF já cadastrado.");
+        }
         pessoas.put(cpf, new PessoaImpl(cpf, nome, habilidades));
     }
 
     public String exibirPessoa(String cpf) throws NoSuchElementException {
         Pessoa pessoa = pessoas.get(cpf);
         if (pessoa == null) {
-            throw new NoSuchElementException("CPF não encontrado");
+            throw new NoSuchElementException("CPF não encontrado.");
         }
         return pessoa.exibir();
     }
@@ -27,7 +30,7 @@ public class PessoaRepository {
     public void alterarNomePessoa(String cpf, String novoNome) throws NoSuchElementException {
         Pessoa pessoa = pessoas.get(cpf);
         if (pessoa == null) {
-            throw new NoSuchElementException("CPF não encontrado");
+            throw new NoSuchElementException("CPF não encontrado.");
         }
         pessoa.alterarNome(novoNome);
     }
@@ -35,7 +38,7 @@ public class PessoaRepository {
     public void alterarHabilidadesPessoa(String cpf, String[] novasHabilidades) throws NoSuchElementException {
         Pessoa pessoa = pessoas.get(cpf);
         if (pessoa == null) {
-            throw new NoSuchElementException("CPF não encontrado");
+            throw new NoSuchElementException("CPF não encontrado.");
         }
         pessoa.alterarHabilidades(novasHabilidades);
     }
@@ -43,7 +46,7 @@ public class PessoaRepository {
     public void removerPessoa(String cpf) throws NoSuchElementException {
         Pessoa pessoa = pessoas.get(cpf);
         if (pessoa == null) {
-            throw new NoSuchElementException("CPF não encontrado");
+            throw new NoSuchElementException("CPF não encontrado.");
         }
         pessoas.put(cpf, null);
     }
@@ -52,7 +55,7 @@ public class PessoaRepository {
         Pessoa pessoa = pessoas.get(cpf);
         Pessoa autor = pessoas.get(autorCpf);
         if (pessoa == null || autor == null) {
-            throw new NoSuchElementException("CPF não encontrado");
+            throw new NoSuchElementException("CPF não encontrado.");
         }
         pessoa.adicionarComentario(comentario, autor);
     }
@@ -60,7 +63,7 @@ public class PessoaRepository {
     public String listarComentariosPessoa(String cpf) throws NoSuchElementException {
         Pessoa pessoa = pessoas.get(cpf);
         if (pessoa == null) {
-            throw new NoSuchElementException("CPF não encontrado");
+            throw new NoSuchElementException("CPF não encontrado.");
         }
         return pessoa.listarComentarios();
     }
