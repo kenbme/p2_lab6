@@ -8,17 +8,18 @@ public class ValidadorPessoa extends Validador {
 
     public void validaCpf(String cpf) {
         valida(cpf);
-        if (cpf.length() != 14) {
+        char[] cpfValido = "222.222.222-22".toCharArray();
+        if (cpf.length() != cpfValido.length) {
             throw new NoSuchElementException("Formatação do CPF inválida");
         }
-        if (cpf.charAt(3) != '.' || cpf.charAt(7) != '.' || cpf.charAt(11) != '-') {
-            throw new NoSuchElementException("Formatação do CPF inválida");
-        }
-        for(String numero : cpf.split("[.-]")) {
-            try {
-                Integer.parseInt(numero);
+        char[] cpfSplitado = cpf.toCharArray();
+        for (int i = 0; i < cpfSplitado.length; i++) {
+            if (isInteger(cpfValido[i])) {
+                if (!isInteger(cpfSplitado[i])) {
+                    throw new NoSuchElementException("Formatação do CPF inválida");
+                }
             }
-            catch (NumberFormatException exception) {
+            else if (cpfSplitado[i] != cpfValido[i]) {
                 throw new NoSuchElementException("Formatação do CPF inválida");
             }
         }

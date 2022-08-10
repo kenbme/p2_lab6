@@ -25,4 +25,14 @@ public class Validador {
         }
     }
 
+    public boolean isInteger(char caractere) {
+        try {
+            Integer.parseInt(String.valueOf(caractere));
+            return true;
+        }
+        catch (NumberFormatException exception) {
+            return false;
+        }
+    }
+
 }
