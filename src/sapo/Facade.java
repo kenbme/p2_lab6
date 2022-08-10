@@ -1,9 +1,11 @@
-import atividade.AtividadeController;
-import atividade.AtividadeService;
-import pessoa.PessoaController;
-import pessoa.PessoaService;
-import tarefa.TarefaController;
-import tarefa.TarefaService;
+package sapo;
+
+import sapo.atividade.AtividadeController;
+import sapo.atividade.AtividadeService;
+import sapo.pessoa.PessoaController;
+import sapo.pessoa.PessoaService;
+import sapo.tarefa.TarefaController;
+import sapo.tarefa.TarefaService;
 
 public class Facade {
 

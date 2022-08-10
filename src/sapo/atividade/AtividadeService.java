@@ -1,4 +1,4 @@
-package atividade;
+package sapo.atividade;
 
 public class AtividadeService {
 }

@@ -1,4 +1,4 @@
-package pessoa;
+package sapo.pessoa;
 
 import java.util.HashMap;
 import java.util.NoSuchElementException;

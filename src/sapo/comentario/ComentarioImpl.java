@@ -1,6 +1,6 @@
-package comentario;
+package sapo.comentario;
 
-import pessoa.Pessoa;
+import sapo.pessoa.Pessoa;
 
 public class ComentarioImpl implements Comentario {
 

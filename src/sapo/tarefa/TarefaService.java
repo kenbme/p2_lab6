@@ -1,4 +1,4 @@
-package tarefa;
+package sapo.tarefa;
 
 public class TarefaService {
 }

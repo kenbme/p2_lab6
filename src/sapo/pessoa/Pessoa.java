@@ -1,4 +1,4 @@
-package pessoa;
+package sapo.pessoa;
 
 public interface Pessoa {
 

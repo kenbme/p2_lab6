@@ -1,7 +1,7 @@
-package pessoa;
+package sapo.pessoa;
 
-import comentario.Comentario;
-import comentario.ComentarioImpl;
+import sapo.comentario.Comentario;
+import sapo.comentario.ComentarioImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
