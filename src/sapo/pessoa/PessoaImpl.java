@@ -5,6 +5,7 @@ import sapo.comentario.ComentarioImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class PessoaImpl implements Pessoa {
 
@@ -24,6 +25,7 @@ public class PessoaImpl implements Pessoa {
     @Override
     public String exibir() {
         StringBuilder exibicao = new StringBuilder(nome + " – " + cpf);
+        Collections.sort(habilidades);
         for (String habilidade : habilidades) {
             exibicao.append("\n- ").append(habilidade);
         }
