@@ -36,4 +36,19 @@ public class PessoaTest extends BaseTest {
                 facade.listarComentariosPessoa(cpf1));
     }
 
+    @Test
+    void validaCpfFormatacaoInvalidaTest1() {
+        Assertions.assertThrowsExactly(NoSuchElementException.class, () -> facade.cadastrarPessoa("222", "Zezin", new String[]{"Chorar"}));
+    }
+
+    @Test
+    void validaCpfFormatacaoInvalidaTest2() {
+        Assertions.assertThrowsExactly(NoSuchElementException.class, () -> facade.cadastrarPessoa("222-222-222-22", "Zezin", new String[]{"Chorar"}));
+    }
+
+    @Test
+    void validaCpfFormatacaoInvalidaTest3() {
+        Assertions.assertThrowsExactly(NoSuchElementException.class, () -> facade.cadastrarPessoa("222.aaa.222-22", "Zezin", new String[]{"Chorar"}));
+    }
+
 }
