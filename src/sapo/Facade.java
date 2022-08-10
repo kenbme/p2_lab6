@@ -13,7 +13,6 @@ public class Facade {
     private final AtividadeController atividadeController;
     private final TarefaController tarefaController;
 
-    // TODO SEPARAR RESPONSABILIDADES
     public Facade() {
         pessoaController = new PessoaController(new PessoaService());
         atividadeController = new AtividadeController(new AtividadeService());
