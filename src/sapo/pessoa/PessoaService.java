@@ -13,7 +13,7 @@ public class PessoaService {
     public void cadastrarPessoa(String cpf, String nome, String[] habilidades) {
         validadorPessoa.validaCpf(cpf);
         validadorPessoa.valida(nome);
-        validadorPessoa.valida(habilidades);
+        validadorPessoa.validaHabilidades(habilidades);
         pessoaRepository.cadastrarPessoa(cpf, nome, habilidades);
     }
 
@@ -30,7 +30,7 @@ public class PessoaService {
 
     public void alterarHabilidadesPessoa(String cpf, String[] novasHabilidades) {
         validadorPessoa.validaCpf(cpf);
-        validadorPessoa.valida(novasHabilidades);
+        validadorPessoa.validaHabilidades(novasHabilidades);
         pessoaRepository.alterarHabilidadesPessoa(cpf, novasHabilidades);
     }
 
