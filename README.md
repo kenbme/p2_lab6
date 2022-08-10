@@ -13,7 +13,7 @@ João Gabriel Eulálio Luiggi Ramos - 121110737
 
 Rielisson Joseff de Sousa Costa     - 3
 
-Guilherme Kenned Bezerra Barbosa    - 1
+Guilherme Kenned Bezerra Barbosa    - 1 4
 
 João Gabriel Eulálio Luiggi Ramos   - 2
 
