@@ -1,17 +1,21 @@
 package sapo.atividade;
 
+import sapo.pessoa.Pessoa;
+
 public class AtividadeImpl implements Atividade {
 
-    private String nome;
+    private final String ID;
+    private final String nome;
     private String descricao;
-    private String cpf;
+    private Pessoa responsavel;
     private boolean encerrada = false;
     private boolean ativada = true;
 
-    public AtividadeImpl(String nome, String descricao, String cpf) {
+    public AtividadeImpl(String ID, String nome, String descricao, Pessoa responsavel) {
+        this.ID = ID;
         this.nome = nome;
         this.descricao = descricao;
-        this.cpf = cpf;
+        this.responsavel = responsavel;
     }
     // TODO Checar erros, verificações e outras especificidades
     @Override
@@ -41,6 +45,10 @@ public class AtividadeImpl implements Atividade {
     public void alterarDescricao(String novaDescricao) { descricao = novaDescricao; }
 
     @Override
-    public void alterarResponsavel(String cpfNovo){ cpf = cpfNovo; }
+    public void alterarResponsavel(Pessoa responsavelNovo){ this.responsavel = responsavelNovo; }
+    @Override
+    public Pessoa getResponsavel(){
+        return this.responsavel;
+    }
 
 }

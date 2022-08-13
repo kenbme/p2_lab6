@@ -1,11 +1,11 @@
 package sapo;
 
-import sapo.atividade.AtividadeController;
-import sapo.atividade.AtividadeService;
-import sapo.pessoa.PessoaController;
-import sapo.pessoa.PessoaService;
 import sapo.tarefa.TarefaController;
 import sapo.tarefa.TarefaService;
+import sapo.pessoa.PessoaController;
+import sapo.pessoa.PessoaService;
+import sapo.atividade.AtividadeController;
+import sapo.atividade.AtividadeService;
 
 public class Facade {
 
@@ -14,9 +14,12 @@ public class Facade {
     private final TarefaController tarefaController;
 
     public Facade() {
-        pessoaController = new PessoaController(new PessoaService());
-        atividadeController = new AtividadeController(new AtividadeService());
-        tarefaController = new TarefaController(new TarefaService());
+        PessoaService pessoaService = new PessoaService();
+        AtividadeService atividadeService = new AtividadeService(pessoaService);
+        TarefaService tarefaService = new TarefaService();
+        pessoaController = new PessoaController(pessoaService);
+        atividadeController = new AtividadeController(atividadeService);
+        tarefaController = new TarefaController(tarefaService);
     }
 
     // PESSOA
@@ -50,31 +53,31 @@ public class Facade {
 
     // ATIVIDADE
     public String cadastrarAtividade(String nome, String descricao, String cpf) {
-        throw new UnsupportedOperationException();
+        atividadeController.cadastrarAtividade(nome, descricao, cpf);
     }
 
     public void encerrarAtividade(String atividadeId) {
-
+        atividadeController.encerrarAtividade(atividadeId);
     }
 
     public void desativarAtividade(String atividadeId) {
-
+        atividadeController.desativarAtividade(atividadeId);
     }
 
     public void reabrirAtividade(String atividadeId) {
-
+        atividadeController.reabrirAtividade(atividadeId);
     }
 
     public String exibirAtividade(String atividadeId) {
-        throw new UnsupportedOperationException();
+        atividadeController.exibirAtividade(atividadeId);
     }
 
     public void alterarDescricaoAtividade(String atividadeId, String descricao) {
-
+        atividadeController.alterarDescricaoAtividade(atividadeId, descricao);
     }
 
     public void alterarResponsavelAtividade(String atividadeId, String cpf) {
-
+        atividadeController.alterarResponsavelAtividade(atividadeId, cpf);
     }
 
     // TAREFA

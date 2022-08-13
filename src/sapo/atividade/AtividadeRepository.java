@@ -1,47 +1,30 @@
 package sapo.atividade;
 
-import java.util.HashMap;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Optional;
 
 public class AtividadeRepository {
 
-    HashMap<String, Atividade> atividades;
-    int atividadeNum = 0;
-    String atividadeSigla;
+    private ArrayList<Atividade> atividades;
 
     public AtividadeRepository() {
-        atividades = new HashMap<>();
+        atividades = new ArrayList<>();
     }
 
-    // TODO Implementar métodos que faltam
-    public String cadastrarAtividade(String nome, String descricao, String cpf) {
-        atividadeNum ++;
-        atividadeSigla = "XXX";
-        String atividadeID = atividadeSigla + atividadeNum;
-        return atividadeID;
+    public void put(Atividade atividade){
+        atividades.add(atividade);
     }
 
-    public void encerrarAtividade(String atividadeId) {
-
+    public Optional<Atividade> get(String atividadeID){
+        int atividadePos = Integer.parseInt((atividadeID.split("-"))[1]);
+        if(atividadePos > atividades.size()) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(atividades.get(atividadePos));
     }
 
-    public void desativarAtividade(String atividadeId) {
-
+    public int totalAtividades(){
+        return atividades.size();
     }
-
-    public void reabrirAtividade(String atividadeId) {
-
-    }
-
-    public Atividade exibirAtividade(String atividadeId) {
-        return atividades.get(atividadeId);
-    }
-
-    public void alterarDescricaoAtividade(String atividadeId, String descricao) {
-
-    }
-
-    public void alterarResponsavelAtividade(String atividadeId, String cpf) {
-
-    }
-
 }
