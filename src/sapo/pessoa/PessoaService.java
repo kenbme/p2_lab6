@@ -1,5 +1,7 @@
 package sapo.pessoa;
 
+import java.util.Optional;
+
 public class PessoaService {
 
     private final PessoaRepository pessoaRepository;
@@ -9,6 +11,8 @@ public class PessoaService {
         pessoaRepository = new PessoaRepository();
         validadorPessoa = new ValidadorPessoa();
     }
+
+
 
     public void cadastrarPessoa(String cpf, String nome, String[] habilidades) {
         validadorPessoa.validaCpf(cpf);
@@ -49,6 +53,10 @@ public class PessoaService {
     public String listarComentariosPessoa(String cpf) {
         validadorPessoa.validaCpf(cpf);
         return pessoaRepository.listarComentariosPessoa(cpf);
+    }
+
+    public Optional<Pessoa> getPessoa(String cpf) {
+        return pessoaRepository.get(cpf);
     }
 
 }

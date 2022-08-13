@@ -8,5 +8,6 @@ public interface Pessoa {
     void adicionarComentario(String comentario, Pessoa autor);
     String listarComentarios();
     String getNome();
+    String getCPF();
 
 }

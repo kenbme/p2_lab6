@@ -65,4 +65,9 @@ public class PessoaImpl implements Pessoa {
         return nome;
     }
 
+    @Override
+    public String getCPF() {
+        return cpf;
+    }
+
 }

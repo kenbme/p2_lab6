@@ -2,6 +2,7 @@ package sapo.pessoa;
 
 import java.util.HashMap;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public class PessoaRepository {
 
@@ -9,6 +10,14 @@ public class PessoaRepository {
 
     public PessoaRepository() {
         pessoas = new HashMap<>();
+    }
+
+    public Optional<Pessoa> get(String cpf) {
+        return Optional.ofNullable(pessoas.get(cpf));
+    }
+
+    public void put(Pessoa pessoa) {
+        pessoas.put(pessoa.getCPF(), pessoa);
     }
 
     public void cadastrarPessoa(String cpf, String nome, String[] habilidades) {
