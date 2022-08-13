@@ -1,6 +1,6 @@
 ## Equipe
 
-Rielisson Joseff de Sousa Costa - 12111333
+Rielisson Joseff de Sousa Costa - 12111333 Verificar se ta tudo ok
 
 Guilherme Kenned Bezerra Barbosa - 121210716
 
