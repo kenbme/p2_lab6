@@ -1,5 +1,7 @@
 package sapo;
 
+import sapo.busca.BuscaController;
+import sapo.busca.BuscaService;
 import sapo.tarefa.TarefaController;
 import sapo.tarefa.TarefaService;
 import sapo.pessoa.PessoaController;
@@ -12,14 +14,17 @@ public class Facade {
     private final PessoaController pessoaController;
     private final AtividadeController atividadeController;
     private final TarefaController tarefaController;
+    private final BuscaController buscaController;
 
     public Facade() {
         PessoaService pessoaService = new PessoaService();
         AtividadeService atividadeService = new AtividadeService(pessoaService);
         TarefaService tarefaService = new TarefaService();
+        BuscaService buscaService = new BuscaService();
         pessoaController = new PessoaController(pessoaService);
         atividadeController = new AtividadeController(atividadeService);
         tarefaController = new TarefaController(tarefaService);
+        buscaController = new BuscaController(buscaService);
     }
 
     // PESSOA
@@ -53,7 +58,7 @@ public class Facade {
 
     // ATIVIDADE
     public String cadastrarAtividade(String nome, String descricao, String cpf) {
-        atividadeController.cadastrarAtividade(nome, descricao, cpf);
+        return atividadeController.cadastrarAtividade(nome, descricao, cpf);
     }
 
     public void encerrarAtividade(String atividadeId) {
@@ -69,7 +74,7 @@ public class Facade {
     }
 
     public String exibirAtividade(String atividadeId) {
-        atividadeController.exibirAtividade(atividadeId);
+        return atividadeController.exibirAtividade(atividadeId);
     }
 
     public void alterarDescricaoAtividade(String atividadeId, String descricao) {
@@ -119,6 +124,81 @@ public class Facade {
 
     public void removerPessoaTarefa(String cpf, String idTarefa) {
 
+    }
+
+    // BUSCA
+    public String[] exibirPessoas(String consulta) {
+        return buscaController.exibirPessoas(consulta);
+    }
+
+    public String[] buscarAtividade(String consulta) {
+       return buscaController.buscarAtividade(consulta);
+    }
+
+    public String[] buscarTarefas(String nome) {
+        return buscaController.buscarTarefas(nome);
+    }
+
+    public String[] buscarTarefas(String idAtividade, String nome) {
+        return buscaController.buscarTarefas(idAtividade, nome);
+    }
+
+    public String[] sugerirTarefas(String cpf) {
+        return buscaController.sugerirTarefas(cpf);
+    }
+
+    public String[] buscasMaisRecentes(int nBuscas) {
+        return buscaController.buscasMaisRecentes(nBuscas);
+    }
+
+    public String[] exibirHistóricoBusca(int indexBusca) {
+        return buscaController.exibirHistoricoBusca(indexBusca);
+    }
+
+    // FUNCAO
+    public void cadastrarAluno(String cpf, String nome, String matr, int periodo, String[] habilidades) {
+
+    }
+
+    public void cadastrarProfessor(String cpf, String nome, String siape, String[] disciplinas, String[] habilidades) {
+
+    }
+
+    public void definirFuncaoProfessor(String cpf, String siape, String[] disciplinas) {
+
+    }
+
+    public void definirFuncaoAluno(String cpf, String matr, int periodo) {
+
+    }
+
+    public void removerFuncao(String cpf) {
+
+    }
+
+    public int pegarNivel(String cpf) {
+        throw new UnsupportedOperationException();
+    }
+
+    public String[] listarPessoas() {
+        throw new UnsupportedOperationException();
+    }
+
+    // TAREFA GERENCIAL
+    public String cadastrarTarefaGerencial(String atividadeId, String nome, String[] habilidades, String[] idTarefas) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void adicionarNaTarefaGerencial(String idTarefaGerencial, String idTarefa) {
+
+    }
+
+    public void removerDaTarefaGerencial(String idTarefaGerencial, String idTarefa) {
+
+    }
+
+    public int contarTodasTarefasNaTarefaGerencial(String idTarefaGerencial) {
+        throw new UnsupportedOperationException();
     }
 
 }
