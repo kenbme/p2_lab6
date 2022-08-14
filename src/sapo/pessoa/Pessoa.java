@@ -1,5 +1,7 @@
 package sapo.pessoa;
 
+import java.util.ArrayList;
+
 public interface Pessoa {
 
     String exibir();
@@ -9,5 +11,6 @@ public interface Pessoa {
     String listarComentarios();
     String getNome();
     String getCPF();
+    ArrayList<String> getHabilidades();
 
 }

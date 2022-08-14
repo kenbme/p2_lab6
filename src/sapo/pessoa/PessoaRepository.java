@@ -1,7 +1,11 @@
 package sapo.pessoa;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class PessoaRepository {
 
@@ -21,6 +25,24 @@ public class PessoaRepository {
 
     public void remove(String cpf) {
         pessoas.put(cpf, null);
+    }
+
+    public Set<Pessoa> consultar(String[] dados) {
+        Predicate<Pessoa> filtro = pessoa -> {
+            for (String dado : dados) {
+                if (List.of(pessoa.getNome().split(" ")).contains(dado)) {
+                    continue;
+                }
+                if (pessoa.getHabilidades().contains(dado)) {
+                    continue;
+                }
+                return false;
+            }
+            return true;
+        };
+        return this.pessoas.values().stream()
+                .filter(filtro)
+                .collect(Collectors.toSet());
     }
 
 }

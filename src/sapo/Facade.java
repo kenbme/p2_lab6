@@ -20,7 +20,7 @@ public class Facade {
         PessoaService pessoaService = new PessoaService();
         AtividadeService atividadeService = new AtividadeService(pessoaService);
         TarefaService tarefaService = new TarefaService();
-        BuscaService buscaService = new BuscaService();
+        BuscaService buscaService = new BuscaService(pessoaService, atividadeService, tarefaService);
         pessoaController = new PessoaController(pessoaService);
         atividadeController = new AtividadeController(atividadeService);
         tarefaController = new TarefaController(tarefaService);

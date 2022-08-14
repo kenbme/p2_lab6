@@ -70,4 +70,9 @@ public class PessoaImpl implements Pessoa {
         return cpf;
     }
 
+    @Override
+    public ArrayList<String> getHabilidades() {
+        return habilidades;
+    }
+
 }

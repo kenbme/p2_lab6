@@ -1,9 +1,10 @@
 package sapo.pessoa;
 
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import sapo.busca.Consultavel;
 
-public class PessoaService {
+import java.util.*;
+
+public class PessoaService implements Consultavel {
 
     private final PessoaRepository pessoaRepository;
 
@@ -70,6 +71,19 @@ public class PessoaService {
 
     public Optional<Pessoa> getPessoa(String cpf) {
         return pessoaRepository.get(cpf);
+    }
+
+    @Override
+    public String[] consultar(String[] dados) {
+        Set<Pessoa> pessoas = pessoaRepository.consultar(dados);
+        String[] resultado = new String[pessoas.size()];
+        int i = 0;
+        for (Pessoa pessoa : pessoas) {
+            resultado[i] = pessoa.exibir();
+            i++;
+        }
+        Arrays.sort(resultado);
+        return resultado;
     }
 
 }
