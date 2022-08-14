@@ -1,16 +1,15 @@
 package sapo.busca;
 
+import sapo.pessoa.PessoaService;
+
 public class BuscaPessoa implements Busca {
 
     private final String[] dados;
-    private String[] resultado;
+    private final String[] resultado;
 
-    public BuscaPessoa(String[] dados) {
+    public BuscaPessoa(PessoaService pessoaService, String[] dados) {
         this.dados = dados;
-    }
-
-    public void consultar(Consultavel servico) {
-        resultado = servico.consultar(dados);
+        resultado =  pessoaService.consultar(dados);
     }
 
     @Override

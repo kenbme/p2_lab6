@@ -4,6 +4,4 @@ public interface Busca {
 
     String[] exibir();
 
-    void consultar(Consultavel servico);
-
 }

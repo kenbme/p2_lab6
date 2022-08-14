@@ -9,7 +9,8 @@ public class AtividadeController {
     }
     //TODO Implementar TUDO
     public String cadastrarAtividade(String nome, String descricao, String cpf) {
-        atividadeService.cadastrarAtividade(nome, descricao, cpf);
+        // IMPLEMENTAR VALIDACAO DA ENTRADA
+        return atividadeService.cadastrarAtividade(nome, descricao, cpf);
     }
 
     public void encerrarAtividade(String atividadeId) {
@@ -25,7 +26,7 @@ public class AtividadeController {
     }
 
     public String exibirAtividade(String atividadeId) {
-        atividadeService.exibirAtividade(atividadeId);
+        return atividadeService.exibirAtividade(atividadeId);
     }
 
     public void alterarDescricaoAtividade(String atividadeId, String descricao) {

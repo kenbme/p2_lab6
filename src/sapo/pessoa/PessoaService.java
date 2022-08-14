@@ -1,10 +1,8 @@
 package sapo.pessoa;
 
-import sapo.busca.Consultavel;
-
 import java.util.*;
 
-public class PessoaService implements Consultavel {
+public class PessoaService {
 
     private final PessoaRepository pessoaRepository;
 
@@ -73,7 +71,6 @@ public class PessoaService implements Consultavel {
         return pessoaRepository.get(cpf);
     }
 
-    @Override
     public String[] consultar(String[] dados) {
         Set<Pessoa> pessoas = pessoaRepository.consultar(dados);
         String[] resultado = new String[pessoas.size()];

@@ -22,25 +22,26 @@ public class BuscaService {
     }
 
     public String[] exibirPessoas(String consulta) {
-        Busca busca =  new BuscaPessoa(consulta.split(" "));
-        busca.consultar(pessoaService);
+        Busca busca =  new BuscaPessoa(pessoaService, consulta.split(" "));
         buscaRepository.put(busca);
         return busca.exibir();
     }
 
     public String[] buscarAtividade(String consulta) {
-        throw new UnsupportedOperationException();
+        Busca busca =  new BuscaAtividade(atividadeService, consulta.split(" "));
+        buscaRepository.put(busca);
+        return busca.exibir();
     }
 
     public String[] buscarTarefas(String idAtividade, String nome) {
-        throw new UnsupportedOperationException();
+        Busca busca =  new BuscaTarefa(tarefaService, idAtividade, nome);
+        buscaRepository.put(busca);
+        return busca.exibir();
     }
 
     public String[] sugerirTarefas(String cpf) {
         throw new UnsupportedOperationException();
     }
-
-
 
     public String[] buscasMaisRecentes(int nBuscas) {
         ArrayList<String> buscas = new ArrayList<>();
