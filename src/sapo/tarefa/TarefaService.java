@@ -6,4 +6,8 @@ public class TarefaService {
         throw new UnsupportedOperationException();
     }
 
+    public String[] sugestionar(String cpf) {
+        throw new UnsupportedOperationException();
+    }
+
 }

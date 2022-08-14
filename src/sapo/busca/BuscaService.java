@@ -6,6 +6,7 @@ import sapo.tarefa.TarefaService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 public class BuscaService {
 
@@ -40,7 +41,9 @@ public class BuscaService {
     }
 
     public String[] sugerirTarefas(String cpf) {
-        throw new UnsupportedOperationException();
+        Busca busca = new BuscaSugestao(tarefaService, cpf);
+        buscaRepository.put(busca);
+        return busca.exibir();
     }
 
     public String[] buscasMaisRecentes(int nBuscas) {
@@ -49,7 +52,11 @@ public class BuscaService {
             if (nBuscas == buscaRepository.totalBuscas() - i) {
                 break;
             }
-            buscas.add(Arrays.toString(buscaRepository.get(i - 1).get().exibir()));
+            Optional<Busca> busca = buscaRepository.get(i - 1);
+            if (busca.isEmpty()) {
+                continue;
+            }
+            buscas.add(Arrays.toString(busca.get().exibir()));
         }
         return buscas.toArray(new String[0]);
     }
