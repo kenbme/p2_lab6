@@ -19,7 +19,7 @@ public class Facade {
     public Facade() {
         PessoaService pessoaService = new PessoaService();
         AtividadeService atividadeService = new AtividadeService(pessoaService);
-        TarefaService tarefaService = new TarefaService();
+        TarefaService tarefaService = new TarefaService(pessoaService);
         BuscaService buscaService = new BuscaService(pessoaService, atividadeService, tarefaService);
         pessoaController = new PessoaController(pessoaService);
         atividadeController = new AtividadeController(atividadeService);
@@ -87,43 +87,47 @@ public class Facade {
 
     // TAREFA
     public String cadastrarTarefa(String atividadeId, String nome, String[] habilidades) {
-        throw new UnsupportedOperationException();
+        return this.tarefaController.cadastraTarefa(atividadeId, nome, habilidades);
     }
 
     public void alterarNomeTarefa(String idTarefa, String novoNome) {
-
+    	this.tarefaController.alteraNome(idTarefa, novoNome);
     }
 
     public void alterarHabilidadesTarefa(String idTarefa, String[] habilidades) {
-
+    	return;
     }
 
     public void adicionarHorasTarefa(String idTarefa, int horas) {
-
+    	this.tarefaController.acrescentaHoras(idTarefa, horas);
     }
 
     public void removerHorasTarefa(String idTarefa, int horas) {
-
+    	this.tarefaController.decrescentaHoras(idTarefa, horas);
     }
 
     public void concluirTarefa(String idTarefa) {
-
+    	this.tarefaController.concluiTarefa(idTarefa);
     }
 
     public void removerTarefa(String idTarefa) {
-
+    	this.tarefaController.removeTarefa(idTarefa);
+    }
+    
+    public boolean concluida (String idTarefa) {
+    	return this.tarefaController.concluida(idTarefa);
     }
 
     public String exibirTarefa(String idTarefa) {
-        throw new UnsupportedOperationException();
+        return this.tarefaController.exibeTarefa(idTarefa);
     }
 
     public void associarPessoaTarefa(String cpf, String idTarefa) {
-
+    	this.tarefaController.adicionaPessoa(idTarefa, cpf);
     }
 
     public void removerPessoaTarefa(String cpf, String idTarefa) {
-
+    	this.tarefaController.removePessoa(idTarefa, cpf);
     }
 
     // BUSCA
@@ -151,7 +155,7 @@ public class Facade {
         return buscaController.buscasMaisRecentes(nBuscas);
     }
 
-    public String[] exibirHistóricoBusca(int indexBusca) {
+    public String[] exibirHistoricoBusca(int indexBusca) {
         return buscaController.exibirHistoricoBusca(indexBusca);
     }
 

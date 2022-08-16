@@ -1,14 +1,13 @@
 package sapo.tarefa;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class TarefaRepository {
 
-    private HashMap<String ,Tarefa> tarefas;
+    private HashMap<String ,Tarefa> tarefas = new HashMap<>();
     private int totalTarefas = 0;
 
-    public String cadastraTarefa(String atividadeID, String nome, HashSet<String> habilidades) {
+    public String cadastraTarefa(String atividadeID, String nome, String[] habilidades) {
         this.totalTarefas ++;
         Tarefa tarefa = new Tarefa(atividadeID, Integer.toString(this.totalTarefas), nome, habilidades);
         this.tarefas.put(tarefa.getID(), tarefa);
@@ -19,7 +18,7 @@ public class TarefaRepository {
     	this.tarefas.get(IDTarefa).alteraNome(novoNome);
     }
 
-    public void alteraHabilidade(String IDTarefa, HashSet<String> habilidades) {
+    public void alteraHabilidade(String IDTarefa, String[] habilidades) {
     	this.tarefas.get(IDTarefa).alteraHabilidades(habilidades);
     }
 
@@ -49,6 +48,10 @@ public class TarefaRepository {
 
     public void removePessoa(String IDTarefa, String CPF) {
     	this.tarefas.get(IDTarefa).removePessoa(CPF);
+    }
+    
+    public boolean concluida(String IDTarefa) {
+    	return this.tarefas.get(IDTarefa).concluida();
     }
 
 }

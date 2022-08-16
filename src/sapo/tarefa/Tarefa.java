@@ -1,19 +1,17 @@
 package sapo.tarefa;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class Tarefa {
 
     private int horasExecutadas;
     private String nome;
-    private HashSet<String> habilidadesRecomendadas;
+    private String[] habilidadesRecomendadas;
     private HashMap<String, String> pessoas;
     private  String ID;
-    private boolean concluida;
+    private boolean concluida = false;
 
-    public Tarefa(String atividadeID, String numTarefa, String nome, HashSet<String> habilidades) {
-        this.habilidadesRecomendadas = new HashSet<String>();
+    public Tarefa(String atividadeID, String numTarefa, String nome, String[] habilidades) {
         this.pessoas = new HashMap<>();
         this.nome = nome;
         this.habilidadesRecomendadas = habilidades;
@@ -24,7 +22,7 @@ public class Tarefa {
         this.nome = nome;
     }
 
-    public void alteraHabilidades(HashSet<String> habilidades) {
+    public void alteraHabilidades(String[] habilidades) {
         this.habilidadesRecomendadas = habilidades;
     }
 
@@ -34,14 +32,14 @@ public class Tarefa {
 
     public void decrescentaHoras(int horas) {
         this.horasExecutadas -= horas;
-        if (this.horasExecutadas > 0) {
+        if (this.horasExecutadas < 0) {
             this.horasExecutadas = 0;
         }
     }
 
     public String toString() {
         return this.nome + " " + this.ID + "\n" +
-                    " (" + horasExecutadas + "hora(s) Executada(s)" + "\n" +
+                    "(" + this.horasExecutadas + " hora(s) Executada(s)" + "\n" +
                     "===" + "\n" +
                     equipes();         
     }
@@ -66,6 +64,10 @@ public class Tarefa {
     	return this.ID;
     }
     
+    public boolean concluida() {
+    	return this.concluida;
+    }
+    
     private String equipes() {
     	String equipes = "Equipe:";
     	for (String CPF : this.pessoas.keySet()) {
@@ -74,4 +76,5 @@ public class Tarefa {
     	
     	return equipes;
     }
+
 }

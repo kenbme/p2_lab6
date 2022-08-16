@@ -13,11 +13,11 @@ public class Validador {
 
     public void valida(String[] strings) throws IllegalArgumentException {
         if (strings == null) {
-            throw new IllegalArgumentException("Strings Ã© null.");
+            throw new IllegalArgumentException("Strings são null.");
         }
         for (String string : strings) {
             if (string == null) {
-                throw new IllegalArgumentException("String Ã© null.");
+                throw new IllegalArgumentException("String são null.");
             }
             if (string.isBlank()) {
                 throw new IllegalArgumentException("String em branco.");

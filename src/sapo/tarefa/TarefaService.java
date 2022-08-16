@@ -1,15 +1,17 @@
 package sapo.tarefa;
 
-import java.util.HashSet;
-
 import sapo.pessoa.PessoaService;
 
 public class TarefaService {
 
     private final TarefaRepository tr = new TarefaRepository();
-    private final PessoaService ps = new PessoaService();
+    private final PessoaService ps;
 
-    public String cadastraTarefa(String atividadeID, String nome, HashSet<String> habilidades) {
+    public TarefaService(PessoaService ps) {
+    	this.ps = ps;
+    }
+    
+    public String cadastraTarefa(String atividadeID, String nome, String[] habilidades) {
     	String ID = this.tr.cadastraTarefa(atividadeID, nome, habilidades);
     	return ID;
     }
@@ -18,7 +20,7 @@ public class TarefaService {
     	this.tr.alteraNome(IDTarefa, novoNome);
     }
 
-    public void alteraHabilidade(String IDTarefa, HashSet<String> habilidades) {
+    public void alteraHabilidade(String IDTarefa, String[]habilidades) {
     	this.tr.alteraHabilidade(IDTarefa, habilidades);
     }
 
@@ -49,6 +51,10 @@ public class TarefaService {
 
     public void removePessoa(String IDTarefa, String CPF) {
     	this.tr.removePessoa(IDTarefa, CPF);
+    }
+    
+    public boolean concluida (String IDTarefa) {
+    	return this.tr.concluida(IDTarefa);
     }
 
 }

@@ -1,12 +1,14 @@
 package sapo.tarefa;
 
-import java.util.HashSet;
-
 public class TarefaController {
 
     private TarefaService ts;
 
-    public String cadastraTarefa(String atividadeID, String nome, HashSet<String> habilidades) {
+    public TarefaController(TarefaService tarefaService) {
+		this.ts = tarefaService;
+	}
+
+	public String cadastraTarefa(String atividadeID, String nome, String[] habilidades) {
     	String ID = this.ts.cadastraTarefa(atividadeID, nome, habilidades);
     	return ID;
     }
@@ -15,7 +17,7 @@ public class TarefaController {
     	this.ts.alteraNome(IDTarefa, novoNome);
     }
 
-    public void alteraHabilidade(String IDTarefa, HashSet<String> habilidades) {
+    public void alteraHabilidade(String IDTarefa, String[] habilidades) {
     	this.ts.alteraHabilidade(IDTarefa, habilidades);
     }
 
@@ -45,6 +47,10 @@ public class TarefaController {
 
     public void removePessoa(String IDTarefa, String CPF) {
     	this.ts.removePessoa(IDTarefa, CPF);
+    }
+    
+    public boolean concluida (String IDTarefa) {
+    	return this.ts.concluida(IDTarefa);
     }
 
 }
