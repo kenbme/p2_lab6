@@ -1,11 +1,14 @@
 package sapo.tarefa;
 
-public class TarefaService {
+public class TarefaRepository {
 
-    private TarefaRepository tr;
+    private Map<String ,Tarefa> tarefas;
+    private int totalTarefas = 0;
 
     public String cadastraTarefa(String atividadeID, String nome, Set<String> habilidades) {
-
+        this.totalTarefas ++;
+        String tarefaID = atividadeID + "-" + totalTarefas;
+        Tarefa tarefa = new Tarefa();
     }
 
     public void alteraNome(String IDTarefa, String novoNome) {
