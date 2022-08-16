@@ -82,5 +82,9 @@ public class PessoaService {
         Arrays.sort(resultado);
         return resultado;
     }
+    
+    public String getNomePessoa (String CPF) {
+    	return this.pessoaRepository.getNome(CPF);
+    }
 
 }

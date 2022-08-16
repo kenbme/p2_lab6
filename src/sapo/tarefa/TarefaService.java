@@ -1,47 +1,54 @@
 package sapo.tarefa;
 
+import java.util.HashSet;
+
+import sapo.pessoa.PessoaService;
+
 public class TarefaService {
 
-    private TarefaRepository tr;
+    private final TarefaRepository tr = new TarefaRepository();
+    private final PessoaService ps = new PessoaService();
 
-    public String cadastraTarefa(String atividadeID, String nome, Set<String> habilidades) {
-
+    public String cadastraTarefa(String atividadeID, String nome, HashSet<String> habilidades) {
+    	String ID = this.tr.cadastraTarefa(atividadeID, nome, habilidades);
+    	return ID;
     }
 
     public void alteraNome(String IDTarefa, String novoNome) {
-
+    	this.tr.alteraNome(IDTarefa, novoNome);
     }
 
-    public void alteraHabilidade(String IDTarefa, Set<String> habilidades) {
-
+    public void alteraHabilidade(String IDTarefa, HashSet<String> habilidades) {
+    	this.tr.alteraHabilidade(IDTarefa, habilidades);
     }
 
     public void acrescentaHoras(String IDTarefas, int horas) {
-
+    	this.tr.acrescentaHoras(IDTarefas, horas);
     }
 
     public void decrescentaHoras(String IDTarefas, int horas) {
-
+    	this.tr.decrescentaHoras(IDTarefas, horas);
     }
 
     public void concluiTarefa(String IDTarefa) {
-
+    	this.tr.concluiTarefa(IDTarefa);
     }
 
     public void removeTarefa(String IDTarefa) {
-
+    	this.tr.removeTarefa(IDTarefa);
     }
 
     public String exibeTarefa(String IDTarefa) {
-
+    	return this.tr.exibeTarefa(IDTarefa);
     }
 
     public void adicionaPessoa(String IDTarefa, String CPF) {
-
+    	String nome = this.ps.getNomePessoa(CPF);
+    	this.tr.adicionaPessoa(IDTarefa, CPF, nome);
     }
 
-    public void remotePessoa(String IDTarefa, String CPF) {
-
+    public void removePessoa(String IDTarefa, String CPF) {
+    	this.tr.removePessoa(IDTarefa, CPF);
     }
 
 }

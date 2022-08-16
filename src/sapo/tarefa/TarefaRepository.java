@@ -1,50 +1,54 @@
 package sapo.tarefa;
 
+import java.util.HashMap;
+import java.util.HashSet;
+
 public class TarefaRepository {
 
-    private Map<String ,Tarefa> tarefas;
+    private HashMap<String ,Tarefa> tarefas;
     private int totalTarefas = 0;
 
-    public String cadastraTarefa(String atividadeID, String nome, Set<String> habilidades) {
+    public String cadastraTarefa(String atividadeID, String nome, HashSet<String> habilidades) {
         this.totalTarefas ++;
-        String tarefaID = atividadeID + "-" + totalTarefas;
-        Tarefa tarefa = new Tarefa();
+        Tarefa tarefa = new Tarefa(atividadeID, Integer.toString(this.totalTarefas), nome, habilidades);
+        this.tarefas.put(tarefa.getID(), tarefa);
+        return tarefa.getID();
     }
 
     public void alteraNome(String IDTarefa, String novoNome) {
-
+    	this.tarefas.get(IDTarefa).alteraNome(novoNome);
     }
 
-    public void alteraHabilidade(String IDTarefa, Set<String> habilidades) {
-
+    public void alteraHabilidade(String IDTarefa, HashSet<String> habilidades) {
+    	this.tarefas.get(IDTarefa).alteraHabilidades(habilidades);
     }
 
-    public void acrescentaHoras(String IDTarefas, int horas) {
-
+    public void acrescentaHoras(String IDTarefa, int horas) {
+    	this.tarefas.get(IDTarefa).acrescentaHoras(horas);
     }
 
-    public void decrescentaHoras(String IDTarefas, int horas) {
-
+    public void decrescentaHoras(String IDTarefa, int horas) {
+    	this.tarefas.get(IDTarefa).decrescentaHoras(horas);
     }
 
     public void concluiTarefa(String IDTarefa) {
-
+    	this.tarefas.get(IDTarefa).concluirTarefa();
     }
 
     public void removeTarefa(String IDTarefa) {
-
+    	this.tarefas.remove(IDTarefa);
     }
 
     public String exibeTarefa(String IDTarefa) {
-
+    	return this.tarefas.get(IDTarefa).toString();
     }
 
-    public void adicionaPessoa(String IDTarefa, String CPF) {
-
+    public void adicionaPessoa(String IDTarefa, String CPF, String nome) {
+    	this.tarefas.get(IDTarefa).adicionaPessoa(CPF, nome);
     }
 
-    public void remotePessoa(String IDTarefa, String CPF) {
-
+    public void removePessoa(String IDTarefa, String CPF) {
+    	this.tarefas.get(IDTarefa).removePessoa(CPF);
     }
 
 }
