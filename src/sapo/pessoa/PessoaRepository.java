@@ -24,7 +24,7 @@ public class PessoaRepository {
     }
 
     public void remove(String cpf) {
-        pessoas.put(cpf, null);
+        pessoas.remove(cpf);
     }
 
     public Set<Pessoa> consultar(String[] dados) {
