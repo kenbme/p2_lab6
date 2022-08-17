@@ -1,8 +1,11 @@
 package sapo;
 
+import sapo.atividade.AtividadeRepository;
 import sapo.busca.BuscaController;
 import sapo.busca.BuscaService;
+import sapo.pessoa.PessoaRepository;
 import sapo.tarefa.TarefaController;
+import sapo.tarefa.TarefaRepository;
 import sapo.tarefa.TarefaService;
 import sapo.pessoa.PessoaController;
 import sapo.pessoa.PessoaService;
@@ -16,10 +19,11 @@ public class Facade {
     private final TarefaController tarefaController;
     private final BuscaController buscaController;
 
-    public Facade() {
-        PessoaService pessoaService = new PessoaService();
-        AtividadeService atividadeService = new AtividadeService(pessoaService);
-        TarefaService tarefaService = new TarefaService(pessoaService);
+    public Facade(PessoaRepository pessoaRepository, AtividadeRepository atividadeRepository,
+                  TarefaRepository tarefaRepository) {
+        PessoaService pessoaService = new PessoaService(pessoaRepository);
+        AtividadeService atividadeService = new AtividadeService(atividadeRepository, pessoaService);
+        TarefaService tarefaService = new TarefaService(tarefaRepository, pessoaService);
         BuscaService buscaService = new BuscaService(pessoaService, atividadeService, tarefaService);
         pessoaController = new PessoaController(pessoaService);
         atividadeController = new AtividadeController(atividadeService);

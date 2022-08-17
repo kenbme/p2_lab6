@@ -11,8 +11,8 @@ public class AtividadeService {
     private final AtividadeRepository atividadeRepository;
     private final PessoaService pessoaService;
 
-    public AtividadeService(PessoaService pessoaService) {
-        atividadeRepository = new AtividadeRepository();
+    public AtividadeService(AtividadeRepository atividadeRepository, PessoaService pessoaService) {
+        this.atividadeRepository = atividadeRepository;
         this.pessoaService = pessoaService;
     }
 

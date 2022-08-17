@@ -1,6 +1,9 @@
 import org.junit.jupiter.api.BeforeEach;
 import sapo.Facade;
 import sapo.Validador;
+import sapo.atividade.AtividadeRepository;
+import sapo.pessoa.PessoaRepository;
+import sapo.tarefa.TarefaRepository;
 
 public class BaseTest {
 
@@ -25,7 +28,7 @@ public class BaseTest {
     @BeforeEach
     void setup() {
         validador = new Validador();
-        facade = new Facade();
+        facade = new Facade(new PessoaRepository(), new AtividadeRepository(), new TarefaRepository());
 
         facade.cadastrarPessoa(cpf1, nome1, habilidades1);
         facade.cadastrarPessoa(cpf2, nome2, habilidades2);

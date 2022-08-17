@@ -4,10 +4,11 @@ import sapo.pessoa.PessoaService;
 
 public class TarefaService {
 
-    private final TarefaRepository tr = new TarefaRepository();
+    private final TarefaRepository tr;
     private final PessoaService ps;
 
-    public TarefaService(PessoaService ps) {
+    public TarefaService(TarefaRepository tr, PessoaService ps) {
+        this.tr = tr;
     	this.ps = ps;
     }
     

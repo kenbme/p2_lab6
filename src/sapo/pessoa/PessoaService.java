@@ -6,8 +6,8 @@ public class PessoaService {
 
     private final PessoaRepository pessoaRepository;
 
-    public PessoaService() {
-        pessoaRepository = new PessoaRepository();
+    public PessoaService(PessoaRepository pessoaRepository) {
+        this.pessoaRepository = pessoaRepository;
     }
 
     public void cadastrarPessoa(String cpf, String nome, String[] habilidades) {
