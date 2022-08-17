@@ -7,48 +7,53 @@ public class AtividadeImpl implements Atividade {
     private final String ID;
     private final String nome;
     private String descricao;
-    private Pessoa responsavel;
+    private String cpfResponsavel;
     private boolean encerrada = false;
     private boolean ativada = true;
 
-    public AtividadeImpl(String ID, String nome, String descricao, Pessoa responsavel) {
+    public AtividadeImpl(String ID, String nome, String descricao, String cpfResponsavel) {
         this.ID = ID;
         this.nome = nome;
         this.descricao = descricao;
-        this.responsavel = responsavel;
+        this.cpfResponsavel = cpfResponsavel;
     }
     // TODO Checar erros, verificações e outras especificidades
     @Override
     public void encerrar(){
-        if(encerrada != true){
+        if(!encerrada) {
             encerrada = true;
         }
-        else {throw new IllegalStateException("Atividade já encerrada.");}
+        throw new IllegalStateException("Atividade já encerrada.");
     }
 
     @Override
     public void desativar(){
-        if (encerrada != true){
+        if (!encerrada){
             ativada = false;
-        }
+        } throw new IllegalStateException("Atividade já está desativada.");
     }
 
     @Override
     public void reabrir(){
         if (ativada != false){
             ativada = true;
-        }
-        else {throw new IllegalStateException("Atividade já está ativada.");}
+        } throw new IllegalStateException("Atividade já está ativada.");
     }
 
     @Override
-    public void alterarDescricao(String novaDescricao) { descricao = novaDescricao; }
-
+    public void alterarDescricao(String novaDescricao) { this.descricao = novaDescricao; }
     @Override
-    public void alterarResponsavel(Pessoa responsavelNovo){ this.responsavel = responsavelNovo; }
+    public void alterarResponsavel(String cpfResponsavelNovo){ this.cpfResponsavel = cpfResponsavelNovo; }
     @Override
-    public Pessoa getResponsavel(){
-        return this.responsavel;
+    public String getResponsavel(){
+        return this.cpfResponsavel;
     }
-
+    @Override
+    public String getNome(){
+        return this.nome;
+    }
+    @Override
+    public String getDescricao(){
+        return this.descricao;
+    }
 }

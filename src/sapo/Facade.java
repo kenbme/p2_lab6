@@ -22,8 +22,8 @@ public class Facade {
     public Facade(PessoaRepository pessoaRepository, AtividadeRepository atividadeRepository,
                   TarefaRepository tarefaRepository) {
         PessoaService pessoaService = new PessoaService(pessoaRepository);
-        AtividadeService atividadeService = new AtividadeService(atividadeRepository, pessoaService);
         TarefaService tarefaService = new TarefaService(tarefaRepository, pessoaService);
+        AtividadeService atividadeService = new AtividadeService(atividadeRepository, pessoaService, tarefaService);
         BuscaService buscaService = new BuscaService(pessoaService, atividadeService, tarefaService);
         pessoaController = new PessoaController(pessoaService);
         atividadeController = new AtividadeController(atividadeService);
