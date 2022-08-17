@@ -5,6 +5,7 @@ public class TarefaController {
     private TarefaService ts;
 
     public TarefaController(TarefaService tarefaService) {
+        // TODO FALTA VALIDACOES
 		this.ts = tarefaService;
 	}
 
