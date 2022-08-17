@@ -56,7 +56,7 @@ public class PessoaService {
         if (pessoa.isEmpty() || autor.isEmpty()) {
             throw new NoSuchElementException("CPF não encontrado.");
         }
-        pessoa.get().adicionarComentario(comentario, autor.get());
+        pessoa.get().adicionarComentario(comentario, autor.get().getCPF());
     }
 
     public String listarComentariosPessoa(String cpf) throws NoSuchElementException {
@@ -64,7 +64,21 @@ public class PessoaService {
         if (pessoa.isEmpty()) {
             throw new NoSuchElementException("CPF não encontrado.");
         }
-        return pessoa.get().listarComentarios();
+        StringBuilder lista = new StringBuilder(pessoa.get().getNome() + " – " + cpf);
+        if (pessoa.get().getComentarios().isEmpty()) {
+            return lista.toString();
+        }
+        lista.append("\nComentários:");
+        for (Comentario comentario : pessoa.get().getComentarios()) {
+            lista.append("\n-- ").append(comentario.getDescricao());
+            Optional<Pessoa> autor = pessoaRepository.get(comentario.getAutorCpf());
+            if (autor.isPresent()) {
+                lista.append(" (").append(autor.get().getNome()).append(")");
+            } else {
+                lista.append(" (REMOVIDO)");
+            }
+        }
+        return lista.toString();
     }
 
     public Optional<Pessoa> getPessoa(String cpf) {
@@ -82,9 +96,9 @@ public class PessoaService {
         Arrays.sort(resultado);
         return resultado;
     }
-    
-    public String getNomePessoa (String CPF) {
-    	return this.pessoaRepository.getNome(CPF);
+
+    public String getNomePessoa(String CPF) {
+        return this.pessoaRepository.getNome(CPF);
     }
 
 }

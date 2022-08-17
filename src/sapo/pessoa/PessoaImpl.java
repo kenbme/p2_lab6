@@ -1,8 +1,5 @@
 package sapo.pessoa;
 
-import sapo.comentario.Comentario;
-import sapo.comentario.ComentarioImpl;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -43,21 +40,13 @@ public class PessoaImpl implements Pessoa {
     }
 
     @Override
-    public void adicionarComentario(String comentario, Pessoa autor) {
-        comentarios.add(new ComentarioImpl(comentario, autor));
+    public void adicionarComentario(String comentario, String autorCpf) {
+        comentarios.add(new Comentario(comentario, autorCpf));
     }
 
     @Override
-    public String listarComentarios() {
-        StringBuilder lista = new StringBuilder(nome + " – " + cpf);
-        if (comentarios.isEmpty()) {
-            return lista.toString();
-        }
-        lista.append("\nComentários:");
-        for (Comentario comentario : comentarios) {
-            lista.append("\n-- ").append(comentario.exibir());
-        }
-        return lista.toString();
+    public ArrayList<Comentario> getComentarios() {
+        return comentarios;
     }
 
     @Override
