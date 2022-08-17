@@ -97,8 +97,4 @@ public class PessoaService {
         return resultado;
     }
 
-    public String getNomePessoa(String CPF) {
-        return this.pessoaRepository.getNome(CPF);
-    }
-
 }
