@@ -45,7 +45,4 @@ public class PessoaRepository {
                 .collect(Collectors.toSet());
     }
     
-    public String getNome(String CPF) {
-    	return this.pessoas.get(CPF).getNome();
-    }
 }
