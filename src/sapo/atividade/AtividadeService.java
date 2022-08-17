@@ -70,17 +70,21 @@ public class AtividadeService {
         if (atividade.isEmpty()){
             throw new NoSuchElementException("Atividade não existe");
         }
-        String nomePessoa = pessoaService.getPessoa(atividade.get().getResponsavel()).get().getNome();
-        String saidaAtividade =
+        Optional<Pessoa> pessoa = pessoaService.getPessoa(atividade.get().getResponsavel());
+        String nomePessoa = pessoa.isEmpty() ? "REMOVIDO" : pessoa.get().getNome();
 
-                atividadeId + ": " + atividade.get().getNome() + "\n" +
-                "Responsável: " + nomePessoa + " - " + atividade.get().getResponsavel() + "\n" +
+        StringBuilder saidaAtividade = new StringBuilder(atividadeId + ": " + atividade.get().getNome() + "\n");
+        if(!nomePessoa.equals("REMOVIDO")){
+            saidaAtividade.append("Responsável: " + nomePessoa + " - " + atividade.get().getResponsavel() + "\n");
+        }
+        saidaAtividade.append(
                 "===\n" +
                 atividade.get().getDescricao() + "\n" +
                 "===\n" +
-                        Arrays.toString(tarefaService.consultar(atividadeId, nomePessoa));
+                Arrays.toString(tarefaService.consultar(atividadeId, nomePessoa))
+        );
 
-        return saidaAtividade;
+        return saidaAtividade.toString();
     }
 
 
