@@ -65,10 +65,10 @@ public class PessoaService {
             throw new NoSuchElementException("CPF não encontrado.");
         }
         StringBuilder lista = new StringBuilder(pessoa.get().getNome() + " – " + cpf);
+        lista.append("\nComentários:");
         if (pessoa.get().getComentarios().isEmpty()) {
             return lista.toString();
         }
-        lista.append("\nComentários:");
         for (Comentario comentario : pessoa.get().getComentarios()) {
             lista.append("\n-- ").append(comentario.getDescricao());
             Optional<Pessoa> autor = pessoaRepository.get(comentario.getAutorCpf());
