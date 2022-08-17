@@ -24,7 +24,7 @@ public class AtividadeService {
         char[] arrayID = {'X', 'X', 'X'};
         int i = 0;
         for (char c : nome.toUpperCase().toCharArray()) {
-            if (i == 3) {
+            if (i == arrayID.length) {
                 break;
             }
             if (c != 'A' && c != 'E' && c != 'I' && c != 'O' && c != 'U' && c != ' ') {
