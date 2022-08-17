@@ -8,8 +8,8 @@ public class TarefaRepository {
     private int totalTarefas = 0;
 
     public String cadastraTarefa(String atividadeID, String nome, String[] habilidades) {
-        this.totalTarefas ++;
         Tarefa tarefa = new Tarefa(atividadeID, Integer.toString(this.totalTarefas), nome, habilidades);
+        this.totalTarefas ++;
         this.tarefas.put(tarefa.getID(), tarefa);
         return tarefa.getID();
     }
