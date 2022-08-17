@@ -57,4 +57,11 @@ public class TarefaService {
     	return this.tr.concluida(IDTarefa);
     }
 
+    public String[] consultar(String idAtividade, String nome) {
+        throw new UnsupportedOperationException();
+    }
+
+    public String[] sugestionar(String cpf) {
+        throw new UnsupportedOperationException();
+    }
 }
