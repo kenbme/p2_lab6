@@ -2,7 +2,7 @@ package sapo.tarefa;
 
 import java.util.HashMap;
 
-public class Tarefa {
+public class Tarefa implements Tarefaw {
 
     private int horasExecutadas;
     private String nome;
