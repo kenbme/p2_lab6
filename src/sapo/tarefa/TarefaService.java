@@ -1,11 +1,15 @@
 package sapo.tarefa;
 
+import java.util.Optional;
+
+import sapo.pessoa.Pessoa;
 import sapo.pessoa.PessoaService;
 
 public class TarefaService {
 
     private final TarefaRepository tr;
     private final PessoaService ps;
+    private int totalTarefas = 1;
 
     public TarefaService(TarefaRepository tr, PessoaService ps) {
         this.tr = tr;
@@ -13,49 +17,51 @@ public class TarefaService {
     }
     
     public String cadastraTarefa(String atividadeID, String nome, String[] habilidades) {
-    	String ID = this.tr.cadastraTarefa(atividadeID, nome, habilidades);
-    	return ID;
+    	Tarefa tarefa = new Tarefa(atividadeID, Integer.toString(this.totalTarefas), nome, habilidades);
+    	this.totalTarefas ++;
+    	this.tr.put(tarefa);
+    	return tarefa.getID();
     }
 
     public void alteraNome(String IDTarefa, String novoNome) {
-    	this.tr.alteraNome(IDTarefa, novoNome);
+    	this.tr.get(IDTarefa).alteraNome(novoNome);
     }
 
     public void alteraHabilidade(String IDTarefa, String[]habilidades) {
-    	this.tr.alteraHabilidade(IDTarefa, habilidades);
+    	this.tr.get(IDTarefa).alteraHabilidades(habilidades);
     }
 
-    public void acrescentaHoras(String IDTarefas, int horas) {
-    	this.tr.acrescentaHoras(IDTarefas, horas);
+    public void acrescentaHoras(String IDTarefa, int horas) {
+    	this.tr.get(IDTarefa).acrescentaHoras(horas);
     }
 
-    public void decrescentaHoras(String IDTarefas, int horas) {
-    	this.tr.decrescentaHoras(IDTarefas, horas);
+    public void decrescentaHoras(String IDTarefa, int horas) {
+    	this.tr.get(IDTarefa).decrescentaHoras(horas);
     }
 
     public void concluiTarefa(String IDTarefa) {
-    	this.tr.concluiTarefa(IDTarefa);
+    	this.tr.get(IDTarefa).concluirTarefa();
     }
 
     public void removeTarefa(String IDTarefa) {
-    	this.tr.removeTarefa(IDTarefa);
+    	this.tr.remove(IDTarefa);
     }
 
     public String exibeTarefa(String IDTarefa) {
-    	return this.tr.exibeTarefa(IDTarefa);
+    	return this.tr.get(IDTarefa).toString();
     }
 
     public void adicionaPessoa(String IDTarefa, String CPF) {
-    	String nome = this.ps.getNomePessoa(CPF);
-    	this.tr.adicionaPessoa(IDTarefa, CPF, nome);
+    	String nome = this.ps.getPessoa(CPF).get().getNome();
+    	this.tr.get(IDTarefa).adicionaPessoa(CPF, nome);;
     }
 
     public void removePessoa(String IDTarefa, String CPF) {
-    	this.tr.removePessoa(IDTarefa, CPF);
+    	this.tr.get(IDTarefa).removePessoa(CPF);
     }
     
     public boolean concluida (String IDTarefa) {
-    	return this.tr.concluida(IDTarefa);
+    	return this.tr.get(IDTarefa).concluida();
     }
 
     public String[] consultar(String idAtividade, String nome) {
