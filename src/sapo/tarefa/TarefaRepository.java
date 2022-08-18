@@ -1,6 +1,7 @@
 package sapo.tarefa;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 public class TarefaRepository {
 
@@ -10,8 +11,8 @@ public class TarefaRepository {
         this.tarefas.put(tarefa.getID(), tarefa);
     }
 
-    public Tarefa get(String tarefaID) {
-    	return this.tarefas.get(tarefaID);
+    public Optional<Tarefa> get(String tarefaID) {
+    	return Optional.ofNullable(tarefas.get(tarefaID));
     }
 
     public void remove(String IDTarefa) {

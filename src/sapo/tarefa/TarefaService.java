@@ -1,8 +1,5 @@
 package sapo.tarefa;
 
-import java.util.Optional;
-
-import sapo.pessoa.Pessoa;
 import sapo.pessoa.PessoaService;
 
 public class TarefaService {
@@ -24,23 +21,29 @@ public class TarefaService {
     }
 
     public void alteraNome(String IDTarefa, String novoNome) {
-    	this.tr.get(IDTarefa).alteraNome(novoNome);
+    	this.tr.get(IDTarefa).get().alteraNome(novoNome);
     }
 
     public void alteraHabilidade(String IDTarefa, String[]habilidades) {
-    	this.tr.get(IDTarefa).alteraHabilidades(habilidades);
+    	this.tr.get(IDTarefa).get().alteraHabilidades(habilidades);
     }
 
     public void acrescentaHoras(String IDTarefa, int horas) {
-    	this.tr.get(IDTarefa).acrescentaHoras(horas);
+    	if (this.tr.get(IDTarefa).get().concluida()) {
+    		return;
+    	}
+    	this.tr.get(IDTarefa).get().acrescentaHoras(horas);
     }
 
     public void decrescentaHoras(String IDTarefa, int horas) {
-    	this.tr.get(IDTarefa).decrescentaHoras(horas);
+    	if (this.tr.get(IDTarefa).get().concluida()) {
+    		return;
+    	}
+    	this.tr.get(IDTarefa).get().decrescentaHoras(horas);
     }
 
     public void concluiTarefa(String IDTarefa) {
-    	this.tr.get(IDTarefa).concluirTarefa();
+    	this.tr.get(IDTarefa).get().concluirTarefa();
     }
 
     public void removeTarefa(String IDTarefa) {
@@ -48,20 +51,26 @@ public class TarefaService {
     }
 
     public String exibeTarefa(String IDTarefa) {
-    	return this.tr.get(IDTarefa).toString();
+    	return this.tr.get(IDTarefa).get().toString();
     }
 
     public void adicionaPessoa(String IDTarefa, String CPF) {
+    	if (this.tr.get(IDTarefa).get().concluida()) {
+    		return;
+    	}
     	String nome = this.ps.getPessoa(CPF).get().getNome();
-    	this.tr.get(IDTarefa).adicionaPessoa(CPF, nome);;
+    	this.tr.get(IDTarefa).get().adicionaPessoa(CPF, nome);;
     }
 
     public void removePessoa(String IDTarefa, String CPF) {
-    	this.tr.get(IDTarefa).removePessoa(CPF);
+    	if (this.tr.get(IDTarefa).get().concluida()) {
+    		return;
+    	}
+    	this.tr.get(IDTarefa).get().removePessoa(CPF);
     }
     
     public boolean concluida (String IDTarefa) {
-    	return this.tr.get(IDTarefa).concluida();
+    	return this.tr.get(IDTarefa).get().concluida();
     }
 
     public String[] consultar(String idAtividade, String nome) {
@@ -71,4 +80,5 @@ public class TarefaService {
     public String[] sugestionar(String cpf) {
         throw new UnsupportedOperationException();
     }
+    
 }
