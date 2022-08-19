@@ -1,7 +1,6 @@
 package sapo.pessoa;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public interface Pessoa {
 
@@ -11,7 +10,8 @@ public interface Pessoa {
     void adicionarComentario(String comentario, String autorCpf);
     String getNome();
     String getCPF();
-    HashSet<String> getHabilidades();
+    ArrayList<String> getHabilidades();
     ArrayList<Comentario> getComentarios();
-
+    int getNivel();
+    void setNivel(int nivel);
 }

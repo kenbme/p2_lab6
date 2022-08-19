@@ -3,19 +3,19 @@ package sapo.pessoa;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 
 public class PessoaImpl implements Pessoa {
 
     private final String cpf;
     private String nome;
-    private final HashSet<String> habilidades;
+    private int nivel = 0;
+    private final ArrayList<String> habilidades;
     private final ArrayList<Comentario> comentarios;
 
     public PessoaImpl(String cpf, String nome, String[] habilidades) {
         this.cpf = cpf;
         this.nome = nome;
-        this.habilidades = new HashSet<>();
+        this.habilidades = new ArrayList<>();
         this.habilidades.addAll(Arrays.asList(habilidades));
         comentarios = new ArrayList<>();
     }
@@ -23,7 +23,6 @@ public class PessoaImpl implements Pessoa {
     @Override
     public String exibir() {
         StringBuilder exibicao = new StringBuilder(nome + " – " + cpf);
-        ArrayList<String> habilidades = new ArrayList<>(this.habilidades);
         Collections.sort(habilidades);
         for (String habilidade : habilidades) {
             exibicao.append("\n- ").append(habilidade);
@@ -62,8 +61,16 @@ public class PessoaImpl implements Pessoa {
     }
 
     @Override
-    public HashSet<String> getHabilidades() {
+    public ArrayList<String> getHabilidades() {
         return habilidades;
+    }
+    
+    public int getNivel() {
+    	return this.nivel;
+    }
+    
+    public void setNivel(int nivel) {
+    	this.nivel = nivel;
     }
 
 }

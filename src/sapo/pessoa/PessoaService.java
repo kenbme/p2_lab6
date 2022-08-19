@@ -17,6 +17,14 @@ public class PessoaService {
         }
         pessoaRepository.put(new PessoaImpl(cpf, nome, habilidades));
     }
+    
+    public void cadastraAluno(String CPF, String nome, String[] habilidades, String matricula, String periodo) {
+		this.pessoaRepository.put(new Aluno(CPF, nome, habilidades, matricula, periodo));
+	}
+    
+    public void cadastraProfessor(String CPF, String nome, String[] habilidades, String codSIAPE, String[] disciplinas) {
+    	this.pessoaRepository.put(new Professor(CPF, nome, habilidades, codSIAPE, disciplinas));
+    }
 
     public String exibirPessoa(String cpf) throws NoSuchElementException {
         Optional<Pessoa> pessoa = pessoaRepository.get(cpf);
@@ -108,5 +116,13 @@ public class PessoaService {
         Arrays.sort(resultado);
         return resultado;
     }
+
+	public void defineFuncaoProfessor(String CPF, String codSIAPE, String[] disciplinas) {
+		Optional<Pessoa> pessoa = this.pessoaRepository.get(CPF);
+		Pessoa professor = new Professor(pessoa.get().getCPF(), pessoa.get().getNome(), pessoa.get().getHabilidades().toArray(new String[0]), codSIAPE, disciplinas);
+		professor.setNivel(pessoa.get().getNivel());
+		this.pessoaRepository.remove(CPF);
+		this.pessoaRepository.put(professor);
+	}
 
 }
