@@ -58,8 +58,8 @@ public class TarefaService {
     	if (this.tr.get(IDTarefa).get().concluida()) {
     		return;
     	}
-    	String nome = this.ps.getPessoa(CPF).get().getNome();
-    	this.tr.get(IDTarefa).get().adicionaPessoa(CPF, nome);;
+    	String nome = this.ps.getNomePessoaOuFalha(CPF);
+    	this.tr.get(IDTarefa).get().adicionaPessoa(CPF, nome);
     }
 
     public void removePessoa(String IDTarefa, String CPF) {

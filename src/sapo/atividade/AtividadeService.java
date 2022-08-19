@@ -1,6 +1,5 @@
 package sapo.atividade;
 
-import sapo.pessoa.Pessoa;
 import sapo.pessoa.PessoaService;
 import sapo.tarefa.TarefaService;
 
@@ -20,11 +19,8 @@ public class AtividadeService {
         this.tarefaService = tarefaService;
     }
 
-    public String cadastrarAtividade(String nome, String descricao, String cpf) throws NoSuchElementException {
-        Optional<Pessoa> responsavel = pessoaService.getPessoa(cpf);
-        if (responsavel.isEmpty()) {
-            throw new NoSuchElementException("CPF não cadastrado.");
-        }
+    public String cadastrarAtividade(String nome, String descricao, String cpf) {
+        pessoaService.getNomePessoaOuFalha(cpf);
         char[] arrayID = {'X', 'X', 'X'};
         int i = 0;
         for (char c : nome.toUpperCase().toCharArray()) {
@@ -37,7 +33,7 @@ public class AtividadeService {
             }
         }
         String ID = String.valueOf(arrayID) + "-" + atividadeRepository.totalAtividades();
-        atividadeRepository.put(new AtividadeImpl(ID, nome, descricao, responsavel.get().getCPF()));
+        atividadeRepository.put(new AtividadeImpl(ID, nome, descricao, cpf));
         return ID;
     }
 
@@ -70,11 +66,9 @@ public class AtividadeService {
         if (atividade.isEmpty()){
             throw new NoSuchElementException("Atividade não existe");
         }
-        Optional<Pessoa> pessoa = pessoaService.getPessoa(atividade.get().getResponsavel());
-        String nomePessoa = pessoa.isEmpty() ? "REMOVIDO" : pessoa.get().getNome();
-
+        String nomePessoa = pessoaService.getNomePessoa(atividade.get().getResponsavel());
         StringBuilder saidaAtividade = new StringBuilder(atividadeId + ": " + atividade.get().getNome() + "\n");
-        if(!nomePessoa.equals("REMOVIDO")){
+        if(!nomePessoa.equals("")){
             saidaAtividade.append("Responsável: " + nomePessoa + " - " + atividade.get().getResponsavel() + "\n");
         }
         saidaAtividade.append(
@@ -83,7 +77,6 @@ public class AtividadeService {
                 "===\n" +
                 Arrays.toString(tarefaService.consultar(atividadeId, nomePessoa))
         );
-
         return saidaAtividade.toString();
     }
 

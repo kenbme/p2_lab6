@@ -81,8 +81,20 @@ public class PessoaService {
         return lista.toString();
     }
 
-    public Optional<Pessoa> getPessoa(String cpf) {
-        return pessoaRepository.get(cpf);
+    public String getNomePessoa(String cpf) {
+        Optional<Pessoa> pessoa = pessoaRepository.get(cpf);
+        if (pessoa.isEmpty()) {
+            return "";
+        }
+        return pessoa.get().getNome();
+    }
+
+    public String getNomePessoaOuFalha(String cpf) throws NoSuchElementException {
+        Optional<Pessoa> pessoa = pessoaRepository.get(cpf);
+        if (pessoa.isEmpty()) {
+            throw new NoSuchElementException("CPF não cadastrado.");
+        }
+        return pessoa.get().getNome();
     }
 
     public String[] consultar(String[] dados) {
