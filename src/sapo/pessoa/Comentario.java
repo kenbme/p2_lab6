@@ -20,4 +20,8 @@ public class Comentario {
         return autorCpf;
     }
 
+    public String getData() {
+        return data;
+    }
+
 }
