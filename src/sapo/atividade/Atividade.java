@@ -1,7 +1,5 @@
 package sapo.atividade;
 
-import sapo.pessoa.Pessoa;
-
 public interface Atividade {
 
     void encerrar();
@@ -12,4 +10,5 @@ public interface Atividade {
     String getResponsavel();
     String getNome();
     String getDescricao();
+
 }
