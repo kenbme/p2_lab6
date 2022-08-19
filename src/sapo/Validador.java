@@ -1,5 +1,7 @@
 package sapo;
 
+import java.util.NoSuchElementException;
+
 public class Validador {
 
     public void valida(String string) throws IllegalArgumentException {
@@ -38,6 +40,25 @@ public class Validador {
         }
         catch (NumberFormatException exception) {
             return false;
+        }
+    }
+
+    public void validaCpf(String cpf) {
+        valida(cpf);
+        char[] cpfValido = "222.222.222-22".toCharArray();
+        if (cpf.length() != cpfValido.length) {
+            throw new NoSuchElementException("Formatação do CPF inválida");
+        }
+        char[] cpfSplitado = cpf.toCharArray();
+        for (int i = 0; i < cpfSplitado.length; i++) {
+            if (isInteger(cpfValido[i])) {
+                if (!isInteger(cpfSplitado[i])) {
+                    throw new NoSuchElementException("Formatação do CPF inválida");
+                }
+            }
+            else if (cpfSplitado[i] != cpfValido[i]) {
+                throw new NoSuchElementException("Formatação do CPF inválida");
+            }
         }
     }
 
