@@ -99,8 +99,7 @@ public class Facade {
     }
 
     public void alterarHabilidadesTarefa(String idTarefa, String[] habilidades) {
-        //Não foi solicitado nada até o momento.
-    	return;
+        this.tarefaController.alteraHabilidade(idTarefa, habilidades);
     }
 
     public void adicionarHorasTarefa(String idTarefa, int horas) {

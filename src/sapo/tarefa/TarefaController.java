@@ -4,8 +4,8 @@ import sapo.Validador;
 
 public class TarefaController {
 
-    private TarefaService ts;
-    private Validador validador;
+    private final TarefaService ts;
+    private final Validador validador;
 
     public TarefaController(TarefaService tarefaService) {
 		this.ts = tarefaService;
@@ -15,8 +15,7 @@ public class TarefaController {
 	public String cadastraTarefa(String atividadeID, String nome, String[] habilidades) {
 		this.validador.valida(new String[]{atividadeID, nome});
 		this.validador.valida(habilidades);
-    	String ID = this.ts.cadastraTarefa(atividadeID, nome, habilidades);
-    	return ID;
+    	return this.ts.cadastraTarefa(atividadeID, nome, habilidades);
     }
 
     public void alteraNome(String IDTarefa, String novoNome) {
@@ -59,11 +58,13 @@ public class TarefaController {
 
     public void adicionaPessoa(String IDTarefa, String CPF) {
     	this.validador.valida(new String[] {IDTarefa, CPF});
+		this.validador.validaCpf(CPF);
     	this.ts.adicionaPessoa(IDTarefa, CPF);
     }
 
     public void removePessoa(String IDTarefa, String CPF) {
     	this.validador.valida(new String[] {IDTarefa, CPF});
+		this.validador.validaCpf(CPF);
     	this.ts.removePessoa(IDTarefa, CPF);
     }
     

@@ -1,15 +1,20 @@
 package sapo.atividade;
 
+import sapo.Validador;
+
 public class AtividadeController {
 
     private final AtividadeService atividadeService;
+    private final Validador validador;
 
     public AtividadeController(AtividadeService atividadeService) {
         this.atividadeService = atividadeService;
+        this.validador = new Validador();
     }
-    //TODO Implementar TUDO
+
     public String cadastrarAtividade(String nome, String descricao, String cpf) {
         // IMPLEMENTAR VALIDACAO DA ENTRADA
+        validador.validaCpf(cpf);
         return atividadeService.cadastrarAtividade(nome, descricao, cpf);
     }
 
@@ -34,6 +39,8 @@ public class AtividadeController {
     }
 
     public void alterarResponsavelAtividade(String atividadeId, String cpf) {
+        validador.validaCpf(cpf);
         atividadeService.alterarResponsavelAtividade(atividadeId, cpf);
     }
+
 }
