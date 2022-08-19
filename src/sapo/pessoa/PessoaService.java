@@ -1,6 +1,9 @@
 package sapo.pessoa;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.Set;
 
 public class PessoaService {
 
@@ -27,57 +30,34 @@ public class PessoaService {
     }
 
     public String exibirPessoa(String cpf) throws NoSuchElementException {
-        Optional<Pessoa> pessoa = pessoaRepository.get(cpf);
-        if (pessoa.isEmpty()) {
-            throw new NoSuchElementException("CPF não encontrado.");
-        }
-        return pessoa.get().exibir();
+        return pessoaRepository.get(cpf).orElseThrow().exibir();
     }
 
     public void alterarNomePessoa(String cpf, String novoNome) throws NoSuchElementException {
-        Optional<Pessoa> pessoa = pessoaRepository.get(cpf);
-        if (pessoa.isEmpty()) {
-            throw new NoSuchElementException("CPF não encontrado.");
-        }
-        pessoa.get().alterarNome(novoNome);
+        pessoaRepository.get(cpf).orElseThrow().alterarNome(novoNome);
     }
 
     public void alterarHabilidadesPessoa(String cpf, String[] novasHabilidades) throws NoSuchElementException {
-        Optional<Pessoa> pessoa = pessoaRepository.get(cpf);
-        if (pessoa.isEmpty()) {
-            throw new NoSuchElementException("CPF não encontrado.");
-        }
-        pessoa.get().alterarHabilidades(novasHabilidades);
+        pessoaRepository.get(cpf).orElseThrow().alterarHabilidades(novasHabilidades);
     }
 
     public void removerPessoa(String cpf) throws NoSuchElementException {
-        Optional<Pessoa> pessoa = pessoaRepository.get(cpf);
-        if (pessoa.isEmpty()) {
-            throw new NoSuchElementException("CPF não encontrado.");
-        }
+        pessoaRepository.get(cpf).orElseThrow();
         pessoaRepository.remove(cpf);
     }
 
     public void adicionarComentarioPessoa(String cpf, String comentario, String autorCpf) throws NoSuchElementException {
-        Optional<Pessoa> pessoa = pessoaRepository.get(cpf);
-        Optional<Pessoa> autor = pessoaRepository.get(autorCpf);
-        if (pessoa.isEmpty() || autor.isEmpty()) {
-            throw new NoSuchElementException("CPF não encontrado.");
-        }
-        pessoa.get().adicionarComentario(comentario, autor.get().getCPF());
+        pessoaRepository.get(cpf).orElseThrow().adicionarComentario(comentario, pessoaRepository.get(autorCpf).orElseThrow().getCPF());
     }
 
     public String listarComentariosPessoa(String cpf) throws NoSuchElementException {
-        Optional<Pessoa> pessoa = pessoaRepository.get(cpf);
-        if (pessoa.isEmpty()) {
-            throw new NoSuchElementException("CPF não encontrado.");
-        }
-        StringBuilder lista = new StringBuilder(pessoa.get().getNome() + " – " + cpf);
+        Pessoa pessoa = pessoaRepository.get(cpf).orElseThrow();
+        StringBuilder lista = new StringBuilder(pessoa.getNome() + " – " + cpf);
         lista.append("\nComentários:");
-        if (pessoa.get().getComentarios().isEmpty()) {
+        if (pessoa.getComentarios().isEmpty()) {
             return lista.toString();
         }
-        for (Comentario comentario : pessoa.get().getComentarios()) {
+        for (Comentario comentario : pessoa.getComentarios()) {
             lista.append("\n-- ").append(comentario.getDescricao());
             Optional<Pessoa> autor = pessoaRepository.get(comentario.getAutorCpf());
             if (autor.isPresent()) {
@@ -98,11 +78,7 @@ public class PessoaService {
     }
 
     public String getNomePessoaOuFalha(String cpf) throws NoSuchElementException {
-        Optional<Pessoa> pessoa = pessoaRepository.get(cpf);
-        if (pessoa.isEmpty()) {
-            throw new NoSuchElementException("CPF não cadastrado.");
-        }
-        return pessoa.get().getNome();
+        return pessoaRepository.get(cpf).orElseThrow().getNome();
     }
 
     public String[] consultar(String[] dados) {
@@ -118,9 +94,9 @@ public class PessoaService {
     }
 
 	public void defineFuncaoProfessor(String CPF, String codSIAPE, String[] disciplinas) {
-		Optional<Pessoa> pessoa = this.pessoaRepository.get(CPF);
-		Pessoa professor = new Professor(pessoa.get().getCPF(), pessoa.get().getNome(), pessoa.get().getHabilidades().toArray(new String[0]), codSIAPE, disciplinas);
-		professor.setNivel(pessoa.get().getNivel());
+		Pessoa pessoa = this.pessoaRepository.get(CPF).orElseThrow();
+		Pessoa professor = new Professor(pessoa.getCPF(), pessoa.getNome(), pessoa.getHabilidades().toArray(new String[0]), codSIAPE, disciplinas);
+		professor.setNivel(pessoa.getNivel());
 		this.pessoaRepository.remove(CPF);
 		this.pessoaRepository.put(professor);
 	}
