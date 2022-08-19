@@ -6,7 +6,7 @@ public class TarefaService {
 
     private final TarefaRepository tr;
     private final PessoaService ps;
-    private int totalTarefas = 1;
+
 
     public TarefaService(TarefaRepository tr, PessoaService ps) {
         this.tr = tr;
@@ -14,8 +14,7 @@ public class TarefaService {
     }
     
     public String cadastraTarefa(String atividadeID, String nome, String[] habilidades) {
-    	Tarefa tarefa = new Tarefa(atividadeID, Integer.toString(this.totalTarefas), nome, habilidades);
-    	this.totalTarefas ++;
+    	Tarefa tarefa = new Tarefa(atividadeID, Integer.toString(tr.getTotalTarefas()), nome, habilidades);
     	this.tr.put(tarefa);
     	return tarefa.getID();
     }
