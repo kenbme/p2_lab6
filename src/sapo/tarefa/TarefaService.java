@@ -64,17 +64,13 @@ public class TarefaService {
     }
 
     public void adicionaPessoa(String IDTarefa, String CPF) {
-    	if (this.tr.get(IDTarefa).orElseThrow().concluida()) {
+    	if (this.tr.get(IDTarefa).get().concluida()) {
     		return;
     	}
     	String nome = this.ps.getNomePessoaOuFalha(CPF);
-<<<<<<< HEAD
     	boolean concluida = this.tr.get(IDTarefa).get().concluida();
     	this.ps.contabilizaTarefa(CPF, concluida);
     	this.tr.get(IDTarefa).get().adicionaPessoa(CPF, nome);
-=======
-    	this.tr.get(IDTarefa).orElseThrow().adicionaPessoa(CPF, nome);
->>>>>>> 20d25a6ee45eb1f78c7cfa3845a2c151eecc6eba
     }
 
     public void removePessoa(String IDTarefa, String CPF) {
