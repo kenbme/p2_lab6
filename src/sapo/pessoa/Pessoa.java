@@ -14,4 +14,6 @@ public interface Pessoa {
     ArrayList<Comentario> getComentarios();
     int getNivel();
     void setNivel(int nivel);
+    int calculaNivel();
+    void contabilizaTarefa();
 }

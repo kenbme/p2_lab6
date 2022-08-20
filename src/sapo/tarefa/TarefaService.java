@@ -58,6 +58,8 @@ public class TarefaService {
     		return;
     	}
     	String nome = this.ps.getNomePessoaOuFalha(CPF);
+    	boolean concluida = this.tr.get(IDTarefa).get().concluida();
+    	this.ps.contabilizaTarefa(CPF, concluida);
     	this.tr.get(IDTarefa).get().adicionaPessoa(CPF, nome);
     }
 

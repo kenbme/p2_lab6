@@ -19,6 +19,10 @@ public class PessoaImpl implements Pessoa {
         this.habilidades.addAll(Arrays.asList(habilidades));
         comentarios = new ArrayList<>();
     }
+    
+    public int calculaNivel() {
+    	return 0;
+    }
 
     @Override
     public String exibir() {

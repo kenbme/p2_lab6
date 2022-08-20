@@ -132,4 +132,8 @@ public class PessoaService {
 		return pessoasSTR.toArray(new String[0]);
 	}
 
+	public void contabilizaTarefa(String CPF, boolean concluida) {
+		this.pessoaRepository.get(CPF).contabilizaTarefa(concluida);
+	}
+
 }
