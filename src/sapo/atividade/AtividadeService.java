@@ -1,9 +1,7 @@
 package sapo.atividade;
 
 import sapo.pessoa.PessoaService;
-import sapo.tarefa.TarefaService;
 
-import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -11,16 +9,14 @@ public class AtividadeService {
 
     private final AtividadeRepository atividadeRepository;
     private final PessoaService pessoaService;
-    private final TarefaService tarefaService;
 
-    public AtividadeService(AtividadeRepository atividadeRepository, PessoaService pessoaService, TarefaService tarefaService) {
+    public AtividadeService(AtividadeRepository atividadeRepository, PessoaService pessoaService) {
         this.atividadeRepository = atividadeRepository;
         this.pessoaService = pessoaService;
-        this.tarefaService = tarefaService;
     }
 
     public String cadastrarAtividade(String nome, String descricao, String cpf) {
-        pessoaService.getNomePessoaOuFalha(cpf);
+        String nomePessoa = pessoaService.getNomePessoaOuFalha(cpf);
         char[] arrayID = {'X', 'X', 'X'};
         int i = 0;
         for (char c : nome.toUpperCase().toCharArray()) {
@@ -33,7 +29,7 @@ public class AtividadeService {
             }
         }
         String ID = String.valueOf(arrayID) + "-" + atividadeRepository.totalAtividades();
-        atividadeRepository.put(new AtividadeImpl(ID, nome, descricao, cpf));
+        atividadeRepository.put(new AtividadeImpl(ID, nome, descricao, cpf, nomePessoa));
         return ID;
     }
 
@@ -61,25 +57,9 @@ public class AtividadeService {
         atividade.get().reabrir();
     }
 
-    public String exibirAtividade(String atividadeId) throws NoSuchElementException {
-        Optional<Atividade> atividade = atividadeRepository.get(atividadeId);
-        if (atividade.isEmpty()){
-            throw new NoSuchElementException("Atividade não existe");
-        }
-        String nomePessoa = pessoaService.getNomePessoa(atividade.get().getResponsavel());
-        StringBuilder saidaAtividade = new StringBuilder(atividadeId + ": " + atividade.get().getNome() + "\n");
-        if(!nomePessoa.equals("")){
-            saidaAtividade.append("Responsável: " + nomePessoa + " - " + atividade.get().getResponsavel() + "\n");
-        }
-        saidaAtividade.append(
-                "===\n" +
-                atividade.get().getDescricao() + "\n" +
-                "===\n" +
-                Arrays.toString(tarefaService.consultar(atividadeId, nomePessoa))
-        );
-        return saidaAtividade.toString();
+    public String exibirAtividade(String id) throws NoSuchElementException {
+        return atividadeRepository.get(id).orElseThrow().exibir();
     }
-
 
     public void alterarDescricaoAtividade(String atividadeId, String descricao) {
         Optional<Atividade> atividade = atividadeRepository.get(atividadeId);
@@ -90,14 +70,27 @@ public class AtividadeService {
     }
 
     public void alterarResponsavelAtividade(String atividadeId, String cpf) {
-        Optional<Atividade> atividade = atividadeRepository.get(atividadeId);
-        if (atividade.isEmpty()) {
-            throw new NoSuchElementException("Atividade não existe");
-        }
-        atividade.get().alterarResponsavel(cpf);
+        Atividade atividade = atividadeRepository.get(atividadeId).orElseThrow();
+        atividade.alterarResponsavel(cpf, pessoaService.getNomePessoaOuFalha(cpf));
     }
 
     public String[] consultar(String[] dados) {
         throw new UnsupportedOperationException();
     }
+
+    public void adicionaTarefa(String atividadeID, String tarefaID, String tarefaNome) throws NoSuchElementException {
+        Atividade atividade = atividadeRepository.get(atividadeID).orElseThrow();
+        atividade.adicionaTarefa(tarefaID, tarefaNome);
+    }
+
+    public void removeTarefa(String atividadeID, String tarefaID) throws NoSuchElementException {
+        Atividade atividade = atividadeRepository.get(atividadeID).orElseThrow();
+        atividade.removeTarefa(tarefaID);
+    }
+
+    public void concluiTarefa(String atividadeID, String id) throws NoSuchElementException {
+        Atividade atividade = atividadeRepository.get(atividadeID).orElseThrow();
+        atividade.concluiTarefa(id);
+    }
+
 }

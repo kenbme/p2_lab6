@@ -71,14 +71,6 @@ public class PessoaService {
         return lista.toString();
     }
 
-    public String getNomePessoa(String cpf) {
-        Optional<Pessoa> pessoa = pessoaRepository.get(cpf);
-        if (pessoa.isEmpty()) {
-            return "";
-        }
-        return pessoa.get().getNome();
-    }
-
     public String getNomePessoaOuFalha(String cpf) throws NoSuchElementException {
         return pessoaRepository.get(cpf).orElseThrow().getNome();
     }
