@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 public class Tarefa {
 
+    private final String atividadeID;
     private int horasExecutadas;
     private String nome;
     private String[] habilidadesRecomendadas;
@@ -11,11 +12,12 @@ public class Tarefa {
     private  String ID;
     private boolean concluida = false;
 
-    public Tarefa(String atividadeID, String numTarefa, String nome, String[] habilidades) {
+    public Tarefa(String atividadeID, String tarefaID, String nome, String[] habilidades) {
         this.pessoas = new HashMap<>();
         this.nome = nome;
         this.habilidadesRecomendadas = habilidades;
-        this.ID = atividadeID + "-" + numTarefa;
+        this.ID = tarefaID;
+        this.atividadeID = atividadeID;
     }
 
     public void alteraNome(String nome) {
@@ -44,12 +46,9 @@ public class Tarefa {
                     equipes();         
     }
 
-    public void concluirTarefa() {
-        if (this.concluida) {
-            this.concluida = false;
-        } else {
-            this.concluida = true;
-        }
+    public boolean concluirTarefa() {
+        this.concluida = !this.concluida;
+        return this.concluida;
     }
 
     public void adicionaPessoa(String CPF, String nome) {
@@ -75,6 +74,10 @@ public class Tarefa {
     	}
     	
     	return equipes;
+    }
+
+    public String getAtividadeID() {
+        return atividadeID;
     }
 
 }
