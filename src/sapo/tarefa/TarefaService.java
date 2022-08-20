@@ -3,6 +3,9 @@ package sapo.tarefa;
 import sapo.atividade.AtividadeService;
 import sapo.pessoa.PessoaService;
 
+import java.util.HashMap;
+import java.util.NoSuchElementException;
+
 public class TarefaService {
 
     private final TarefaRepository tr;
@@ -21,6 +24,17 @@ public class TarefaService {
         this.as.adicionaTarefa(atividadeID, tarefa.getID(), nome);
         this.tr.put(tarefa);
     	return tarefa.getID();
+    }
+
+    public String cadastraTarefa(String atividadeId, String nome, String[] habilidades, String[] idTarefas) {
+        HashMap<String, String> tarefas = new HashMap<>();
+        for (String id: idTarefas) {
+            tarefas.put(id, tr.get(id).orElseThrow().getNome());
+        }
+        TarefaGerencial tarefa = new TarefaGerencial(atividadeId,atividadeId + "-" + tr.getTotalTarefas(), nome, habilidades, tarefas);
+        this.as.adicionaTarefa(atividadeId, tarefa.getID(), nome);
+        this.tr.put(tarefa);
+        return tarefa.getID();
     }
 
     public void alteraNome(String IDTarefa, String novoNome) {
@@ -91,6 +105,28 @@ public class TarefaService {
 
     public String[] sugestionar(String cpf) {
         throw new UnsupportedOperationException();
+    }
+
+    public void adicionarNaTarefaGerencial(String idTarefaGerencial, String idTarefa) {
+        Tarefa tarefa = tr.get(idTarefaGerencial).orElseThrow();
+        if (tarefa instanceof TarefaGerencial) {
+            ((TarefaGerencial) tarefa).adicionarTarefa(idTarefa, tr.get(idTarefa).orElseThrow().getNome());
+        }
+    }
+
+    public void removerDaTarefaGerencial(String idTarefaGerencial, String idTarefa) {
+        Tarefa tarefa = tr.get(idTarefaGerencial).orElseThrow();
+        if (tarefa instanceof TarefaGerencial) {
+            ((TarefaGerencial) tarefa).removerTarefa(idTarefa);
+        }
+    }
+
+    public int contarTodasTarefasNaTarefaGerencial(String idTarefaGerencial) {
+        Tarefa tarefa = tr.get(idTarefaGerencial).orElseThrow();
+        if (tarefa instanceof TarefaGerencial) {
+            return ((TarefaGerencial) tarefa).contarTarefas();
+        }
+        throw new NoSuchElementException();
     }
 
 }
