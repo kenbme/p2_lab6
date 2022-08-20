@@ -25,6 +25,11 @@ public class PessoaImpl implements Pessoa {
     }
 
     @Override
+    public void contabilizaTarefa() {
+
+    }
+
+    @Override
     public String exibir() {
         StringBuilder exibicao = new StringBuilder(nome + " – " + cpf);
         Collections.sort(habilidades);

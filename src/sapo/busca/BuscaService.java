@@ -56,7 +56,7 @@ public class BuscaService {
             if (busca.isEmpty()) {
                 continue;
             }
-            buscas.add(Arrays.toString(busca.get().exibir()));
+            buscas.addAll(Arrays.asList(busca.get().exibir()));
         }
         return buscas.toArray(new String[0]);
     }

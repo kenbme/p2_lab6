@@ -125,7 +125,7 @@ public class PessoaService {
 	}
 
 	public void contabilizaTarefa(String CPF, boolean concluida) {
-		this.pessoaRepository.get(CPF).contabilizaTarefa(concluida);
+		// this.pessoaRepository.get(CPF).contabilizaTarefa(concluida);
 	}
 
 }
