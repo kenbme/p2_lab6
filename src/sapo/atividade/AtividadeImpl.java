@@ -1,21 +1,33 @@
 package sapo.atividade;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class AtividadeImpl implements Atividade {
 
-    private final String ID;
+    private final String id;
     private final String nome;
+    private String responsavelCpf;
+    private String responsavelNome;
     private String descricao;
-    private String cpfResponsavel;
     private boolean encerrada;
     private boolean ativada;
+    private final HashMap<String, String> tarefas;
+    private int totalTarefas;
+    private int tarefasConcluidas;
 
-    public AtividadeImpl(String ID, String nome, String descricao, String cpfResponsavel) {
-        this.ID = ID;
+    public AtividadeImpl(String id, String nome, String descricao, String responsavelCpf, String responsavelNome) {
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
-        this.cpfResponsavel = cpfResponsavel;
         this.encerrada = false;
         this.ativada = true;
+        tarefas = new HashMap<>();
+        this.responsavelCpf = responsavelCpf;
+        this.responsavelNome = responsavelNome;
+        totalTarefas = 0;
+        tarefasConcluidas = 0;
     }
 
     // TODO Checar erros, verificações e outras especificidades
@@ -47,21 +59,52 @@ public class AtividadeImpl implements Atividade {
     public void alterarDescricao(String novaDescricao) { this.descricao = novaDescricao; }
 
     @Override
-    public void alterarResponsavel(String cpfResponsavelNovo){ this.cpfResponsavel = cpfResponsavelNovo; }
-
-    @Override
-    public String getResponsavel(){
-        return this.cpfResponsavel;
+    public void alterarResponsavel(String cpfResponsavelNovo, String nomeResponsavelNovo){
+        this.responsavelCpf = cpfResponsavelNovo;
+        this.responsavelNome = nomeResponsavelNovo;
     }
 
     @Override
-    public String getNome(){
-        return this.nome;
+    public void adicionaTarefa(String tarefaID, String tarefaNome) {
+        if (tarefas.containsKey(tarefaID)) {
+            return;
+        }
+        tarefas.put(tarefaID, tarefaNome);
+        totalTarefas++;
     }
 
     @Override
-    public String getDescricao(){
-        return this.descricao;
+    public void removeTarefa(String tarefaID) {
+        tarefas.remove(tarefaID);
+    }
+
+    @Override
+    public void concluiTarefa(String tarefaID) {
+       if (tarefas.remove(tarefaID) != null) {
+           tarefasConcluidas++;
+       }
+    }
+
+    @Override
+    public String exibir() {
+        String exibicao = id + ": " + nome;
+        if (responsavelCpf != null) {
+            exibicao += "\nResponsável: " + responsavelNome + " – " + responsavelCpf;
+        }
+        exibicao += "\n===\n" + descricao + "\n===\n" + imprimeTarefas();
+        return exibicao;
+    }
+
+    private String imprimeTarefas() {
+        String exibicao = "Tarefas: " + tarefasConcluidas + "/" + totalTarefas;
+        ArrayList<String> tarefas = new ArrayList<>();
+        for (Map.Entry<String, String> tarefa : this.tarefas.entrySet()) {
+            tarefas.add(tarefa.getValue() + " - " + tarefa.getKey());
+        }
+        for (int i = tarefas.size() - 1; i > -1; i--) {
+            exibicao += "\n- " + tarefas.get(i);
+        }
+        return exibicao;
     }
 
 }
