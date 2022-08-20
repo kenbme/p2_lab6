@@ -1,6 +1,8 @@
 package sapo.pessoa;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
@@ -94,11 +96,40 @@ public class PessoaService {
     }
 
 	public void defineFuncaoProfessor(String CPF, String codSIAPE, String[] disciplinas) {
-		Pessoa pessoa = this.pessoaRepository.get(CPF).orElseThrow();
-		Pessoa professor = new Professor(pessoa.getCPF(), pessoa.getNome(), pessoa.getHabilidades().toArray(new String[0]), codSIAPE, disciplinas);
-		professor.setNivel(pessoa.getNivel());
+		Optional<Pessoa> pessoa = this.pessoaRepository.get(CPF);
+		Pessoa professor = new Professor(pessoa.get().getCPF(), pessoa.get().getNome(), pessoa.get().getHabilidades().toArray(new String[0]), codSIAPE, disciplinas);
+		professor.setNivel(pessoa.get().getNivel());
 		this.pessoaRepository.remove(CPF);
 		this.pessoaRepository.put(professor);
+	}
+
+	public void defineFuncaoAluno(String CPF, String matricula, String periodo) {
+		Optional<Pessoa> pessoa = this.pessoaRepository.get(CPF);
+		Pessoa aluno = new Aluno(pessoa.get().getCPF(), pessoa.get().getNome(), pessoa.get().getHabilidades().toArray(new String[0]), matricula, periodo);
+		aluno.setNivel(pessoa.get().getNivel());
+		this.pessoaRepository.remove(CPF);
+		this.pessoaRepository.put(aluno);
+	}
+	
+	public void removeFuncao(String CPF) {
+		Optional<Pessoa> funcao = this.pessoaRepository.get(CPF);
+		Pessoa pessoa = new PessoaImpl(funcao.get().getCPF(), funcao.get().getNome(), funcao.get().getHabilidades().toArray(new String[0]));
+		pessoa.setNivel(funcao.get().getNivel());
+		this.pessoaRepository.remove(CPF);
+		this.pessoaRepository.put(pessoa);
+	}
+	
+	public int getNivel(String CPF) {
+		return this.pessoaRepository.get(CPF).get().getNivel();
+	}
+
+	public String[] listarPessoas() {
+		HashSet<Pessoa> pessoas = this.pessoaRepository.getAll();
+		ArrayList<String> pessoasSTR = new ArrayList<>();
+		for(Pessoa pessoa : pessoas) {
+			pessoasSTR.add(pessoa.toString());
+		}
+		return pessoasSTR.toArray(new String[0]);
 	}
 
 }

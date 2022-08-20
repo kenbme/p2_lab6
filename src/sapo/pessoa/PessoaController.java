@@ -36,7 +36,18 @@ public class PessoaController {
     	validadorPessoa.validaCpf(CPF);
     	validadorPessoa.valida(disciplinas);
     	validadorPessoa.valida(codSIAPE);
-    	pessoaService.defineFuncaoProfessor(CPF,  codSIAPE,  disciplinas);
+    	this.pessoaService.defineFuncaoProfessor(CPF,  codSIAPE,  disciplinas);
+    }
+    
+    public void defineFuncaoAluno(String CPF, String matricula, String periodo) {
+    	validadorPessoa.validaCpf(CPF);
+    	validadorPessoa.valida(new String[]{matricula, periodo});
+    	this.pessoaService.defineFuncaoAluno(CPF, matricula, periodo);
+    }
+    
+    public void removeFuncao(String CPF) {
+    	validadorPessoa.validaCpf(CPF);
+    	this.pessoaService.removeFuncao(CPF);
     }
 
     public String exibirPessoa(String cpf) {
@@ -71,6 +82,10 @@ public class PessoaController {
     public String listarComentariosPessoa(String cpf) {
         validadorPessoa.validaCpf(cpf);
         return pessoaService.listarComentariosPessoa(cpf);
+    }
+
+    public String[] listarPessoas() {
+    	return this.pessoaService.listarPessoas();
     }
 
 }

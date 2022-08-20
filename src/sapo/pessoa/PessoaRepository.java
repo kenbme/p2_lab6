@@ -1,6 +1,7 @@
 package sapo.pessoa;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -43,6 +44,14 @@ public class PessoaRepository {
         return this.pessoas.values().stream()
                 .filter(filtro)
                 .collect(Collectors.toSet());
+    }
+
+    public HashSet<Pessoa> getAll(){
+    	HashSet<Pessoa> pessoas = new HashSet<>();
+    	for (Pessoa pessoa : this.pessoas.values()) {
+    		pessoas.add(pessoa);
+    	}
+    	return pessoas;
     }
     
 }
