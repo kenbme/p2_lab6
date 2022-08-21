@@ -13,8 +13,9 @@ public class AtividadeController {
     }
 
     public String cadastrarAtividade(String nome, String descricao, String cpf) {
-        // IMPLEMENTAR VALIDACAO DA ENTRADA
         validador.validaCpf(cpf);
+        validador.valida(nome);
+        validador.valida(descricao);
         return atividadeService.cadastrarAtividade(nome, descricao, cpf);
     }
 
