@@ -18,16 +18,42 @@ public class AtividadeTest extends BaseTest {
             facade.cadastrarAtividade("Estudar OO", descricao, "CPF Errado");	
             Assertions.fail("Era esperado um erro por causa do CPF errado.");
         } catch (NoSuchElementException nsee) {}
-        
         try {
         	facade.cadastrarAtividade("Estudar OO", descricao, null);
         	Assertions.fail("Era esperado um erro por causa do CPF nulo.");
         } catch (IllegalArgumentException iae) {}
-        
         try {
         	facade.cadastrarAtividade("", descricao, cpf1);
         	Assertions.fail("Era esperado um erro por causa do nome vazio");
-        } catch (NoSuchElementException nsee) {}
+        } catch (IllegalArgumentException iae) {}
+        try {
+        	facade.cadastrarAtividade(null, descricao, cpf1);
+        	Assertions.fail("Era esperado um erro por causa do nome nulo.");
+        } catch (IllegalArgumentException iae) {}
+        try {
+        	facade.cadastrarAtividade("Estudar OO", null, cpf1);
+        	Assertions.fail("Era esperado um erro por causa da descrição nula.");
+        }catch (IllegalArgumentException iae) {}
+        try {
+        	facade.cadastrarAtividade("Estudar OO", "", cpf1);
+        	Assertions.fail("Era esperado um erro por causa da descrição vazia.");
+        } catch (IllegalArgumentException iae) {}
+    }
+    
+    @Test
+    void exibirAtividadeErros() {
+    	try {
+    		facade.exibirAtividade("nada");
+        	Assertions.fail("Era esperado um erro por causa do ID de atividade inexistente.");
+    	} catch (NoSuchElementException nsee) {}
+    	try {
+    		facade.exibirAtividade("");
+        	Assertions.fail("Era esperado um erro por causa do ID de atividade vazio.");
+    	} catch (NoSuchElementException nsee) {}
+    	try {
+    		facade.exibirAtividade(null);
+        	Assertions.fail("Era esperado um erro por causa do ID de atividade nulo.");
+    	} catch (IllegalArgumentException iae) {}
     }
 
     @Test
@@ -35,7 +61,7 @@ public class AtividadeTest extends BaseTest {
         String idAtividade = facade.cadastrarAtividade("nome", "descricao", cpf1);
         facade.cadastrarTarefa(idAtividade, "nomeTarefa", new String[]{"habilidade1"});
         Assertions.assertEquals(
-                "NMX-1: nome\n" +
+                		"NMX-1: nome\n" +
                         "Responsável: Matheus Canella – 222.222.222-22\n" +
                         "===\n" +
                         "descricao\n" +
@@ -124,5 +150,93 @@ public class AtividadeTest extends BaseTest {
                 facade.exibirAtividade(idAtividade)
         );
     }
-
+    
+    @Test
+    void encerrarAtividadeStringsInvalidas() {
+    	try {
+    		facade.encerrarAtividade("nome Engraçado '-' ");
+    		Assertions.fail("Era esperado um erro ao tentar passar um ID inexistente");
+    	} catch (NoSuchElementException nsee) {}
+    	try {
+    		facade.encerrarAtividade("");
+    		Assertions.fail("Era esperado um erro ao tentar passar um ID vazio");
+    	} catch (NoSuchElementException nsee) {}
+    	try {
+    		facade.encerrarAtividade(null);
+    		Assertions.fail("Era esperado um erro ao tentar passar um ID nulo");
+    	} catch (IllegalArgumentException iae) {}
+    }
+    
+    @Test
+    void desativarAtividadeStringsInvalidas() {
+    	try {
+    		facade.desativarAtividade("Dart Vader");
+    		Assertions.fail("Era esperado um erro ao tentar passar um ID inexistente");
+    	} catch (NoSuchElementException nsee) {}
+    	try {
+    		facade.desativarAtividade("");
+    		Assertions.fail("Era esperado um erro ao tentar passar um ID vazio");
+    	} catch (NoSuchElementException nsee) {}
+    	try {
+    		facade.desativarAtividade(null);
+    		Assertions.fail("Era esperado um erro ao tentar passar um ID nulo");
+    	} catch (IllegalArgumentException iae) {}
+    }
+    
+    @Test
+    void reabrirAtividadeStringsInvalidas() {
+    	String descricao = "Atividade de estudo de OO, considerando alunos com experiência de programação e uso da linguagem Java.";
+    	String atividadeID = facade.cadastrarAtividade("Estudar OO", descricao, cpf1);
+    	facade.encerrarAtividade(atividadeID);
+    	try {
+    		facade.reabrirAtividade("Um ID muito doido");
+    		Assertions.fail("Era esperado um erro ao tentar passar um ID inexistente");
+    	} catch (NoSuchElementException nsee) {}
+    	try {
+    		facade.reabrirAtividade("");
+    		Assertions.fail("Era esperado um erro ao tentar passar um ID vazio");
+    	} catch (NoSuchElementException nsee) {}
+    	try {
+    		facade.reabrirAtividade(null);
+    		Assertions.fail("Era esperado um erro ao tentar passar um ID nulo");
+    	} catch (IllegalArgumentException iae) {}
+    }
+    
+    @Test
+    void atividadeReabrirDesativarEncerrar() {
+    	String descricao = "Atividade de estudo de OO, considerando alunos com experiência de programação e uso da linguagem Java.";
+    	String atividadeID = facade.cadastrarAtividade("Estudar OO", descricao, cpf1);
+    	String tarefaID = facade.cadastrarTarefa(atividadeID, "nomeTarefa", new String[]{"habilidade1"});
+    	try {
+    		facade.desativarAtividade(atividadeID);
+    		Assertions.fail("Era esperado um erro ao tentar desativar uma atividade com tarefas pendentes.");
+    	} catch (IllegalStateException iae) {}
+    	try {
+    		facade.encerrarAtividade(atividadeID);
+    		Assertions.fail("Era esperado um erro ao tentar encerrar uma atividade com tarefas pendentes.");
+    	} catch (IllegalStateException ise) {}
+    	facade.concluirTarefa(tarefaID);
+    	facade.desativarAtividade(atividadeID);
+    	try {
+    		facade.encerrarAtividade(atividadeID);
+    		Assertions.fail("Era esperado um erro ao tentar encerrar uma atividade desativada.");
+    	} catch (IllegalStateException ise) {}
+    	facade.reabrirAtividade(atividadeID);
+    	facade.encerrarAtividade(atividadeID);
+    	try {
+    		facade.desativarAtividade(atividadeID);
+    		Assertions.fail("Era esperado um erro ao tentar desativar uma atividade encerrada.");
+    	} catch (IllegalStateException ise) {}
+    }
+    
+    @Test
+    void alteraDescricaoStringsInvalidas() {
+    	String descricao = "Atividade de estudo de OO, considerando alunos com experiência de programação e uso da linguagem Java.";
+    	String descricao2 = "Descrição alterada.";
+    	String atividadeID = facade.cadastrarAtividade("Estudar OO", descricao, cpf1);
+    	facade.alterarDescricaoAtividade(atividadeID, descricao2);
+    	try {
+    		facade.alterarDescricaoAtividade(atividadeID, null);
+    	} catch (IllegalArgumentException iae) {}
+    }
 }
