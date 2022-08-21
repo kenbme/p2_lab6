@@ -33,26 +33,23 @@ public class AtividadeImpl implements Atividade {
     // TODO Checar erros, verificações e outras especificidades
     @Override
     public void encerrar(){
-        if(!encerrada) {
+        if(ativada && !encerrada && tarefasConcluidas == totalTarefas) {
             encerrada = true;
-        }
-        throw new IllegalStateException("Atividade já encerrada.");
+        } else { throw new IllegalStateException("Atividade já encerrada ou há tarefas pendentes.");}
     }
 
     @Override
     public void desativar(){
-        if (!encerrada){
+        if (!encerrada && tarefasConcluidas == totalTarefas){
             ativada = false;
-        }
-        throw new IllegalStateException("Atividade já está desativada.");
+        } else{ throw new IllegalStateException("Atividade já está desativada ou há tarefas pendentes."); }
     }
 
     @Override
     public void reabrir(){
         if (!ativada){
             ativada = true;
-        }
-        throw new IllegalStateException("Atividade já está ativada.");
+        } else{ throw new IllegalStateException("Atividade já está ativada."); }
     }
 
     @Override
@@ -66,11 +63,13 @@ public class AtividadeImpl implements Atividade {
 
     @Override
     public void adicionaTarefa(String tarefaID, String tarefaNome) {
-        if (tarefas.containsKey(tarefaID)) {
-            return;
-        }
-        tarefas.put(tarefaID, tarefaNome);
-        totalTarefas++;
+        if(ativada && !encerrada) {
+            if (tarefas.containsKey(tarefaID)) {
+                return;
+            }
+            tarefas.put(tarefaID, tarefaNome);
+            totalTarefas++;
+        } else{ throw new IllegalStateException("Atividade desativada/encerrada não pode receber novas tarefas."); }
     }
 
     @Override
