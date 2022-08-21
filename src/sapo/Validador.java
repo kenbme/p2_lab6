@@ -29,7 +29,7 @@ public class Validador {
     
     public void isPositivo(int inteiro) {
     	if (inteiro < 0) {
-    		throw new IllegalArgumentException("O valor da hora não pode ser negativo.");
+    		throw new IllegalArgumentException("O valor da hora nÃ£o pode ser negativo.");
     	}
     }
 
@@ -47,17 +47,17 @@ public class Validador {
         valida(cpf);
         char[] cpfValido = "222.222.222-22".toCharArray();
         if (cpf.length() != cpfValido.length) {
-            throw new NoSuchElementException("Formatação do CPF inválida");
+            throw new NoSuchElementException("FormataÃ§Ã£o do CPF invÃ¡lida");
         }
         char[] cpfSplitado = cpf.toCharArray();
         for (int i = 0; i < cpfSplitado.length; i++) {
             if (isInteger(cpfValido[i])) {
                 if (!isInteger(cpfSplitado[i])) {
-                    throw new NoSuchElementException("Formatação do CPF inválida");
+                    throw new NoSuchElementException("FormataÃ§Ã£o do CPF invÃ¡lida");
                 }
             }
             else if (cpfSplitado[i] != cpfValido[i]) {
-                throw new NoSuchElementException("Formatação do CPF inválida");
+                throw new NoSuchElementException("FormataÃ§Ã£o do CPF invÃ¡lida");
             }
         }
     }
@@ -65,18 +65,18 @@ public class Validador {
     public void validaID(String id){
         valida(id);
         if(id.length() < 5) {
-            throw new NoSuchElementException("Formatação do ID inválida");
+            throw new NoSuchElementException("Formataï¿½ï¿½o do ID invï¿½lida");
         }
         char[] idSplitado = id.toCharArray();
 
         for (int i = 0; i < 3; i++) {
             if (!Character.isLetter(idSplitado[i])) {
-                throw new NoSuchElementException("Formatação do ID inválida");
+                throw new NoSuchElementException("Formataï¿½ï¿½o do ID invï¿½lida");
             }
         }
         for(int i = 4; i < idSplitado.length; i++){
             if(!isInteger(idSplitado[i])){
-                throw new NoSuchElementException("Formatação do ID inválida");
+                throw new NoSuchElementException("Formataï¿½ï¿½o do ID invï¿½lida");
             }
         }
     }
