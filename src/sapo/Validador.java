@@ -61,4 +61,24 @@ public class Validador {
             }
         }
     }
+
+    public void validaID(String id){
+        valida(id);
+        if(id.length() < 5) {
+            throw new NoSuchElementException("Formata��o do ID inv�lida");
+        }
+        char[] idSplitado = id.toCharArray();
+
+        for (int i = 0; i < 3; i++) {
+            if (!Character.isLetter(idSplitado[i])) {
+                throw new NoSuchElementException("Formata��o do ID inv�lida");
+            }
+        }
+        for(int i = 4; i < idSplitado.length; i++){
+            if(!isInteger(idSplitado[i])){
+                throw new NoSuchElementException("Formata��o do ID inv�lida");
+            }
+        }
+    }
+
 }
