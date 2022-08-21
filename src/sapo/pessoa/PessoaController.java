@@ -87,9 +87,5 @@ public class PessoaController {
     public String[] listarPessoas() {
     	return this.pessoaService.listarPessoas();
     }
-    
-    public int getNivel(String CPF) {
-    	return this.pessoaService.getNivel(CPF);
-    }
 
 }

@@ -3,47 +3,30 @@ package sapo.pessoa;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-
-import sapo.tarefa.TarefaDTO;
 
 public class PessoaImpl implements Pessoa {
 
     private final String cpf;
     private String nome;
-    private int nivel;
-    private int nivelAnterior;
-    private HashMap<String, TarefaDTO> tarefasAndamento;
-    private HashMap<String, TarefaDTO> tarefasFinalizadas;
-    private HashSet<String> tarefasAnteriores;
+    private int nivel = 0;
     private final ArrayList<String> habilidades;
     private final ArrayList<Comentario> comentarios;
 
     public PessoaImpl(String cpf, String nome, String[] habilidades) {
         this.cpf = cpf;
         this.nome = nome;
-        this.nivel = 0;
-        this.nivelAnterior = 0;
         this.habilidades = new ArrayList<>();
         this.habilidades.addAll(Arrays.asList(habilidades));
         comentarios = new ArrayList<>();
-		this.tarefasAndamento = new HashMap<>();
-		this.tarefasFinalizadas = new HashMap<>();
-		this.tarefasAnteriores = new HashSet<>();
     }
     
-    public PessoaImpl(String cpf, String nome, String[] habilidades, HashSet<String> tarefasAnteriores, int nivelAnterior) {
-        this.cpf = cpf;
-        this.nome = nome;
-        this.nivel = 0;
-        this.habilidades = new ArrayList<>();
-        this.habilidades.addAll(Arrays.asList(habilidades));
-        comentarios = new ArrayList<>();
-		this.tarefasAndamento = new HashMap<>();
-		this.tarefasFinalizadas = new HashMap<>();
-		this.tarefasAnteriores = tarefasAnteriores;
-		this.nivelAnterior = nivelAnterior;
+    public int calculaNivel() {
+    	return 0;
+    }
+
+    @Override
+    public void contabilizaTarefa() {
+
     }
 
     @Override
@@ -91,59 +74,12 @@ public class PessoaImpl implements Pessoa {
         return habilidades;
     }
     
-    @Override
     public int getNivel() {
-    	calculaNivel();
     	return this.nivel;
     }
+    
+    public void setNivel(int nivel) {
+    	this.nivel = nivel;
+    }
 
-    @Override
-	public void contabilizaTarefa(TarefaDTO tarefa) {
-		if (!this.tarefasAnteriores.contains(tarefa.getID())) {
-			this.tarefasAndamento.put(tarefa.getID(), tarefa);
-		}
-	}
-    
-    @Override
-	public void removeTarefa(TarefaDTO tarefa) {
-    	if (!this.tarefasAnteriores.contains(tarefa.getID())) {
-			this.tarefasAndamento.remove(tarefa.getID());
-		}
-	}
-    
-    @Override
-	public void contabilizaTarefaFinalizada(TarefaDTO tarefa) {
-		if (!this.tarefasAnteriores.contains(tarefa.getID())) {
-			this.tarefasAndamento.remove(tarefa.getID());
-			this.tarefasFinalizadas.put(tarefa.getID(), tarefa);
-		}
-	}
-    
-    @Override
-	public void removeTarefaFinalizada(TarefaDTO tarefa) {
-    	if (!this.tarefasAnteriores.contains(tarefa.getID())) {
-			this.tarefasAndamento.put(tarefa.getID(), tarefa);
-			this.tarefasFinalizadas.remove(tarefa.getID());
-		}
-	}
-	
-	private void calculaNivel() {
-		this.nivel = (int)Math.floor(this.tarefasAndamento.size() / 2) + this.tarefasFinalizadas.size() + this.nivelAnterior;
-	}
-
-	@Override
-	public HashSet<String> getTarefas() {
-		HashSet<String> tarefasTotais = new HashSet<>();
-		for (TarefaDTO tarefa : this.tarefasAndamento.values()) {
-			tarefasTotais.add(tarefa.getID());
-		}
-		for (TarefaDTO tarefa : this.tarefasFinalizadas.values()) {
-			tarefasTotais.add(tarefa.getID());
-		}
-		for (String tarefaID : this.tarefasAnteriores) {
-			tarefasTotais.add(tarefaID);
-		}
-		return tarefasTotais;
-	}
-	
 }

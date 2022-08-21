@@ -73,4 +73,20 @@ public class TarefaController {
     	return this.ts.concluida(IDTarefa);
     }
 
+    public String cadastraTarefa(String atividadeId, String nome, String[] habilidades, String[] idTarefas) {
+		return ts.cadastraTarefa(atividadeId, nome, habilidades, idTarefas);
+	}
+
+	public void adicionarNaTarefaGerencial(String idTarefaGerencial, String idTarefa) {
+		ts.adicionarNaTarefaGerencial(idTarefaGerencial, idTarefa);
+	}
+
+	public void removerDaTarefaGerencial(String idTarefaGerencial, String idTarefa) {
+		ts.removerDaTarefaGerencial(idTarefaGerencial, idTarefa);
+	}
+
+	public int contarTodasTarefasNaTarefaGerencial(String idTarefaGerencial) {
+		return ts.contarTodasTarefasNaTarefaGerencial(idTarefaGerencial);
+	}
+
 }

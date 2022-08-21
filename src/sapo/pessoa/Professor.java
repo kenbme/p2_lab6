@@ -1,102 +1,27 @@
 package sapo.pessoa;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 
-import sapo.tarefa.TarefaDTO;
+public class Professor extends PessoaImpl {
 
-public class Professor implements Pessoa {
-
-	private final String CPF;
-    private String nome;
 	private String codSIAPE;
     private String[] disciplinas;
-    private int nivel = 0;
-    private int nivelAnterior = 0;
-    private final ArrayList<String> habilidades;
-    private final ArrayList<Comentario> comentarios;
-    private HashMap<String, TarefaDTO> tarefasAndamento;
-    private HashMap<String, TarefaDTO> tarefasFinalizadas;
-    private HashSet<String> tarefasAnteriores;
     
     public Professor(String cpf, String nome, String[] habilidades, String codSIAPE, String[] disciplinas) {
-    	this.CPF = cpf;
-        this.nome = nome;
+		super(cpf, nome, habilidades);
 		this.codSIAPE = codSIAPE;
 		this.disciplinas = disciplinas;
-		this.comentarios = new ArrayList<>();
-		this.habilidades = new ArrayList<>();
-        this.habilidades.addAll(Arrays.asList(habilidades));
-		this.tarefasAndamento = new HashMap<>();
-		this.tarefasFinalizadas = new HashMap<>();
-		this.tarefasAnteriores = new HashSet<>();
 	}
     
-    public Professor(String cpf, String nome, String[] habilidades, String codSIAPE, String[] disciplinas, HashSet<String> tarefasAnteriores, int nivelAnterior) {
-    	this.CPF = cpf;
-        this.nome = nome;
-		this.codSIAPE = codSIAPE;
-		this.disciplinas = disciplinas;
-		this.comentarios = new ArrayList<>();
-		this.habilidades = new ArrayList<>();
-        this.habilidades.addAll(Arrays.asList(habilidades));
-		this.tarefasAndamento = new HashMap<>();
-		this.tarefasFinalizadas = new HashMap<>();
-		this.tarefasAnteriores = tarefasAnteriores;
-		this.nivelAnterior = nivelAnterior;
-	}
+    public int calcularNivel() {
+    	return 0;
+    }
     
-    public String exibir() {
-    	return this.nome + " - " + this.CPF + "\n" +
+    public String toString() {
+    	return super.getNome() + " - " + super.getCPF() + "\n" +
 				"Professor - " + this.codSIAPE+ " - " + disciplinasToString() + "\n" + 
 				habilidadesToString();
-    }
-    
-    @Override
-    public void alterarNome(String novoNome) {
-        nome = novoNome;
-    }
-
-    @Override
-    public void alterarHabilidades(String[] novasHabilidades) {
-        this.habilidades.addAll(Arrays.asList(novasHabilidades));
-    }
-
-    @Override
-    public void adicionarComentario(String comentario, String autorCpf) {
-        comentarios.add(new Comentario(comentario, autorCpf));
-    }
-    
-    @Override
-    public ArrayList<Comentario> getComentarios() {
-        return comentarios;
-    }
-    
-    @Override
-    public String getNome() {
-        return nome;
-    }
-
-    @Override
-    public String getCPF() {
-        return CPF;
-    }
-    
-    @Override
-    public ArrayList<String> getHabilidades() {
-        return habilidades;
-    }
-    
-    private String habilidadesToString() {
-    	String habilidadesSTR = "";
-    	Collections.sort(this.habilidades);
-    	for (String habilidade : this.habilidades) {
-    		habilidadesSTR += habilidade + "\n";
-    	}
-    	return habilidadesSTR;
     }
 
     private String disciplinasToString() {
@@ -107,67 +32,14 @@ public class Professor implements Pessoa {
     	return dts;
     }
     
-    public int getNivel() {
-    	calculaNivel();
-    	return this.nivel;
-    }
-    
-    @Override
-	public void contabilizaTarefa(TarefaDTO tarefa) {
-		if (!this.tarefasAnteriores.contains(tarefa.getID())) {
-			this.tarefasAndamento.put(tarefa.getID(), tarefa);
-		}
-	}
-    
-    @Override
-	public void removeTarefa(TarefaDTO tarefa) {
-    	if (!this.tarefasAnteriores.contains(tarefa.getID())) {
-			this.tarefasAndamento.remove(tarefa.getID());
-		}
-	}
-    
-    @Override
-	public void contabilizaTarefaFinalizada(TarefaDTO tarefa) {
-		if (!this.tarefasAnteriores.contains(tarefa.getID())) {
-			this.tarefasAndamento.remove(tarefa.getID());
-			this.tarefasFinalizadas.put(tarefa.getID(), tarefa);
-		}
-	}
-    
-    @Override
-	public void removeTarefaFinalizada(TarefaDTO tarefa) {
-    	if (!this.tarefasAnteriores.contains(tarefa.getID())) {
-			this.tarefasAndamento.put(tarefa.getID(), tarefa);
-			this.tarefasFinalizadas.remove(tarefa.getID());
-		}
-	}
-    
-    public void calculaNivel() {
-    	int comHabilidades = 0;
-    	for (TarefaDTO tarefa : this.tarefasFinalizadas.values()) {
-    		for(String habilidades : tarefa.getHabilidadesRecomendadas()) {
-    			if (this.habilidades.contains(habilidades)) {
-    				comHabilidades ++;
-    				break;
-    			}
-    		}
+    private String habilidadesToString() {
+    	String habilidadesSTR = "";
+    	ArrayList<String> habilidades = super.getHabilidades();
+    	Collections.sort(habilidades);
+    	for (String habilidade : habilidades) {
+    		habilidadesSTR += habilidade + "\n";
     	}
-    	this.nivel = (int)Math.floor(this.tarefasAndamento.size() / 4) + comHabilidades + this.nivelAnterior;
+    	return habilidadesSTR;
     }
-    
-    @Override
-	public HashSet<String> getTarefas() {
-		HashSet<String> tarefasTotais = new HashSet<>();
-		for (TarefaDTO tarefa : this.tarefasAndamento.values()) {
-			tarefasTotais.add(tarefa.getID());
-		}
-		for (TarefaDTO tarefa : this.tarefasFinalizadas.values()) {
-			tarefasTotais.add(tarefa.getID());
-		}
-		for (String tarefaID : this.tarefasAnteriores) {
-			tarefasTotais.add(tarefaID);
-		}
-		return tarefasTotais;
-	}
     
 }

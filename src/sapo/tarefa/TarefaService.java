@@ -1,9 +1,10 @@
 package sapo.tarefa;
 
-import java.util.HashMap;
-
 import sapo.atividade.AtividadeService;
 import sapo.pessoa.PessoaService;
+
+import java.util.HashMap;
+import java.util.NoSuchElementException;
 
 public class TarefaService {
 
@@ -23,6 +24,17 @@ public class TarefaService {
         this.as.adicionaTarefa(atividadeID, tarefa.getID(), nome);
         this.tr.put(tarefa);
     	return tarefa.getID();
+    }
+
+    public String cadastraTarefa(String atividadeId, String nome, String[] habilidades, String[] idTarefas) {
+        HashMap<String, String> tarefas = new HashMap<>();
+        for (String id: idTarefas) {
+            tarefas.put(id, tr.get(id).orElseThrow().getNome());
+        }
+        TarefaGerencial tarefa = new TarefaGerencial(atividadeId,atividadeId + "-" + tr.getTotalTarefas(), nome, habilidades, tarefas);
+        this.as.adicionaTarefa(atividadeId, tarefa.getID(), nome);
+        this.tr.put(tarefa);
+        return tarefa.getID();
     }
 
     public void alteraNome(String IDTarefa, String novoNome) {
@@ -52,9 +64,6 @@ public class TarefaService {
         Tarefa tarefa = this.tr.get(IDTarefa).orElseThrow();
     	if(tarefa.concluirTarefa()) {
             as.concluiTarefa(tarefa.getAtividadeID(), tarefa.getID());
-            this.ps.contabilizaTarefaFinalizada(getDTO(IDTarefa));
-        } else {
-        	this.ps.removeTarefaFinalizada(getDTO(IDTarefa));
         }
     }
 
@@ -69,12 +78,14 @@ public class TarefaService {
     }
 
     public void adicionaPessoa(String IDTarefa, String CPF) {
-    	if (this.tr.get(IDTarefa).get().concluida()) {
+    	if (this.tr.get(IDTarefa).orElseThrow().concluida()) {
     		return;
     	}
     	String nome = this.ps.getNomePessoaOuFalha(CPF);
+    	boolean concluida = this.tr.get(IDTarefa).get().concluida();
+    	this.ps.contabilizaTarefa(CPF, concluida);
     	this.tr.get(IDTarefa).get().adicionaPessoa(CPF, nome);
-    	this.ps.contabilizaTarefa(getDTO(IDTarefa), CPF);
+    	this.tr.get(IDTarefa).orElseThrow().adicionaPessoa(CPF, nome);
     }
 
     public void removePessoa(String IDTarefa, String CPF) {
@@ -82,7 +93,6 @@ public class TarefaService {
     		return;
     	}
     	this.tr.get(IDTarefa).orElseThrow().removePessoa(CPF);
-    	this.ps.removeTarefa(getDTO(IDTarefa), CPF);
     }
     
     public boolean concluida (String IDTarefa) {
@@ -96,12 +106,27 @@ public class TarefaService {
     public String[] sugestionar(String cpf) {
         throw new UnsupportedOperationException();
     }
-    
-    private TarefaDTO getDTO(String tarefaID) {
-    	String[] habilidades = this.tr.get(tarefaID).get().getHabilidadesRecomendadas();
-    	HashMap<String, String> pessoas = this.tr.get(tarefaID).get().getPessoas();
-    	String ID = this.tr.get(tarefaID).get().getID();
-    	return new TarefaDTO(habilidades, pessoas, ID);
+
+    public void adicionarNaTarefaGerencial(String idTarefaGerencial, String idTarefa) {
+        Tarefa tarefa = tr.get(idTarefaGerencial).orElseThrow();
+        if (tarefa instanceof TarefaGerencial) {
+            ((TarefaGerencial) tarefa).adicionarTarefa(idTarefa, tr.get(idTarefa).orElseThrow().getNome());
+        }
+    }
+
+    public void removerDaTarefaGerencial(String idTarefaGerencial, String idTarefa) {
+        Tarefa tarefa = tr.get(idTarefaGerencial).orElseThrow();
+        if (tarefa instanceof TarefaGerencial) {
+            ((TarefaGerencial) tarefa).removerTarefa(idTarefa);
+        }
+    }
+
+    public int contarTodasTarefasNaTarefaGerencial(String idTarefaGerencial) {
+        Tarefa tarefa = tr.get(idTarefaGerencial).orElseThrow();
+        if (tarefa instanceof TarefaGerencial) {
+            return ((TarefaGerencial) tarefa).contarTarefas();
+        }
+        throw new NoSuchElementException();
     }
 
 }
