@@ -6,9 +6,8 @@ public class Tarefa {
 
     private final String atividadeID;
     private int horasExecutadas;
-
     private String nome;
-    private String[] habilidades;
+    private String[] habilidadesRecomendadas;
     private final HashMap<String, String> pessoas;
     private final String ID;
     private boolean concluida = false;
@@ -16,7 +15,7 @@ public class Tarefa {
     public Tarefa(String atividadeID, String tarefaID, String nome, String[] habilidades) {
         this.pessoas = new HashMap<>();
         this.nome = nome;
-        this.habilidades = habilidades;
+        this.habilidadesRecomendadas = habilidades;
         this.ID = tarefaID;
         this.atividadeID = atividadeID;
     }
@@ -30,7 +29,7 @@ public class Tarefa {
     }
 
     public void alteraHabilidades(String[] habilidades) {
-        this.habilidades = habilidades;
+        this.habilidadesRecomendadas = habilidades;
     }
 
     public void acrescentaHoras(int horas) {
@@ -46,7 +45,7 @@ public class Tarefa {
 
     public String toString() {
         String exibicao = this.nome + " – " + this.ID;
-        for (String habilidade : habilidades) {
+        for (String habilidade : habilidadesRecomendadas) {
             exibicao += "\n- " + habilidade;
         }
         exibicao += "\n(" + this.horasExecutadas + " hora(s) executada(s)" + "\n===\n" + equipes();
@@ -86,6 +85,14 @@ public class Tarefa {
 
     public String getAtividadeID() {
         return atividadeID;
+    }
+    
+    public String[] getHabilidadesRecomendadas() {
+    	return this.habilidadesRecomendadas;
+    }
+    
+    public HashMap<String, String> getPessoas(){
+    	return this.pessoas;
     }
 
 }
