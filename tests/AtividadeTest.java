@@ -5,6 +5,11 @@ import org.junit.jupiter.api.Test;
 
 public class AtividadeTest extends BaseTest {
 
+	String parametroNulo = "Era esperado um erro ao tentar passar um parametro nulo";
+	String parametroVazio = "Era esperado um erro ao tentar passar um parametro vazio";
+	String parametroInexistente = "Era esperado um erro ao tentar passar um parametro inexistente";
+	String naoECPF = "Era esperado um erro ao tentar passar algo que não seja CPF";
+	
     @Test
     void cadastrarAtividadeTest1() {
         String descricao = "Atividade de estudo de OO, considerando alunos com experiência de programação e uso da linguagem Java.";
@@ -16,27 +21,27 @@ public class AtividadeTest extends BaseTest {
     	String descricao = "Atividade de estudo de OO, considerando alunos com experiência de programação e uso da linguagem Java.";
     	try {
             facade.cadastrarAtividade("Estudar OO", descricao, "CPF Errado");	
-            Assertions.fail("Era esperado um erro por causa do CPF errado.");
+            Assertions.fail(naoECPF);
         } catch (NoSuchElementException nsee) {}
         try {
         	facade.cadastrarAtividade("Estudar OO", descricao, null);
-        	Assertions.fail("Era esperado um erro por causa do CPF nulo.");
+        	Assertions.fail(parametroNulo + " - CPF");
         } catch (IllegalArgumentException iae) {}
         try {
         	facade.cadastrarAtividade("", descricao, cpf1);
-        	Assertions.fail("Era esperado um erro por causa do nome vazio");
+        	Assertions.fail(parametroVazio + " - Nome");
         } catch (IllegalArgumentException iae) {}
         try {
         	facade.cadastrarAtividade(null, descricao, cpf1);
-        	Assertions.fail("Era esperado um erro por causa do nome nulo.");
+        	Assertions.fail(parametroNulo + " - Nome");
         } catch (IllegalArgumentException iae) {}
         try {
         	facade.cadastrarAtividade("Estudar OO", null, cpf1);
-        	Assertions.fail("Era esperado um erro por causa da descrição nula.");
+        	Assertions.fail(parametroNulo + " - Descrição");
         }catch (IllegalArgumentException iae) {}
         try {
         	facade.cadastrarAtividade("Estudar OO", "", cpf1);
-        	Assertions.fail("Era esperado um erro por causa da descrição vazia.");
+        	Assertions.fail(parametroVazio + " - Descrição");
         } catch (IllegalArgumentException iae) {}
     }
     
@@ -44,15 +49,15 @@ public class AtividadeTest extends BaseTest {
     void exibirAtividadeErros() {
     	try {
     		facade.exibirAtividade("nada");
-        	Assertions.fail("Era esperado um erro por causa do ID de atividade inexistente.");
+        	Assertions.fail(parametroInexistente + " - ID");
     	} catch (NoSuchElementException nsee) {}
     	try {
     		facade.exibirAtividade("");
-        	Assertions.fail("Era esperado um erro por causa do ID de atividade vazio.");
-    	} catch (NoSuchElementException nsee) {}
+        	Assertions.fail(parametroVazio + " - ID");
+    	} catch (IllegalArgumentException iae) {}
     	try {
     		facade.exibirAtividade(null);
-        	Assertions.fail("Era esperado um erro por causa do ID de atividade nulo.");
+        	Assertions.fail(parametroNulo + " - ID");
     	} catch (IllegalArgumentException iae) {}
     }
 
@@ -154,16 +159,16 @@ public class AtividadeTest extends BaseTest {
     @Test
     void encerrarAtividadeStringsInvalidas() {
     	try {
-    		facade.encerrarAtividade("nome Engraçado '-' ");
-    		Assertions.fail("Era esperado um erro ao tentar passar um ID inexistente");
+    		facade.encerrarAtividade("nome Engraçado");
+    		Assertions.fail(parametroInexistente + " - ID");
     	} catch (NoSuchElementException nsee) {}
     	try {
     		facade.encerrarAtividade("");
-    		Assertions.fail("Era esperado um erro ao tentar passar um ID vazio");
-    	} catch (NoSuchElementException nsee) {}
+    		Assertions.fail(parametroVazio + " - ID");
+    	} catch (IllegalArgumentException iae) {}
     	try {
     		facade.encerrarAtividade(null);
-    		Assertions.fail("Era esperado um erro ao tentar passar um ID nulo");
+    		Assertions.fail(parametroNulo + " - ID");
     	} catch (IllegalArgumentException iae) {}
     }
     
@@ -171,15 +176,15 @@ public class AtividadeTest extends BaseTest {
     void desativarAtividadeStringsInvalidas() {
     	try {
     		facade.desativarAtividade("Dart Vader");
-    		Assertions.fail("Era esperado um erro ao tentar passar um ID inexistente");
+    		Assertions.fail(parametroInexistente + " - ID");
     	} catch (NoSuchElementException nsee) {}
     	try {
     		facade.desativarAtividade("");
-    		Assertions.fail("Era esperado um erro ao tentar passar um ID vazio");
-    	} catch (NoSuchElementException nsee) {}
+    		Assertions.fail(parametroVazio + " - ID");
+    	} catch (IllegalArgumentException iae) {}
     	try {
     		facade.desativarAtividade(null);
-    		Assertions.fail("Era esperado um erro ao tentar passar um ID nulo");
+    		Assertions.fail(parametroNulo + " - ID");
     	} catch (IllegalArgumentException iae) {}
     }
     
@@ -190,15 +195,15 @@ public class AtividadeTest extends BaseTest {
     	facade.encerrarAtividade(atividadeID);
     	try {
     		facade.reabrirAtividade("Um ID muito doido");
-    		Assertions.fail("Era esperado um erro ao tentar passar um ID inexistente");
+    		Assertions.fail(parametroInexistente + " - ID");
     	} catch (NoSuchElementException nsee) {}
     	try {
     		facade.reabrirAtividade("");
-    		Assertions.fail("Era esperado um erro ao tentar passar um ID vazio");
+    		Assertions.fail(parametroVazio + " - ID");
     	} catch (NoSuchElementException nsee) {}
     	try {
     		facade.reabrirAtividade(null);
-    		Assertions.fail("Era esperado um erro ao tentar passar um ID nulo");
+    		Assertions.fail(parametroNulo + " - ID");
     	} catch (IllegalArgumentException iae) {}
     }
     
@@ -237,6 +242,49 @@ public class AtividadeTest extends BaseTest {
     	facade.alterarDescricaoAtividade(atividadeID, descricao2);
     	try {
     		facade.alterarDescricaoAtividade(atividadeID, null);
+    		Assertions.fail(parametroNulo + " - Descrição");
+    	} catch (IllegalArgumentException iae) {}
+    	try {
+    		facade.alterarDescricaoAtividade("github me deu stress", descricao2);
+    		Assertions.fail(parametroInexistente + " - ID");
+    	} catch (NoSuchElementException nsee) {}
+    	try {
+    		facade.alterarDescricaoAtividade("", descricao2);
+    		Assertions.fail(parametroVazio + " - ID");
+    	} catch (IllegalArgumentException iae) {}
+    }
+    
+    @Test
+    void alteraResposavelStringsInvalidas() {
+    	String descricao = "Atividade de estudo de OO, considerando alunos com experiência de programação e uso da linguagem Java.";
+    	String atividadeID = facade.cadastrarAtividade("Estudar OO", descricao, cpf1);
+    	try {
+    		facade.alterarResponsavelAtividade(atividadeID, "Não é um CPF");
+    		Assertions.fail(naoECPF);
+    	} catch (NoSuchElementException nsee) {}
+    	try {
+    		facade.alterarResponsavelAtividade(atividadeID, "130.199.199.130-19");
+    		Assertions.fail(parametroInexistente + " - CPF");
+    	} catch (NoSuchElementException nsee) {}
+    	try {
+    		facade.alterarResponsavelAtividade(atividadeID, null);
+    		Assertions.fail(parametroNulo + " - CPF");
+    	} catch (IllegalArgumentException iae) {}
+    	try {
+    		facade.alterarResponsavelAtividade(atividadeID, "");
+    		Assertions.fail(parametroVazio + " - CPF");
+    	} catch (IllegalArgumentException iae) {}
+    	try {
+    		facade.alterarResponsavelAtividade("Não é um ID", cpf4);
+    		Assertions.fail(parametroInexistente + " - ID");
+    	} catch (NoSuchElementException nsee) {}
+    	try {
+    		facade.alterarResponsavelAtividade("", cpf4);
+    		Assertions.fail(parametroVazio + " - ID");
+    	} catch (IllegalArgumentException iae) {}
+    	try {
+    		facade.alterarResponsavelAtividade(null, cpf4);
+    		Assertions.fail(parametroNulo + " - ID");
     	} catch (IllegalArgumentException iae) {}
     }
 }
