@@ -7,6 +7,8 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
+import sapo.tarefa.TarefaDTO;
+
 public class PessoaService {
 
     private final PessoaRepository pessoaRepository;
@@ -89,24 +91,21 @@ public class PessoaService {
 
 	public void defineFuncaoProfessor(String CPF, String codSIAPE, String[] disciplinas) {
 		Optional<Pessoa> pessoa = this.pessoaRepository.get(CPF);
-		Pessoa professor = new Professor(pessoa.get().getCPF(), pessoa.get().getNome(), pessoa.get().getHabilidades().toArray(new String[0]), codSIAPE, disciplinas);
-		professor.setNivel(pessoa.get().getNivel());
+		Pessoa professor = new Professor(pessoa.get().getCPF(), pessoa.get().getNome(), pessoa.get().getHabilidades().toArray(new String[0]), codSIAPE, disciplinas, pessoa.get().getTarefas(), pessoa.get().getNivel());
 		this.pessoaRepository.remove(CPF);
 		this.pessoaRepository.put(professor);
 	}
 
 	public void defineFuncaoAluno(String CPF, String matricula, String periodo) {
 		Optional<Pessoa> pessoa = this.pessoaRepository.get(CPF);
-		Pessoa aluno = new Aluno(pessoa.get().getCPF(), pessoa.get().getNome(), pessoa.get().getHabilidades().toArray(new String[0]), matricula, periodo);
-		aluno.setNivel(pessoa.get().getNivel());
+		Pessoa aluno = new Aluno(pessoa.get().getCPF(), pessoa.get().getNome(), pessoa.get().getHabilidades().toArray(new String[0]), matricula, periodo, pessoa.get().getTarefas(), pessoa.get().getNivel());
 		this.pessoaRepository.remove(CPF);
 		this.pessoaRepository.put(aluno);
 	}
 	
 	public void removeFuncao(String CPF) {
 		Optional<Pessoa> funcao = this.pessoaRepository.get(CPF);
-		Pessoa pessoa = new PessoaImpl(funcao.get().getCPF(), funcao.get().getNome(), funcao.get().getHabilidades().toArray(new String[0]));
-		pessoa.setNivel(funcao.get().getNivel());
+		Pessoa pessoa = new PessoaImpl(funcao.get().getCPF(), funcao.get().getNome(), funcao.get().getHabilidades().toArray(new String[0]), funcao.get().getTarefas(), funcao.get().getNivel());
 		this.pessoaRepository.remove(CPF);
 		this.pessoaRepository.put(pessoa);
 	}
@@ -124,8 +123,24 @@ public class PessoaService {
 		return pessoasSTR.toArray(new String[0]);
 	}
 
-	public void contabilizaTarefa(String CPF, boolean concluida) {
-		// this.pessoaRepository.get(CPF).contabilizaTarefa(concluida);
+	public void contabilizaTarefa(TarefaDTO tarefa, String CPF) {
+		this.pessoaRepository.get(CPF).get().contabilizaTarefa(tarefa);
+	}
+	
+	public void removeTarefa(TarefaDTO tarefa, String CPF) {
+		this.pessoaRepository.get(CPF).get().removeTarefa(tarefa);
+	}
+	
+	public void contabilizaTarefaFinalizada(TarefaDTO tarefa) {
+		for (String CPF : tarefa.getPessoas().keySet()){
+			this.pessoaRepository.get(CPF).get().contabilizaTarefaFinalizada(tarefa);
+		}
+	}
+
+	public void removeTarefaFinalizada(TarefaDTO tarefa) {
+		for (String CPF : tarefa.getPessoas().keySet()){
+			this.pessoaRepository.get(CPF).get().removeTarefaFinalizada(tarefa);
+		}
 	}
 
 }

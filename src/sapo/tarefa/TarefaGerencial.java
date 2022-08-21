@@ -1,36 +1,62 @@
 package sapo.tarefa;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
-public class TarefaGerencial extends Tarefa {
+public class TarefaGerencial implements Tarefaw {
+    private int horasExecutadas;
+    private String nome;
+    private String[] habilidadesRecomendadas;
+    private HashSet<String> cpfs;
+    private String ID;
+    private boolean concluida;
+    private HashSet<String> idTarefas;
 
-    private final HashMap<String, String> tarefas;
-
-    public TarefaGerencial(String atividadeID, String tarefaID, String nome, String[] habilidades, HashMap<String, String> tarefas){
-        super(atividadeID, tarefaID, nome, habilidades);
-        this.tarefas = tarefas;
+    public TarefaGerencial(String ID, String nome, String[] habilidades, String[] idTarefas){
+        this.nome = nome;
+        this.habilidadesRecomendadas = habilidades;
+        this.idTarefas = new HashSet<>();
+        this.idTarefas.add("Gestão");
+        this.idTarefas.addAll(Arrays.asList(idTarefas));
+        this.ID = ID;
+        this.concluida = false;
     }
-
-    public void adicionarTarefa(String idTarefa, String nomeTarefa){
-        tarefas.put(idTarefa, nomeTarefa);
-    }
-
-    public void removerTarefa(String idTarefa){
-        tarefas.remove(idTarefa);
-    }
-
-    public int contarTarefas(){
-        return tarefas.size();
+    public HashSet<String> getIdTarefas(){
+        return idTarefas;
     }
 
     @Override
-    public String toString() {
-        String exibicao = super.toString() + "\n===\nTarefas:";
-        for (Map.Entry<String, String> tarefa : tarefas.entrySet()) {
-            exibicao += "\n- " + tarefa.getValue() + " - " + tarefa.getKey();
-        }
-        return exibicao;
+    public void acrescentaHoras(int horas) {
+        this.horasExecutadas += horas;
     }
 
+    @Override
+    public void decrescentaHoras(int horas) {
+        this.horasExecutadas -= horas;
+        if (this.horasExecutadas < 0) {
+            this.horasExecutadas = 0;
+        }
+    }
+    @Override
+    public void adicionaPessoa(String CPF) {
+        this.cpfs.add(CPF);
+    }
+    @Override
+    public void removePessoa(String CPF) {
+        this.cpfs.remove(CPF);
+    }
+    @Override
+    public void concluirTarefa(){
+        this.concluida = true;
+    }
+    public void adicionarTarefa(String idTarefa){
+        this.idTarefas.add(idTarefa);
+    }
+    public void removerTarefa(String idTarefa){
+        this.idTarefas.remove(idTarefa);
+    }
+    public int contarTarefas(){
+        return this.idTarefas.size();
+    }
 }

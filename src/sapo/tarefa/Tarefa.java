@@ -6,23 +6,18 @@ public class Tarefa {
 
     private final String atividadeID;
     private int horasExecutadas;
-
     private String nome;
-    private String[] habilidades;
-    private final HashMap<String, String> pessoas;
-    private final String ID;
+    private String[] habilidadesRecomendadas;
+    private HashMap<String, String> pessoas;
+    private  String ID;
     private boolean concluida = false;
 
     public Tarefa(String atividadeID, String tarefaID, String nome, String[] habilidades) {
         this.pessoas = new HashMap<>();
         this.nome = nome;
-        this.habilidades = habilidades;
+        this.habilidadesRecomendadas = habilidades;
         this.ID = tarefaID;
         this.atividadeID = atividadeID;
-    }
-
-    public String getNome() {
-        return nome;
     }
 
     public void alteraNome(String nome) {
@@ -30,7 +25,7 @@ public class Tarefa {
     }
 
     public void alteraHabilidades(String[] habilidades) {
-        this.habilidades = habilidades;
+        this.habilidadesRecomendadas = habilidades;
     }
 
     public void acrescentaHoras(int horas) {
@@ -45,12 +40,10 @@ public class Tarefa {
     }
 
     public String toString() {
-        String exibicao = this.nome + " – " + this.ID;
-        for (String habilidade : habilidades) {
-            exibicao += "\n- " + habilidade;
-        }
-        exibicao += "\n(" + this.horasExecutadas + " hora(s) executada(s)" + "\n===\n" + equipes();
-        return exibicao;
+        return this.nome + " " + this.ID + "\n" +
+                    "(" + this.horasExecutadas + " hora(s) Executada(s)" + "\n" +
+                    "===" + "\n" +
+                    equipes();         
     }
 
     public boolean concluirTarefa() {
@@ -62,30 +55,37 @@ public class Tarefa {
         this.pessoas.put(CPF, nome);
     }
 
-
     public void removePessoa(String CPF) {
         this.pessoas.remove(CPF);
     }
 
     public String getID() {
-        return this.ID;
+    	return this.ID;
     }
-
+    
     public boolean concluida() {
-        return this.concluida;
+    	return this.concluida;
     }
-
+    
     private String equipes() {
-        String equipes = "Equipe:";
-        for (String CPF : this.pessoas.keySet()) {
-            equipes += "\n" + pessoas.get(CPF) + " - " + CPF;
-        }
-
-        return equipes;
+    	String equipes = "Equipe:";
+    	for (String CPF : this.pessoas.keySet()) {
+    		equipes += "\n" + pessoas.get(CPF) + " - " + CPF;
+    	}
+    	
+    	return equipes;
     }
 
     public String getAtividadeID() {
         return atividadeID;
+    }
+    
+    public String[] getHabilidadesRecomendadas() {
+    	return this.habilidadesRecomendadas;
+    }
+    
+    public HashMap<String, String> getPessoas(){
+    	return this.pessoas;
     }
 
 }
