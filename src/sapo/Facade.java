@@ -164,49 +164,49 @@ public class Facade {
     }
 
     // FUNCAO
-    public void cadastrarAluno(String cpf, String nome, String matr, int periodo, String[] habilidades) {
-
+    public void cadastraAluno(String CPF, String nome, String[]habilidades, String matricula, String periodo) {
+    	this.pessoaController.cadastraAluno(CPF, nome, habilidades, matricula, periodo);
     }
 
-    public void cadastrarProfessor(String cpf, String nome, String siape, String[] disciplinas, String[] habilidades) {
-
+    public void cadastraProfessor(String CPF, String nome, String[]habilidades, String codSIAPE, String[] disciplinas) {
+    	this.pessoaController.cadastraProfessor(CPF, nome, habilidades, codSIAPE, disciplinas);
     }
 
-    public void definirFuncaoProfessor(String cpf, String siape, String[] disciplinas) {
-
+    public void defineFuncaoAluno(String CPF, String matricula, String periodo) {
+    	this.pessoaController.defineFuncaoAluno(CPF, matricula, periodo);
     }
 
-    public void definirFuncaoAluno(String cpf, String matr, int periodo) {
-
+    public void defineFuncaoProfessor(String CPF, String codSIAPE, String[] disciplinas) {
+    	this.pessoaController.defineFuncaoProfessor(CPF, codSIAPE, disciplinas);
     }
-
-    public void removerFuncao(String cpf) {
-
+    
+    public void removeFuncao(String CPF) {
+    	this.pessoaController.removeFuncao(CPF);
     }
-
-    public int pegarNivel(String cpf) {
-        throw new UnsupportedOperationException();
+    
+    public int pegarNivel(String CPF) {
+    	return this.pessoaController.getNivel(CPF);
     }
-
+    
     public String[] listarPessoas() {
-        throw new UnsupportedOperationException();
+    	return this.pessoaController.listarPessoas();
     }
 
     // TAREFA GERENCIAL
     public String cadastrarTarefaGerencial(String atividadeId, String nome, String[] habilidades, String[] idTarefas) {
-        return tarefaController.cadastraTarefa(atividadeId, nome, habilidades, idTarefas);
+        throw new UnsupportedOperationException();
     }
 
     public void adicionarNaTarefaGerencial(String idTarefaGerencial, String idTarefa) {
-        tarefaController.adicionarNaTarefaGerencial( idTarefaGerencial,  idTarefa);
+
     }
 
     public void removerDaTarefaGerencial(String idTarefaGerencial, String idTarefa) {
-        tarefaController.removerDaTarefaGerencial(idTarefaGerencial,  idTarefa);
+
     }
 
     public int contarTodasTarefasNaTarefaGerencial(String idTarefaGerencial) {
-        return tarefaController.contarTodasTarefasNaTarefaGerencial(idTarefaGerencial);
+        throw new UnsupportedOperationException();
     }
 
 }
