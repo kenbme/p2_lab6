@@ -1,3 +1,5 @@
+import java.util.NoSuchElementException;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -7,6 +9,25 @@ public class AtividadeTest extends BaseTest {
     void cadastrarAtividadeTest1() {
         String descricao = "Atividade de estudo de OO, considerando alunos com experiência de programação e uso da linguagem Java.";
         Assertions.assertEquals("STD-1", facade.cadastrarAtividade("Estudar OO", descricao, cpf1));
+    }
+    
+    @Test
+    void cadastrarAtividadeStringsInvalidas() {
+    	String descricao = "Atividade de estudo de OO, considerando alunos com experiência de programação e uso da linguagem Java.";
+    	try {
+            facade.cadastrarAtividade("Estudar OO", descricao, "CPF Errado");	
+            Assertions.fail("Era esperado um erro por causa do CPF errado.");
+        } catch (NoSuchElementException nsee) {}
+        
+        try {
+        	facade.cadastrarAtividade("Estudar OO", descricao, null);
+        	Assertions.fail("Era esperado um erro por causa do CPF nulo.");
+        } catch (IllegalArgumentException iae) {}
+        
+        try {
+        	facade.cadastrarAtividade("", descricao, cpf1);
+        	Assertions.fail("Era esperado um erro por causa do nome vazio");
+        } catch (NoSuchElementException nsee) {}
     }
 
     @Test
