@@ -88,4 +88,8 @@ public class PessoaController {
     	return this.pessoaService.listarPessoas();
     }
 
+    public int getNivel(String CPF) {
+    	return this.pessoaService.getNivel(CPF);
+    }
+
 }
