@@ -101,8 +101,10 @@ public class AtividadeImpl implements Atividade {
         for (Map.Entry<String, String> tarefa : this.tarefas.entrySet()) {
             tarefas.add(tarefa.getValue() + " - " + tarefa.getKey());
         }
-        for (int i = tarefas.size() - 1; i > -1; i--) {
-            exibicao += "\n- " + tarefas.get(i);
+        if(!tarefas.isEmpty()) {
+            for (int i = tarefas.size() - 1; i > -1; i--) {
+                exibicao += "\n- " + tarefas.get(i);
+            }
         }
         return exibicao;
     }
