@@ -35,7 +35,7 @@ public class BaseTest {
         facade.cadastrarPessoa(cpf3, nome3, habilidades3);
         facade.cadastrarPessoa(cpf4, nome4, habilidades4);
 
-        atividade1 = facade.cadastrarAtividade("ESTUDAR OO", "Atividade de estudo de OO, considerando alunos com experiência de programação e uso da linguagem Java.", cpf1);
+        atividade1 = facade.cadastrarAtividade("Estudar OO", "Atividade de estudo de OO, considerando alunos com experiência de programação e uso da linguagem Java.", cpf1);
 
         tarefa1 = facade.cadastrarTarefa(atividade1, "Preparar material de estudo", new String[]{"OO"});
     }

@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 public class AtividadeTest extends BaseTest {
 
-	String parametroNulo = "Era esperado um erro ao tentar passar um parametro nulo";
-	String parametroVazio = "Era esperado um erro ao tentar passar um parametro vazio";
-	String parametroInexistente = "Era esperado um erro ao tentar passar um parametro inexistente";
-	String naoECPF = "Era esperado um erro ao tentar passar algo que não seja CPF";
+	private String parametroNulo = "Era esperado um erro ao tentar passar um parametro nulo";
+	private String parametroVazio = "Era esperado um erro ao tentar passar um parametro vazio";
+	private String parametroInexistente = "Era esperado um erro ao tentar passar um parametro inexistente";
+	private String naoECPF = "Era esperado um erro ao tentar passar algo que não seja CPF";
 	
     @Test
     void cadastrarAtividadeTest1() {
@@ -200,7 +200,7 @@ public class AtividadeTest extends BaseTest {
     	try {
     		facade.reabrirAtividade("");
     		Assertions.fail(parametroVazio + " - ID");
-    	} catch (NoSuchElementException nsee) {}
+    	} catch (IllegalArgumentException iae) {}
     	try {
     		facade.reabrirAtividade(null);
     		Assertions.fail(parametroNulo + " - ID");
