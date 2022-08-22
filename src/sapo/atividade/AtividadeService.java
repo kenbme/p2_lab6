@@ -93,4 +93,7 @@ public class AtividadeService {
         atividade.concluiTarefa(id);
     }
 
+    public String getAtividadeNome(String atividadeID) throws NoSuchElementException {
+        return atividadeRepository.get(atividadeID).orElseThrow().getNome();
+    }
 }

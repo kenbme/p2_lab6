@@ -11,5 +11,5 @@ public interface Atividade {
     void removeTarefa(String tarefaID);
     void concluiTarefa(String tarefaID);
     String exibir();
-
+    String getNome();
 }

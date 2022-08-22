@@ -7,8 +7,8 @@ public class TarefaGerencial extends Tarefa {
 
     private final HashMap<String, String> tarefas;
 
-    public TarefaGerencial(String atividadeID, String tarefaID, String nome, String[] habilidades, HashMap<String, String> tarefas){
-        super(atividadeID, tarefaID, nome, habilidades);
+    public TarefaGerencial(String atividadeID, String atividadeNome, String tarefaID, String nome, String[] habilidades, HashMap<String, String> tarefas){
+        super(atividadeID, atividadeNome, tarefaID, nome, habilidades);
         this.tarefas = tarefas;
     }
 

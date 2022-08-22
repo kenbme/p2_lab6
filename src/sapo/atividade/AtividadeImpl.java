@@ -94,6 +94,11 @@ public class AtividadeImpl implements Atividade {
         return exibicao;
     }
 
+    @Override
+    public String getNome() {
+        return nome;
+    }
+
     private String imprimeTarefas() {
         String exibicao = "Tarefas: " + tarefasConcluidas + "/" + totalTarefas;
         ArrayList<String> tarefas = new ArrayList<>();

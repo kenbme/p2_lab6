@@ -20,7 +20,7 @@ public class TarefaService {
     }
     
     public String cadastraTarefa(String atividadeID, String nome, String[] habilidades) {
-    	Tarefa tarefa = new Tarefa(atividadeID,atividadeID + "-" + tr.getTotalTarefas(), nome, habilidades);
+        Tarefa tarefa = new Tarefa(atividadeID, as.getAtividadeNome(atividadeID), atividadeID + "-" + tr.getTotalTarefas(), nome, habilidades);
         this.as.adicionaTarefa(atividadeID, tarefa.getID(), nome);
         this.tr.put(tarefa);
     	return tarefa.getID();
@@ -31,7 +31,7 @@ public class TarefaService {
         for (String id: idTarefas) {
             tarefas.put(id, tr.get(id).orElseThrow().getNome());
         }
-        TarefaGerencial tarefa = new TarefaGerencial(atividadeId,atividadeId + "-" + tr.getTotalTarefas(), nome, habilidades, tarefas);
+        TarefaGerencial tarefa = new TarefaGerencial(atividadeId, as.getAtividadeNome(atividadeId), atividadeId + "-" + tr.getTotalTarefas(), nome, habilidades, tarefas);
         this.as.adicionaTarefa(atividadeId, tarefa.getID(), nome);
         this.tr.put(tarefa);
         return tarefa.getID();

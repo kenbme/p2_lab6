@@ -89,4 +89,8 @@ public class TarefaController {
 		return ts.contarTodasTarefasNaTarefaGerencial(idTarefaGerencial);
 	}
 
+    public String cadastrarTarefaGerencial(String atividadeId, String nome, String[] habilidades, String[] idTarefas) {
+    	return ts.cadastraTarefa(atividadeId, nome, habilidades, idTarefas);
+	}
+
 }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 public class Tarefa {
 
     private final String atividadeID;
+    private String atividadeNome;
     private int horasExecutadas;
     private String nome;
     private String[] habilidadesRecomendadas;
@@ -12,12 +13,13 @@ public class Tarefa {
     private final String ID;
     private boolean concluida = false;
 
-    public Tarefa(String atividadeID, String tarefaID, String nome, String[] habilidades) {
+    public Tarefa(String atividadeID, String atividadeNome, String tarefaID, String nome, String[] habilidades) {
         this.pessoas = new HashMap<>();
         this.nome = nome;
         this.habilidadesRecomendadas = habilidades;
         this.ID = tarefaID;
         this.atividadeID = atividadeID;
+        this.atividadeNome = atividadeNome;
     }
 
     public String getNome() {
@@ -44,11 +46,16 @@ public class Tarefa {
     }
 
     public String toString() {
-        String exibicao = this.nome + " – " + this.ID;
+        String exibicao = this.nome + " - " + this.ID + "\n- " + this.atividadeNome + "\n";
+        int i = 0;
         for (String habilidade : habilidadesRecomendadas) {
-            exibicao += "\n- " + habilidade;
+            if (i > 0) {
+                exibicao += ", ";
+            }
+            exibicao += habilidade;
+            i++;
         }
-        exibicao += "\n(" + this.horasExecutadas + " hora(s) executada(s)" + "\n===\n" + equipes();
+        exibicao += "\n(" + this.horasExecutadas + " hora(s) executada(s))" + "\n===\n" + equipes();
         return exibicao;
     }
 
@@ -77,7 +84,7 @@ public class Tarefa {
     private String equipes() {
         String equipes = "Equipe:";
         for (String CPF : this.pessoas.keySet()) {
-            equipes += "\n" + pessoas.get(CPF) + " - " + CPF;
+            equipes += "\n" + pessoas.get(CPF) + " – " + CPF;
         }
 
         return equipes;

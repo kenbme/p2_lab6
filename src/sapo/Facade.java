@@ -194,7 +194,7 @@ public class Facade {
 
     // TAREFA GERENCIAL
     public String cadastrarTarefaGerencial(String atividadeId, String nome, String[] habilidades, String[] idTarefas) {
-        throw new UnsupportedOperationException();
+        return tarefaController.cadastrarTarefaGerencial(atividadeId, nome, habilidades, idTarefas);
     }
 
     public void adicionarNaTarefaGerencial(String idTarefaGerencial, String idTarefa) {
