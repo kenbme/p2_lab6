@@ -22,6 +22,18 @@ public class BaseTest {
     String nome4 = "Matheus Gaudencio do Rêgo";
     String[] habilidades4 = new String[]{"Java"};
 
+    String cpf5 = "666.666.666-66";
+
+    String nome5 = "Aluno da Silva";
+
+    String[] habilidades5 = new String[]{"Estudar"};
+    String cpf6 = "777.777.777-77";
+
+    String nome6 = "Professor da Silva";
+
+    String[] habilidades6 = new String[]{"Ensinar"};
+    String[] disciplinas = new String[]{"Java", "EDA", "LEDA"};
+
     String atividade1;
     String tarefa1;
 
