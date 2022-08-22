@@ -26,6 +26,12 @@ public class Validador {
             }
         }
     }
+
+    public void valida(Integer numero) throws IllegalArgumentException {
+        if (numero == null) {
+            throw new IllegalArgumentException("Número não pode ser nulo");
+        }
+    }
     
     public void isPositivo(int inteiro) {
     	if (inteiro < 0) {

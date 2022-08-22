@@ -55,7 +55,7 @@ public class BuscaTest extends BaseTest {
     	try {
     		facade.exibirPessoas(null);
     		Assertions.fail(parametroNulo + " - Consulta");
-    	} catch (NullPointerException npe) {}
+    	} catch (IllegalArgumentException npe) {}
     	try {
     		facade.exibirPessoas("ConsultaNãoExiste");
     		Assertions.fail(parametroInexistente + " - Consulta");
@@ -67,7 +67,7 @@ public class BuscaTest extends BaseTest {
     	try {
     		facade.buscarAtividade(null);
     		Assertions.fail(parametroNulo + " - Consulta");
-    	} catch (NullPointerException npe) {}
+    	} catch (IllegalArgumentException npe) {}
     	try {
     		facade.buscarAtividade("IDNãoExiste");
     		Assertions.fail(parametroInexistente + " - Consulta");
@@ -79,7 +79,7 @@ public class BuscaTest extends BaseTest {
     	try {
     		facade.buscarTarefas(null);
     		Assertions.fail(parametroNulo + " - Nome");
-    	} catch (NullPointerException npe) {}
+    	} catch (IllegalArgumentException npe) {}
     	try {
     		facade.buscarTarefas("NãoTemNiguém");
     		Assertions.fail(parametroInexistente + " - Nome");
@@ -87,7 +87,7 @@ public class BuscaTest extends BaseTest {
     	try {
     		facade.buscarTarefas(null, nome1);
     		Assertions.fail(parametroNulo + " - ID");
-    	} catch (NullPointerException npe) {}
+    	} catch (IllegalArgumentException npe) {}
     	try {
     		facade.buscarTarefas("IDNãoExiste", nome1);
     		Assertions.fail(parametroInexistente + " - ID");
@@ -95,6 +95,6 @@ public class BuscaTest extends BaseTest {
     	try {
     		facade.buscarTarefas(atividade1, null);
     		Assertions.fail(parametroNulo + " - nome");
-    	} catch (NullPointerException npe) {}
+    	} catch (IllegalArgumentException npe) {}
     }
 }
