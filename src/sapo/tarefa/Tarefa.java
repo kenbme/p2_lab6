@@ -1,10 +1,12 @@
 package sapo.tarefa;
 
+import java.util.Date;
 import java.util.HashMap;
 
-public class Tarefa {
+public class Tarefa implements Comparable {
 
     private final String atividadeID;
+    private final Date criacao;
     private String atividadeNome;
     private int horasExecutadas;
     private String nome;
@@ -14,6 +16,7 @@ public class Tarefa {
     private boolean concluida = false;
 
     public Tarefa(String atividadeID, String atividadeNome, String tarefaID, String nome, String[] habilidades) {
+        this.criacao = new Date();
         this.pessoas = new HashMap<>();
         this.nome = nome;
         this.habilidadesRecomendadas = habilidades;
@@ -100,6 +103,14 @@ public class Tarefa {
     
     public HashMap<String, String> getPessoas(){
     	return this.pessoas;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Tarefa) {
+            return ((Tarefa) o).criacao.compareTo(this.criacao);
+        }
+        return 0;
     }
 
 }

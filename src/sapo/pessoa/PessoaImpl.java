@@ -8,7 +8,7 @@ import java.util.HashSet;
 
 import sapo.tarefa.TarefaDTO;
 
-public class PessoaImpl implements Pessoa {
+public class PessoaImpl implements Pessoa, Comparable {
 
     private final String cpf;
     private String nome;
@@ -145,5 +145,13 @@ public class PessoaImpl implements Pessoa {
 		}
 		return tarefasTotais;
 	}
-	
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Pessoa) {
+            return this.getNome().compareTo(((Pessoa) o).getNome());
+        }
+        return 0;
+    }
+
 }

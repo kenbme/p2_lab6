@@ -24,17 +24,17 @@ public class BuscaController {
 
     public String[] buscarTarefas(String nome) {
         validador.valida(nome);
-        return buscaService.buscarTarefas(null, nome);
+        return buscaService.buscarTarefas(nome);
     }
 
     public String[] buscarTarefas(String idAtividade, String nome) {
-        validador.valida(idAtividade);
+        validador.validaID(idAtividade);
         validador.valida(nome);
         return buscaService.buscarTarefas(idAtividade, nome);
     }
 
     public String[] sugerirTarefas(String cpf) {
-        validador.valida(cpf);
+        validador.validaCpf(cpf);
         return buscaService.sugerirTarefas(cpf);
     }
 

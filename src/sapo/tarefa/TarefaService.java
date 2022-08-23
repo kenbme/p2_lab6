@@ -5,6 +5,7 @@ import sapo.pessoa.PessoaService;
 
 import java.util.HashMap;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 public class TarefaService {
 
@@ -101,8 +102,27 @@ public class TarefaService {
     	return this.tr.get(IDTarefa).orElseThrow().concluida();
     }
 
+
+    public String[] consultar(String nome) {
+        Set<Tarefa> tarefas = tr.consultar(nome);
+        String[] resultado = new String[tarefas.size()];
+        int i = 0;
+        for (Tarefa tarefa : tarefas) {
+            resultado[i] = tarefa.toString();
+            i++;
+        }
+        return resultado;
+    }
+
     public String[] consultar(String idAtividade, String nome) {
-        throw new UnsupportedOperationException();
+        Set<Tarefa> tarefas = tr.consultar(as.getAtividadeTarefas(idAtividade), nome);
+        String[] resultado = new String[tarefas.size()];
+        int i = 0;
+        for (Tarefa tarefa : tarefas) {
+            resultado[i] = tarefa.toString();
+            i++;
+        }
+        return resultado;
     }
 
     public String[] sugestionar(String cpf) {

@@ -1,7 +1,6 @@
 package sapo.pessoa;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -85,7 +84,6 @@ public class PessoaService {
             resultado[i] = pessoa.exibir();
             i++;
         }
-        Arrays.sort(resultado);
         return resultado;
     }
 

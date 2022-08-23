@@ -2,17 +2,15 @@ package sapo.busca;
 
 import sapo.tarefa.TarefaService;
 
-public class BuscaTarefa implements Busca {
 
-    private final String[] resultado;
+public class BuscaTarefa extends Busca {
 
-    public BuscaTarefa(TarefaService tarefaService, String idAtividade, String nome) {
-        resultado = tarefaService.consultar(idAtividade, nome);
+    public BuscaTarefa(TarefaService tarefaService, String nome) {
+        super(tarefaService.consultar(nome.toLowerCase()), "TAREFA");
     }
 
-    @Override
-    public String[] exibir() {
-        return resultado;
+    public BuscaTarefa(TarefaService tarefaService, String idAtividade, String nome) {
+        super(tarefaService.consultar(idAtividade, nome.toLowerCase()), "TAREFA");
     }
     
 }

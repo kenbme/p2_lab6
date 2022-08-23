@@ -1,10 +1,6 @@
 package sapo.pessoa;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -31,10 +27,17 @@ public class PessoaRepository {
     public Set<Pessoa> consultar(String[] dados) {
         Predicate<Pessoa> filtro = pessoa -> {
             for (String dado : dados) {
-                if (List.of(pessoa.getNome().split(" ")).contains(dado)) {
+                if (List.of(pessoa.getNome().toLowerCase().split(" ")).contains(dado)) {
                     continue;
                 }
-                if (pessoa.getHabilidades().contains(dado)) {
+                boolean contem_habilidade = false;
+                for (String habilidade : pessoa.getHabilidades()) {
+                    if (habilidade.toLowerCase().contains(dado)) {
+                        contem_habilidade = true;
+                        break;
+                    }
+                }
+                if (contem_habilidade) {
                     continue;
                 }
                 return false;
@@ -42,16 +45,12 @@ public class PessoaRepository {
             return true;
         };
         return this.pessoas.values().stream()
-                .filter(filtro)
-                .collect(Collectors.toSet());
+                .filter(filtro).sorted()
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     public HashSet<Pessoa> getAll(){
-    	HashSet<Pessoa> pessoas = new HashSet<>();
-    	for (Pessoa pessoa : this.pessoas.values()) {
-    		pessoas.add(pessoa);
-    	}
-    	return pessoas;
+        return new HashSet<>(this.pessoas.values());
     }
     
 }

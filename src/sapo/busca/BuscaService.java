@@ -23,13 +23,19 @@ public class BuscaService {
     }
 
     public String[] exibirPessoas(String consulta) {
-        Busca busca =  new BuscaPessoa(pessoaService, consulta.split(" "));
+        Busca busca =  new BuscaPessoa(pessoaService, consulta);
         buscaRepository.put(busca);
         return busca.exibir();
     }
 
     public String[] buscarAtividade(String consulta) {
-        Busca busca =  new BuscaAtividade(atividadeService, consulta.split(" "));
+        Busca busca =  new BuscaAtividade(atividadeService, consulta);
+        buscaRepository.put(busca);
+        return busca.exibir();
+    }
+
+    public String[] buscarTarefas(String nome) {
+        Busca busca =  new BuscaTarefa(tarefaService, nome);
         buscaRepository.put(busca);
         return busca.exibir();
     }
@@ -62,7 +68,7 @@ public class BuscaService {
     }
 
     public String[] exibirHistoricoBusca(int indexBusca) {
-        throw new UnsupportedOperationException();
+        return buscaRepository.get(buscaRepository.totalBuscas() - 1 - indexBusca).orElseThrow().exibirComDetalhes();
     }
 
 }

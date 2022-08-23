@@ -4,6 +4,7 @@ import sapo.pessoa.PessoaService;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
 
 public class AtividadeService {
 
@@ -75,7 +76,14 @@ public class AtividadeService {
     }
 
     public String[] consultar(String[] dados) {
-        throw new UnsupportedOperationException();
+        Set<Atividade> atividades = atividadeRepository.consultar(dados);
+        String[] resultado = new String[atividades.size()];
+        int i = 0;
+        for (Atividade atividade : atividades) {
+            resultado[i] = atividade.exibir();
+            i++;
+        }
+        return resultado;
     }
 
     public void adicionaTarefa(String atividadeID, String tarefaID, String tarefaNome) throws NoSuchElementException {
@@ -96,4 +104,9 @@ public class AtividadeService {
     public String getAtividadeNome(String atividadeID) throws NoSuchElementException {
         return atividadeRepository.get(atividadeID).orElseThrow().getNome();
     }
+
+    public String[] getAtividadeTarefas(String idAtividade) throws NoSuchElementException {
+        return atividadeRepository.get(idAtividade).orElseThrow().getTarefas();
+    }
+
 }

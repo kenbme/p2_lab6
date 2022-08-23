@@ -12,4 +12,8 @@ public interface Atividade {
     void concluiTarefa(String tarefaID);
     String exibir();
     String getNome();
+    String getId();
+    String getDescricao();
+    String[] getTarefas();
+
 }

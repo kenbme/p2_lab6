@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AtividadeImpl implements Atividade {
+public class AtividadeImpl implements Atividade, Comparable {
 
     private final String id;
     private final String nome;
@@ -99,6 +99,21 @@ public class AtividadeImpl implements Atividade {
         return nome;
     }
 
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public String getDescricao() {
+        return descricao;
+    }
+
+    @Override
+    public String[] getTarefas() {
+        return tarefas.keySet().toArray(new String[0]);
+    }
+
     private String imprimeTarefas() {
         String exibicao = "Tarefas: " + tarefasConcluidas + "/" + totalTarefas;
         ArrayList<String> tarefas = new ArrayList<>();
@@ -111,6 +126,14 @@ public class AtividadeImpl implements Atividade {
             }
         }
         return exibicao;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Atividade) {
+            return this.getId().compareTo(((Atividade) o).getId());
+        }
+        return 0;
     }
 
 }

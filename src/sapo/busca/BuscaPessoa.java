@@ -2,16 +2,10 @@ package sapo.busca;
 
 import sapo.pessoa.PessoaService;
 
-public class BuscaPessoa implements Busca {
-    private final String[] resultado;
+public class BuscaPessoa extends Busca {
 
-    public BuscaPessoa(PessoaService pessoaService, String[] dados) {
-        resultado =  pessoaService.consultar(dados);
-    }
-
-    @Override
-    public String[] exibir() {
-        return resultado;
+    public BuscaPessoa(PessoaService pessoaService, String consulta) {
+        super(pessoaService.consultar(consulta.toLowerCase().split(" ")), "PESSOA");
     }
 
 }
