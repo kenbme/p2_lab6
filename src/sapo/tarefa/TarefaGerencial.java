@@ -1,5 +1,6 @@
 package sapo.tarefa;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class TarefaGerencial extends Tarefa {
@@ -34,6 +35,11 @@ public class TarefaGerencial extends Tarefa {
         return exibicao;
     }
 
+    public String[] getIdTarefasSubordinadas(){
+        ArrayList<String> idsTarefas = new ArrayList<String>();
+        idsTarefas.addAll(tarefas.keySet());
+        return idsTarefas.toArray(new String[0]);
+    }
     public boolean contains(String idTarefaGerencial) {
         return tarefas.containsKey(idTarefaGerencial);
     }

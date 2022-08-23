@@ -51,26 +51,39 @@ public class TarefaService {
     }
 
     public void acrescentaHoras(String IDTarefa, int horas) {
-    	if (this.tr.get(IDTarefa).orElseThrow().concluida()) {
-    		return;
-    	}
-    	this.tr.get(IDTarefa).orElseThrow().acrescentaHoras(horas);
+        Tarefa tarefa = this.tr.get(IDTarefa).orElseThrow();
+        if (tarefa.concluida() && !(tarefa instanceof TarefaGerencial)) {
+            throw new IllegalStateException("Não é possível alterar horas de uma tarefa concluída.");
+        }
+    	tarefa.acrescentaHoras(horas);
     }
 
     public void decrescentaHoras(String IDTarefa, int horas) {
-    	if (this.tr.get(IDTarefa).orElseThrow().concluida()) {
-    		return;
+        Tarefa tarefa = this.tr.get(IDTarefa).orElseThrow();
+    	if (tarefa.concluida() && !(tarefa instanceof TarefaGerencial)) {
+    		throw new IllegalStateException("Não é possível alterar horas de uma tarefa concluída.");
     	}
-    	this.tr.get(IDTarefa).orElseThrow().decrescentaHoras(horas);
+    	tarefa.decrescentaHoras(horas);
     }
 
     public void concluiTarefa(String IDTarefa) {
         Tarefa tarefa = this.tr.get(IDTarefa).orElseThrow();
-    	if(tarefa.concluirTarefa()) {
-            as.concluiTarefa(tarefa.getAtividadeID(), tarefa.getID());
-            this.ps.contabilizaTarefaFinalizada(getDTO(IDTarefa));
-        } else {
-        	this.ps.removeTarefaFinalizada(getDTO(IDTarefa));
+        if(tarefa.concluida()){
+            throw new IllegalStateException("Tarefa já concluída.");
+        }
+        if (tarefa instanceof TarefaGerencial && !tarefa.concluida()){
+            String[] idsTarefas = ((TarefaGerencial) tarefa).getIdTarefasSubordinadas();
+            tarefa.concluirTarefa();
+            for(String id: idsTarefas){
+                concluiTarefa(id);
+            }
+        }else {
+            if (tarefa.concluirTarefa()) {
+                as.concluiTarefa(tarefa.getAtividadeID(), tarefa.getID());
+                this.ps.contabilizaTarefaFinalizada(getDTO(IDTarefa));
+            } else {
+                this.ps.removeTarefaFinalizada(getDTO(IDTarefa));
+            }
         }
     }
 
@@ -86,7 +99,7 @@ public class TarefaService {
 
     public void adicionaPessoa(String IDTarefa, String CPF) {
     	if (this.tr.get(IDTarefa).orElseThrow().concluida()) {
-    		return;
+    		throw new IllegalStateException("Não é possível associar pessoas a uma tarefa concluída.");
     	}
     	this.tr.get(IDTarefa).orElseThrow().adicionaPessoa(CPF, this.ps.getNomePessoaOuFalha(CPF));
     	this.ps.contabilizaTarefa(getDTO(IDTarefa), CPF);
@@ -94,7 +107,7 @@ public class TarefaService {
 
     public void removePessoa(String IDTarefa, String CPF) {
     	if (this.tr.get(IDTarefa).orElseThrow().concluida()) {
-    		return;
+            throw new IllegalStateException("Não é possível desassociar pessoas a uma tarefa concluída.");
     	}
     	this.tr.get(IDTarefa).orElseThrow().removePessoa(CPF);
     	this.ps.removeTarefa(getDTO(IDTarefa), CPF);

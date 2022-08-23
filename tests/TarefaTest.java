@@ -157,8 +157,6 @@ public class TarefaTest extends BaseTest {
     void concluirTarefa2() {
         String id = facade.cadastrarTarefa(atividade1, "Aula sobre herança", new String[]{"OO", "Herança", "Professor"});
         facade.concluirTarefa(id);
-        Assertions.assertThrowsExactly(IllegalStateException.class, () -> facade.alterarNomeTarefa(id, "novo nome"));
-        Assertions.assertThrowsExactly(IllegalStateException.class, () -> facade.alterarHabilidadesTarefa(id, new String[]{"habilidade nova"}));
         Assertions.assertThrowsExactly(IllegalStateException.class, () -> facade.adicionarHorasTarefa(id, 20));
         Assertions.assertThrowsExactly(IllegalStateException.class, () -> facade.removerHorasTarefa(id, 20));
         Assertions.assertThrowsExactly(IllegalStateException.class, () -> facade.associarPessoaTarefa(cpf1, id));
@@ -167,28 +165,16 @@ public class TarefaTest extends BaseTest {
     }
 
     @Test
-    void concluirTarefaGerencial1() {
+    void concluirTarefaGerencial() {
         String id = facade.cadastrarTarefaGerencial(atividade1, "Tarefa gerencial",
                 new String[]{"OO", "Herança", "Professor"}, new String[]{tarefa1});
+        facade.associarPessoaTarefa(cpf1, id);
         facade.concluirTarefa(id);
-        Assertions.assertThrowsExactly(IllegalStateException.class, () -> facade.alterarNomeTarefa(id, "novo nome"));
-        Assertions.assertThrowsExactly(IllegalStateException.class, () -> facade.alterarHabilidadesTarefa(id, new String[]{"habilidade nova"}));
-        Assertions.assertThrowsExactly(IllegalStateException.class, () -> facade.adicionarHorasTarefa(id, 20));
-        Assertions.assertThrowsExactly(IllegalStateException.class, () -> facade.removerHorasTarefa(id, 20));
-        Assertions.assertThrowsExactly(IllegalStateException.class, () -> facade.associarPessoaTarefa(cpf1, id));
+        Assertions.assertThrowsExactly(IllegalStateException.class, () -> facade.associarPessoaTarefa(cpf2, id));
         Assertions.assertThrowsExactly(IllegalStateException.class, () -> facade.removerPessoaTarefa(cpf1, id));
         Assertions.assertThrowsExactly(IllegalStateException.class, () -> facade.concluirTarefa(id));
     }
 
-    @Test
-    void concluirTarefaGerencial2() {
-        String id = facade.cadastrarTarefaGerencial(atividade1, "Tarefa gerencial",
-                new String[]{"OO", "Herança", "Professor"}, new String[]{tarefa1});
-        facade.concluirTarefa(id);
-        Assertions.assertThrowsExactly(IllegalStateException.class, () -> facade.adicionarNaTarefaGerencial(id, "tarefa"));
-        Assertions.assertThrowsExactly(IllegalStateException.class, () -> facade.removerDaTarefaGerencial(id, "tarefa"));
-        Assertions.assertThrowsExactly(IllegalStateException.class, () -> facade.contarTodasTarefasNaTarefaGerencial(id));
-    }
 
     @Test
     void funcoesTarefaGerencial() {
