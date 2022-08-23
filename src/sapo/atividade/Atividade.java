@@ -15,5 +15,5 @@ public interface Atividade {
     String getId();
     String getDescricao();
     String[] getTarefas();
-
+    void alteraNomeTarefa(String tarefaID, String novoNome);
 }

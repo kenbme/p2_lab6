@@ -54,6 +54,7 @@ public class PessoaService {
     }
 
     public String listarComentariosPessoa(String cpf) throws NoSuchElementException {
+        // TODO REFATORAR LISTAR COMENTARIOS DENTRO DE PESSOA
         Pessoa pessoa = pessoaRepository.get(cpf).orElseThrow();
         StringBuilder lista = new StringBuilder(pessoa.getNome() + " – " + cpf);
         lista.append("\nComentários:");

@@ -114,6 +114,13 @@ public class AtividadeImpl implements Atividade, Comparable {
         return tarefas.keySet().toArray(new String[0]);
     }
 
+    @Override
+    public void alteraNomeTarefa(String tarefaID, String novoNome) {
+        if (tarefas.containsKey(tarefaID)) {
+            tarefas.put(tarefaID, novoNome);
+        }
+    }
+
     private String imprimeTarefas() {
         String exibicao = "Tarefas: " + tarefasConcluidas + "/" + totalTarefas;
         ArrayList<String> tarefas = new ArrayList<>();

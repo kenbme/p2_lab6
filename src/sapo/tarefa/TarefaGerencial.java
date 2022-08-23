@@ -1,13 +1,12 @@
 package sapo.tarefa;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedHashMap;
 
 public class TarefaGerencial extends Tarefa {
 
-    private final HashMap<String, String> tarefas;
+    private final LinkedHashMap<String, String> tarefas;
 
-    public TarefaGerencial(String atividadeID, String atividadeNome, String tarefaID, String nome, String[] habilidades, HashMap<String, String> tarefas){
+    public TarefaGerencial(String atividadeID, String atividadeNome, String tarefaID, String nome, String[] habilidades, LinkedHashMap<String, String> tarefas){
         super(atividadeID, atividadeNome, tarefaID, nome, habilidades);
         this.tarefas = tarefas;
     }
@@ -27,10 +26,16 @@ public class TarefaGerencial extends Tarefa {
     @Override
     public String toString() {
         String exibicao = super.toString() + "\n===\nTarefas:";
-        for (Map.Entry<String, String> tarefa : tarefas.entrySet()) {
-            exibicao += "\n- " + tarefa.getValue() + " - " + tarefa.getKey();
+        String[] nomeTarefas = tarefas.values().toArray(new String[0]);
+        String[] idTarefas = tarefas.keySet().toArray(new String[0]);
+        for (int i = nomeTarefas.length - 1; i > -1; i--) {
+            exibicao += "\n- " + nomeTarefas[i] + " - " + idTarefas[i];
         }
         return exibicao;
+    }
+
+    public boolean contains(String idTarefaGerencial) {
+        return tarefas.containsKey(idTarefaGerencial);
     }
 
 }

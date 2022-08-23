@@ -109,4 +109,8 @@ public class AtividadeService {
         return atividadeRepository.get(idAtividade).orElseThrow().getTarefas();
     }
 
+    public void alteraNomeTarefa(String atividadeID, String tarefaID, String novoNome) {
+        atividadeRepository.get(atividadeID).orElseThrow().alteraNomeTarefa(tarefaID, novoNome);
+    }
+
 }

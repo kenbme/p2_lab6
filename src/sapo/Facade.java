@@ -198,15 +198,15 @@ public class Facade {
     }
 
     public void adicionarNaTarefaGerencial(String idTarefaGerencial, String idTarefa) {
-
+        tarefaController.adicionarNaTarefaGerencial(idTarefaGerencial, idTarefa);
     }
 
     public void removerDaTarefaGerencial(String idTarefaGerencial, String idTarefa) {
-
+        tarefaController.removerDaTarefaGerencial(idTarefaGerencial, idTarefa);
     }
 
     public int contarTodasTarefasNaTarefaGerencial(String idTarefaGerencial) {
-        throw new UnsupportedOperationException();
+        return tarefaController.contarTodasTarefasNaTarefaGerencial(idTarefaGerencial);
     }
 
 }
