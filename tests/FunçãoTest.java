@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -16,12 +15,6 @@ public class FunçãoTest extends BaseTest{
             facade.defineFuncaoProfessor(cpf6, "12345", disciplinas);
             Assertions.fail("Mudança de estado Ilegal");
         } catch (IllegalStateException hey) {}
-    }
-
-    @Test
-    void listarEmOrdemCorreta(){
-        throw new RuntimeException();
-
     }
 
     @Test
