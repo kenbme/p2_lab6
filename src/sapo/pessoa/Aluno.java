@@ -16,6 +16,7 @@ public class Aluno implements Pessoa{
     private String periodo;
     private int nivel = 0;
     private int nivelAnterior = 0;
+    private String funcao = "Aluno";
     private final ArrayList<String> habilidades;
     private final ArrayList<Comentario> comentarios;
     private HashMap<String, TarefaDTO> tarefasAndamento;
@@ -144,7 +145,11 @@ public class Aluno implements Pessoa{
 	}
     
     private void calculaNivel() {
-    	this.nivel = (int)Math.floor(this.tarefasAndamento.size() / 2) + (int)Math.ceil(1.5 * this.tarefasFinalizadasComHabilidades.size()) + this.tarefasFinalizadas.size() + this.nivelAnterior;
+    	int finalizadasComHabilidades = 0;
+    	if (this.tarefasFinalizadasComHabilidades != null) {
+    		finalizadasComHabilidades = this.tarefasFinalizadasComHabilidades.size();
+    	}
+    	this.nivel = (int)Math.floor(this.tarefasAndamento.size() / 2) + (int)Math.ceil(1.5 * finalizadasComHabilidades) + this.tarefasFinalizadas.size() + this.nivelAnterior;
     }
     
     @Override
@@ -160,5 +165,10 @@ public class Aluno implements Pessoa{
 			tarefasTotais.add(tarefaID);
 		}
 		return tarefasTotais;
+	}
+
+	@Override
+	public String getFuncao() {
+		return this.funcao;
 	}
 }

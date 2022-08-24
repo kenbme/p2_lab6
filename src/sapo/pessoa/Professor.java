@@ -16,6 +16,7 @@ public class Professor implements Pessoa {
     private String[] disciplinas;
     private int nivel = 0;
     private int nivelAnterior = 0;
+    private String funcao = "Professor";
     private final ArrayList<String> habilidades;
     private final ArrayList<Comentario> comentarios;
     private HashMap<String, TarefaDTO> tarefasAndamento;
@@ -168,6 +169,11 @@ public class Professor implements Pessoa {
 			tarefasTotais.add(tarefaID);
 		}
 		return tarefasTotais;
+	}
+
+	@Override
+	public String getFuncao() {
+		return this.funcao;
 	}
     
 }

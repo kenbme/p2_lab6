@@ -14,6 +14,7 @@ public class PessoaImpl implements Pessoa, Comparable {
     private String nome;
     private int nivel;
     private int nivelAnterior;
+    private String funcao = "Pessoa";
     private HashMap<String, TarefaDTO> tarefasAndamento;
     private HashMap<String, TarefaDTO> tarefasFinalizadas;
     private HashSet<String> tarefasAnteriores;
@@ -153,5 +154,10 @@ public class PessoaImpl implements Pessoa, Comparable {
         }
         return 0;
     }
+
+	@Override
+	public String getFuncao() {
+		return this.funcao;
+	}
 
 }

@@ -16,6 +16,7 @@ public interface Pessoa {
     ArrayList<String> getHabilidades();
     ArrayList<Comentario> getComentarios();
     int getNivel();
+    String getFuncao();
     void contabilizaTarefa(TarefaDTO tarefa);
     void removeTarefa(TarefaDTO tarefa);
     void contabilizaTarefaFinalizada(TarefaDTO tarefa);
