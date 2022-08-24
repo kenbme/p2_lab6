@@ -20,6 +20,7 @@ public class Aluno implements Pessoa{
     private final ArrayList<Comentario> comentarios;
     private HashMap<String, TarefaDTO> tarefasAndamento;
     private HashMap<String, TarefaDTO> tarefasFinalizadas;
+    private HashMap<String, TarefaDTO> tarefasFinalizadasComHabilidades;
     private HashSet<String> tarefasAnteriores;
 
     public Aluno(String cpf, String nome, String[] habilidades, String matricula, String periodo) {
@@ -123,6 +124,12 @@ public class Aluno implements Pessoa{
 	public void contabilizaTarefaFinalizada(TarefaDTO tarefa) {
 		if (!this.tarefasAnteriores.contains(tarefa.getID())) {
 			this.tarefasAndamento.remove(tarefa.getID());
+			for (String habilidade : tarefa.getHabilidadesRecomendadas()) {
+				if (this.habilidades.contains(habilidade)) {
+					this.tarefasFinalizadasComHabilidades.put(tarefa.getID(), tarefa);
+					return;
+				}
+			}
 			this.tarefasFinalizadas.put(tarefa.getID(), tarefa);
 		}
 	}
@@ -132,21 +139,12 @@ public class Aluno implements Pessoa{
     	if (!this.tarefasAnteriores.contains(tarefa.getID())) {
 			this.tarefasAndamento.put(tarefa.getID(), tarefa);
 			this.tarefasFinalizadas.remove(tarefa.getID());
+			this.tarefasFinalizadasComHabilidades.remove(tarefa.getID());
 		}
 	}
     
     private void calculaNivel() {
-    	int finalizadasComHabilidades = 0;
-    	for (TarefaDTO tarefa : this.tarefasFinalizadas.values()) {
-    		for (String habilidades : tarefa.getHabilidadesRecomendadas()) {
-    			if (this.habilidades.contains(habilidades)) {
-    				finalizadasComHabilidades ++;
-    				break;
-    			}
-    		}
-    	}
-    	
-    	this.nivel = (int)Math.floor(this.tarefasAndamento.size() / 2) + (int)Math.ceil(1.5 * finalizadasComHabilidades) + this.tarefasFinalizadas.size() + this.nivelAnterior;
+    	this.nivel = (int)Math.floor(this.tarefasAndamento.size() / 2) + (int)Math.ceil(1.5 * this.tarefasFinalizadasComHabilidades.size()) + this.tarefasFinalizadas.size() + this.nivelAnterior;
     }
     
     @Override
