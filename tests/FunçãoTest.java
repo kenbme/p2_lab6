@@ -26,8 +26,50 @@ public class FunçãoTest extends BaseTest{
 
     @Test
     void testaCalculoNivelProfessor(){
-        throw new RuntimeException();
+        facade.cadastrarPessoa(cpf5, nome5, habilidades5);
 
+        Assertions.assertEquals(0, facade.pegarNivel(cpf5)); //Pedro começa sem função
+
+        String atividadeTest = facade.cadastrarAtividade("Atestividade", "É pra testar...", cpf5);
+        String tarefaTest1 = facade.cadastrarTarefa(atividadeTest, "umaTarefa", habilidades3);
+        String tarefaTest2 = facade.cadastrarTarefa(atividadeTest, "outraTarefa", habilidades3);
+        String tarefaTest3 = facade.cadastrarTarefa(atividadeTest, "maisUmaTarefa", habilidades3);
+
+        facade.associarPessoaTarefa(cpf5, tarefaTest1);
+        facade.associarPessoaTarefa(cpf5, tarefaTest2);
+        facade.associarPessoaTarefa(cpf5, tarefaTest3);
+
+        Assertions.assertEquals(1, facade.pegarNivel(cpf5)); //Pedro recebe a atribuição de 3 tarefas em andamento (A, B e C)
+
+        facade.concluirTarefa(tarefaTest1);
+
+        Assertions.assertEquals(2, facade.pegarNivel(cpf5)); //A tarefa A de Pedro é finalizada
+
+        facade.defineFuncaoProfessor(cpf5, "12345", new String[]{"3"});
+
+        Assertions.assertEquals(2, facade.pegarNivel(cpf5)); //Pedro troca de função para professor
+
+        String tarefaTest4 = facade.cadastrarTarefa(atividadeTest, "quantasTarefas...", new String[]{"3"});
+        String tarefaTest5 = facade.cadastrarTarefa(atividadeTest, "semComentarios", habilidades3);
+        String tarefaTest6 = facade.cadastrarTarefa(atividadeTest, "antePenultima", habilidades3);
+        String tarefaTest7 = facade.cadastrarTarefa(atividadeTest, "aPenultima", habilidades3);
+        String tarefaTest8 = facade.cadastrarTarefa(atividadeTest, "aUltima", habilidades3);
+        facade.associarPessoaTarefa(cpf5, tarefaTest4);
+        facade.associarPessoaTarefa(cpf5, tarefaTest5);
+        facade.associarPessoaTarefa(cpf5, tarefaTest6);
+        facade.associarPessoaTarefa(cpf5, tarefaTest7);
+        facade.associarPessoaTarefa(cpf5, tarefaTest8);
+
+        Assertions.assertEquals(3, facade.pegarNivel(cpf5)); //Pedro recebe a atribuição de 5 novas tarefas (D, E, F, G, H)
+
+        facade.concluirTarefa(tarefaTest4);
+
+        Assertions.assertEquals(4, facade.pegarNivel(cpf5)); //A tarefa F é finalizada e a tarefa tinha uma disciplina que Pedro tinha
+
+        facade.removeFuncao(cpf5);
+        facade.removerTarefa(tarefaTest4);
+
+        Assertions.assertEquals(4, facade.pegarNivel(cpf5)); //Pedro perde a função
     }
 
     @Test
