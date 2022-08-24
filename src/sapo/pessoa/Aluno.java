@@ -34,6 +34,7 @@ public class Aluno implements Pessoa{
         this.habilidades.addAll(Arrays.asList(habilidades));
 		this.tarefasAndamento = new HashMap<>();
 		this.tarefasFinalizadas = new HashMap<>();
+		this.tarefasFinalizadasComHabilidades = new HashMap<>();
 		this.tarefasAnteriores = new HashSet<>();
 	}
     
@@ -47,6 +48,7 @@ public class Aluno implements Pessoa{
         this.habilidades.addAll(Arrays.asList(habilidades));
 		this.tarefasAndamento = new HashMap<>();
 		this.tarefasFinalizadas = new HashMap<>();
+		this.tarefasFinalizadasComHabilidades = new HashMap<>();
 		this.tarefasAnteriores = tarefasAnteriores;
 		this.nivelAnterior = nivelAnterior;
 	}
@@ -145,11 +147,7 @@ public class Aluno implements Pessoa{
 	}
     
     private void calculaNivel() {
-    	int finalizadasComHabilidades = 0;
-    	if (this.tarefasFinalizadasComHabilidades != null) {
-    		finalizadasComHabilidades = this.tarefasFinalizadasComHabilidades.size();
-    	}
-    	this.nivel = (int)Math.floor(this.tarefasAndamento.size() / 2) + (int)Math.ceil(1.5 * finalizadasComHabilidades) + this.tarefasFinalizadas.size() + this.nivelAnterior;
+    	this.nivel = (int)Math.floor(this.tarefasAndamento.size() / 2) + (int)Math.ceil(1.5 * this.tarefasFinalizadasComHabilidades.size()) + this.tarefasFinalizadas.size() + this.nivelAnterior;
     }
     
     @Override

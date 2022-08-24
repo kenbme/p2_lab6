@@ -90,7 +90,7 @@ public class PessoaService {
 
 	public void defineFuncaoProfessor(String CPF, String codSIAPE, String[] disciplinas) {
 		Optional<Pessoa> pessoa = this.pessoaRepository.get(CPF);
-		if (pessoa.get().getFuncao().equals("Professor")) {return;}
+		if (pessoa.get().getFuncao().equals("Professor")) {throw new IllegalStateException();}
 		Pessoa professor = new Professor(pessoa.get().getCPF(), pessoa.get().getNome(), pessoa.get().getHabilidades().toArray(new String[0]), codSIAPE, disciplinas, pessoa.get().getTarefas(), pessoa.get().getNivel());
 		this.pessoaRepository.remove(CPF);
 		this.pessoaRepository.put(professor);
@@ -98,7 +98,7 @@ public class PessoaService {
 
 	public void defineFuncaoAluno(String CPF, String matricula, String periodo) {
 		Optional<Pessoa> pessoa = this.pessoaRepository.get(CPF);
-		if (pessoa.get().getFuncao().equals("Aluno")) { return;}
+		if (pessoa.get().getFuncao().equals("Aluno")) {throw new IllegalStateException();}
 		Pessoa aluno = new Aluno(pessoa.get().getCPF(), pessoa.get().getNome(), pessoa.get().getHabilidades().toArray(new String[0]), matricula, periodo, pessoa.get().getTarefas(), pessoa.get().getNivel());
 		this.pessoaRepository.remove(CPF);
 		this.pessoaRepository.put(aluno);
@@ -106,7 +106,7 @@ public class PessoaService {
 	
 	public void removeFuncao(String CPF) {
 		Optional<Pessoa> funcao = this.pessoaRepository.get(CPF);
-		if (funcao.get().getFuncao().equals("Pessoa")) {return;}
+		if (funcao.get().getFuncao().equals("Pessoa")) {throw new IllegalStateException();}
 		Pessoa pessoa = new PessoaImpl(funcao.get().getCPF(), funcao.get().getNome(), funcao.get().getHabilidades().toArray(new String[0]), funcao.get().getTarefas(), funcao.get().getNivel());
 		this.pessoaRepository.remove(CPF);
 		this.pessoaRepository.put(pessoa);

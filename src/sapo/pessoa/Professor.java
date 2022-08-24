@@ -147,7 +147,7 @@ public class Professor implements Pessoa {
     	int comHabilidades = 0;
     	for (TarefaDTO tarefa : this.tarefasFinalizadas.values()) {
     		for(String habilidades : tarefa.getHabilidadesRecomendadas()) {
-    			if (this.habilidades.contains(habilidades)) {
+    			if (this.habilidades.contains(habilidades) || Arrays.asList(this.disciplinas).contains(habilidades)) {
     				comHabilidades ++;
     				break;
     			}
